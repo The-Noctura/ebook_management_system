@@ -137,9 +137,9 @@ Centang pekerjaan di sini setelah kotak **Selesai jika**-nya tercentang.
 
 **Penutup**
 
-- [ ] Inisialisasi Git dan commit pertama.
+- [x] Inisialisasi Git dan commit pertama.
 
-- [ ] **Selesai jika:** register, login, dan logout berjalan di browser; tabel `users` sesuai dokumen 03 bagian 3 tanpa kolom atau tabel bawaan yang tidak dipakai.
+- [x] **Selesai jika:** register, login, dan logout berjalan di browser; tabel `users` sesuai dokumen 03 bagian 3 tanpa kolom atau tabel bawaan yang tidak dipakai.
 
 #### C02 · Backend · Tabel ebook dan model · P0 · 4 Okt
 
@@ -147,16 +147,16 @@ Membutuhkan: C01.
 
 **Tabel**
 
-- [ ] Migration `ebooks` (dokumen 03 bagian 4): `id`, `user_id` (kunci asing ke `users.id`, yaitu penanda bahwa setiap ebook dimiliki satu user), `title`, `file_path`, `file_hash` (CHAR 64, hasil SHA-256 isi file), `is_read` (bawaan false), `created_at`, `updated_at`.
-- [ ] Constraint unik pada pasangan `(user_id, file_hash)` agar satu user tidak punya dua PDF yang sama, dan index pada `user_id` (dokumen 03 bagian 12).
-- [ ] Migration `ebook_status_history` (dokumen 03 bagian 5): `id`, `ebook_id` (kunci asing ke `ebooks.id`), `old_status`, `new_status`, `changed_at`.
+- [x] Migration `ebooks` (dokumen 03 bagian 4): `id`, `user_id` (kunci asing ke `users.id`, yaitu penanda bahwa setiap ebook dimiliki satu user), `title`, `file_path`, `file_hash` (CHAR 64, hasil SHA-256 isi file), `is_read` (bawaan false), `created_at`, `updated_at`.
+- [x] Constraint unik pada pasangan `(user_id, file_hash)` agar satu user tidak punya dua PDF yang sama, dan index pada `user_id` (dokumen 03 bagian 12).
+- [x] Migration `ebook_status_history` (dokumen 03 bagian 5): `id`, `ebook_id` (kunci asing ke `ebooks.id`), `old_status`, `new_status`, `changed_at`.
 
 **Model**
 
-- [ ] Model `Ebook`: `is_read` dibaca sebagai boolean; relasi ke `User` (milik satu user) dan ke riwayat status (punya banyak).
-- [ ] Model `User`: relasi punya banyak `Ebook`.
+- [x] Model `Ebook`: `is_read` dibaca sebagai boolean; relasi ke `User` (milik satu user) dan ke riwayat status (punya banyak).
+- [x] Model `User`: relasi punya banyak `Ebook`.
 
-- [ ] **Selesai jika:** `php artisan migrate:fresh` berhasil dan ketiga tabel beserta kunci asing, index, dan constraint unik terlihat benar di klien MySQL (dokumen 03 dan 04).
+- [x] **Selesai jika:** `php artisan migrate:fresh` berhasil dan ketiga tabel beserta kunci asing, index, dan constraint unik terlihat benar di klien MySQL (dokumen 03 dan 04).
 
 #### C03 · Backend · Objek database: procedure, trigger, function · P0 · 5 Okt
 
