@@ -148,7 +148,7 @@ Membutuhkan: C01.
 **Tabel**
 
 - [x] Migration `ebooks` (dokumen 03 bagian 4): `id`, `user_id` (kunci asing ke `users.id`, yaitu penanda bahwa setiap ebook dimiliki satu user), `title`, `file_path`, `file_hash` (CHAR 64, hasil SHA-256 isi file), `is_read` (bawaan false), `created_at`, `updated_at`.
-- [x] Constraint unik pada pasangan `(user_id, file_hash)` agar satu user tidak punya dua PDF yang sama, dan index pada `user_id` (dokumen 03 bagian 12).
+- [x] Constraint unik pada pasangan `(user_id, file_hash)` agar satu user tidak punya dua PDF yang sama, dan index pada `user_id` (dokumen 03 bagian 12). => karena hal ini fitur delete ebooks dipertimbangkan untuk masuk lebih cepat.
 - [x] Migration `ebook_status_history` (dokumen 03 bagian 5): `id`, `ebook_id` (kunci asing ke `ebooks.id`), `old_status`, `new_status`, `changed_at`.
 
 **Model**
@@ -164,30 +164,30 @@ Membutuhkan: C02.
 
 **Cara pembuatan**
 
-- [ ] Satu migration khusus yang membuat semua objek di bawah memakai `DB::unprepared()` (menjalankan SQL mentah). Migration ini tidak boleh berada di dalam transaksi karena perintah pembuatan objek di MySQL otomatis meng-commit.
+- [x] Satu migration khusus yang membuat semua objek di bawah memakai `DB::unprepared()` (menjalankan SQL mentah). Migration ini tidak boleh berada di dalam transaksi karena perintah pembuatan objek di MySQL otomatis meng-commit.
 
 **Stored procedure** (dokumen 03 bagian 7.1)
 
-- [ ] `sp_mark_ebook_read(user_id, ebook_id)`: memeriksa bahwa ebook milik user (jika bukan, menghasilkan error), lalu mengubah `is_read` menjadi true dan `updated_at` menjadi `NOW()`. `updated_at` harus diisi di sini karena perubahan lewat procedure tidak melewati Eloquent yang biasanya mengisinya.
-- [ ] `sp_mark_ebook_unread(user_id, ebook_id)`: sama, dengan `is_read` menjadi false.
-- [ ] Procedure tidak mengisi tabel riwayat; itu tugas trigger.
+- [x] `sp_mark_ebook_read(user_id, ebook_id)`: memeriksa bahwa ebook milik user (jika bukan, menghasilkan error), lalu mengubah `is_read` menjadi true dan `updated_at` menjadi `NOW()`. `updated_at` harus diisi di sini karena perubahan lewat procedure tidak melewati Eloquent yang biasanya mengisinya.
+- [x] `sp_mark_ebook_unread(user_id, ebook_id)`: sama, dengan `is_read` menjadi false.
+- [x] Procedure tidak mengisi tabel riwayat; itu tugas trigger.
 
 **Trigger** (dokumen 03 bagian 7.2)
 
-- [ ] Trigger `AFTER UPDATE` pada `ebooks`: menambah satu baris ke `ebook_status_history` (`old_status`, `new_status`, `changed_at`) hanya bila `OLD.is_read <> NEW.is_read`.
+- [x] Trigger `AFTER UPDATE` pada `ebooks`: menambah satu baris ke `ebook_status_history` (`old_status`, `new_status`, `changed_at`) hanya bila `OLD.is_read <> NEW.is_read`.
 
 **Function** (dokumen 03 bagian 7.3)
 
-- [ ] `fn_count_read_ebooks(user_id)`: mengembalikan jumlah ebook milik user dengan `is_read` true.
+- [x] `fn_count_read_ebooks(user_id)`: mengembalikan jumlah ebook milik user dengan `is_read` true.
 
 **Pengujian manual di klien MySQL**
 
-- [ ] Memanggil procedure mengubah status dan menambah tepat satu baris riwayat.
-- [ ] Memanggil procedure kedua kali dengan nilai yang sama tidak menambah riwayat.
-- [ ] Memanggil procedure pada ebook milik user lain menghasilkan error.
-- [ ] Function mengembalikan jumlah yang benar.
+- [x] Memanggil procedure mengubah status dan menambah tepat satu baris riwayat.
+- [x] Memanggil procedure kedua kali dengan nilai yang sama tidak menambah riwayat.
+- [x] Memanggil procedure pada ebook milik user lain menghasilkan error.
+- [x] Function mengembalikan jumlah yang benar.
 
-- [ ] **Selesai jika:** keempat objek database teruji manual.
+- [x] **Selesai jika:** keempat objek database teruji manual.
 
 #### C04 · Backend · Autentikasi API · P0 · 5 Okt
 
