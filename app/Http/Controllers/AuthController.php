@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,26 +17,9 @@ class AuthController extends Controller
     return view('register.form');
   }
 
-  public function register(Request $request): RedirectResponse
+  public function register(RegisterRequest $request): RedirectResponse
   {
-    $validated = $request->validate([
-      'name' => ['required', 'string', 'max:100'],
-      'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-      'password' => ['required', 'string', 'min:8', 'confirmed'],
-      'password_confirmation' => ['required', 'string', 'min:8'],
-    ], [
-      'name.required' => 'Nama wajib diisi.',
-      'name.max' => 'Nama maksimal 100 karakter.',
-      'email.required' => 'Email wajib diisi.',
-      'email.email' => 'Format email tidak valid.',
-      'email.max' => 'Email maksimal 255 karakter.',
-      'email.unique' => 'Email sudah digunakan.',
-      'password.required' => 'Password wajib diisi.',
-      'password.min' => 'Password minimal 8 karakter.',
-      'password.confirmed' => 'Konfirmasi password tidak cocok.',
-      'password_confirmation.required' => 'Konfirmasi password wajib diisi.',
-      'password_confirmation.min' => 'Konfirmasi password minimal 8 karakter.',
-    ]);
+    $validated = $request->validated();
 
     User::create([
       'name' => $validated['name'],
