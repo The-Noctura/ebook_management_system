@@ -55,3 +55,23 @@ test('user exposes ebooks relationship', function () {
   expect($user->fresh()->ebooks)->toHaveCount(1)
     ->and($user->fresh()->ebooks->first()->title)->toBe('Another PDF');
 });
+
+test('user can create a Sanctum personal access token', function () {
+  $user = User::create([
+    'name' => 'Token User',
+    'email' => 'token@example.com',
+    'password' => 'secret123',
+  ]);
+
+  $token = $user->createToken('android');
+
+  expect($token->plainTextToken)->not->toBeEmpty()
+    ->and($token->accessToken->name)->toBe('android');
+
+  $this->assertDatabaseHas('personal_access_tokens', [
+    'id' => $token->accessToken->getKey(),
+    'tokenable_type' => User::class,
+    'tokenable_id' => $user->id,
+    'name' => 'android',
+  ]);
+});
