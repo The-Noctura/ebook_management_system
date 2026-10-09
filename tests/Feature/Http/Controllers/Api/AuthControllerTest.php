@@ -6,6 +6,150 @@ use Illuminate\Support\Facades\Hash;
 
 uses(RefreshDatabase::class);
 
+it('logs in and returns a bearer token with public user data', function () {
+  $user = User::query()->create([
+    'name' => 'Noctura',
+    'email' => 'user@example.com',
+    'password' => 'rahasia123',
+  ]);
+
+  $response = $this->postJson('/api/login', [
+    'email' => '  USER@example.com ',
+    'password' => 'rahasia123',
+  ]);
+
+  $token = $response->json('data.token');
+
+  $response
+    ->assertOk()
+    ->assertExactJson([
+      'data' => [
+        'token' => $token,
+        'token_type' => 'Bearer',
+        'user' => [
+          'id' => $user->id,
+          'name' => 'Noctura',
+          'email' => 'user@example.com',
+        ],
+      ],
+    ]);
+
+  $this->assertDatabaseHas('personal_access_tokens', [
+    'tokenable_id' => $user->id,
+    'name' => 'android',
+  ]);
+
+  $this->withToken($token)
+    ->getJson('/api/user')
+    ->assertOk()
+    ->assertJsonPath('id', $user->id);
+});
+
+it('uses the supplied device name for the personal access token', function () {
+  $user = User::query()->create([
+    'name' => 'Noctura',
+    'email' => 'user@example.com',
+    'password' => 'rahasia123',
+  ]);
+
+  $this->postJson('/api/login', [
+    'email' => 'user@example.com',
+    'password' => 'rahasia123',
+    'device_name' => 'android-pixel',
+  ])->assertOk();
+
+  $this->assertDatabaseHas('personal_access_tokens', [
+    'tokenable_id' => $user->id,
+    'name' => 'android-pixel',
+  ]);
+});
+
+it('returns the same generic error for invalid login credentials', function () {
+  User::query()->create([
+    'name' => 'Noctura',
+    'email' => 'user@example.com',
+    'password' => 'rahasia123',
+  ]);
+
+  $wrongPasswordResponse = $this->postJson('/api/login', [
+    'email' => 'user@example.com',
+    'password' => 'wrong-password',
+  ]);
+
+  $wrongPasswordResponse
+    ->assertUnauthorized()
+    ->assertExactJson([
+      'message' => 'Email atau password salah.',
+      'code' => 'invalid_credentials',
+    ]);
+
+  $unknownEmailResponse = $this->postJson('/api/login', [
+    'email' => 'unknown@example.com',
+    'password' => 'wrong-password',
+  ]);
+
+  $unknownEmailResponse
+    ->assertUnauthorized()
+    ->assertExactJson($wrongPasswordResponse->json());
+
+  $this->assertDatabaseCount('personal_access_tokens', 0);
+});
+
+it('validates required login fields and device name', function () {
+  $response = $this->postJson('/api/login', []);
+
+  $response
+    ->assertUnprocessable()
+    ->assertJsonValidationErrors(['email', 'password']);
+
+  $invalidDeviceNameResponse = $this->postJson('/api/login', [
+    'email' => 'user@example.com',
+    'password' => 'rahasia123',
+    'device_name' => str_repeat('d', 256),
+  ]);
+
+  $invalidDeviceNameResponse
+    ->assertUnprocessable()
+    ->assertJsonValidationErrors(['device_name']);
+
+  $this->assertDatabaseCount('personal_access_tokens', 0);
+});
+
+it('limits login attempts to five per normalized email and ip address', function () {
+  $credentials = [
+    'email' => 'user@example.com',
+    'password' => 'wrong-password',
+  ];
+
+  for ($attempt = 0; $attempt < 5; $attempt++) {
+    $this->withServerVariables(['REMOTE_ADDR' => '192.0.2.10'])
+      ->postJson('/api/login', $credentials)
+      ->assertUnauthorized();
+  }
+
+  $this->withServerVariables(['REMOTE_ADDR' => '192.0.2.10'])
+    ->postJson('/api/login', [
+      'email' => 'another@example.com',
+      'password' => 'wrong-password',
+    ])
+    ->assertUnauthorized();
+
+  $this->withServerVariables(['REMOTE_ADDR' => '192.0.2.11'])
+    ->postJson('/api/login', $credentials)
+    ->assertUnauthorized();
+
+  $this->withServerVariables(['REMOTE_ADDR' => '192.0.2.10'])
+    ->postJson('/api/login', [
+      'email' => '  USER@example.com ',
+      'password' => 'wrong-password',
+    ])
+    ->assertTooManyRequests()
+    ->assertExactJson([
+      'message' => 'Terlalu banyak percobaan login. Silakan coba lagi nanti.',
+      'code' => 'too_many_attempts',
+    ]);
+});
+
 it('registers a user and returns only public account data', function () {
   $response = $this->postJson('/api/register', [
     'name' => 'Noctura',
