@@ -229,6 +229,25 @@ it('returns 422 when a registration field violates its rules', function (array $
   'password confirmation must match' => [['password_confirmation' => 'different123'], 'password'],
 ]);
 
+it('logs the user out and revokes the active token', function () {
+  $user = User::query()->create([
+    'name' => 'Noctura',
+    'email' => 'user@example.com',
+    'password' => 'rahasia123',
+  ]);
+
+  $token = $user->createToken('android')->plainTextToken;
+
+  $this->withToken($token)
+    ->postJson('/api/logout')
+    ->assertOk()
+    ->assertExactJson([
+      'message' => 'Logout berhasil.',
+    ]);
+
+  $this->assertDatabaseCount('personal_access_tokens', 0);
+});
+
 it('returns 422 when the email is already registered', function () {
   User::query()->create([
     'name' => 'Existing User',

@@ -48,6 +48,19 @@ class AuthController extends Controller
     ]);
   }
 
+  public function logout(Request $request): JsonResponse
+  {
+    $user = $request->user();
+
+    if ($user) {
+      $user->tokens()->delete();
+    }
+
+    return response()->json([
+      'message' => 'Logout berhasil.',
+    ]);
+  }
+
   public function register(Request $request): JsonResponse
   {
     if (is_string($request->input('email'))) {
