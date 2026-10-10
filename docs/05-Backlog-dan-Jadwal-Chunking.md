@@ -17,12 +17,31 @@
 Dokumen ini adalah **daftar hal yang harus ada**, bukan daftar perintah. Setiap pekerjaan berisi apa yang perlu dibuat, dikelompokkan per topik. Cara mengerjakannya, urutan di dalam pekerjaan, dan lamanya diserahkan kepada Anda.
 
 - **Kode pekerjaan** (C01 sampai C26) hanyalah nama pekerjaan. Kode ini juga dipakai pada Log Perubahan Rancangan (bagian 9).
-- **Tanda platform** pada judul: **Backend** (Laravel dan MySQL, dipakai bersama oleh Web dan Android), **Web** (Laravel Blade), **Android** (Kotlin), atau **Uji** (pengujian lintas bagian).
+- **Tempat kerja.** Setiap pekerjaan punya baris **Dikerjakan di**, dan setiap butir diawali tanda dalam kurung siku, misalnya **[Laravel API]**, yang menyebut butir itu dikerjakan di mana. Bila suatu pekerjaan tidak memuat tanda **[Android]**, pekerjaan itu tidak menyentuh Android. Bila tidak memuat tanda Laravel, pekerjaan itu tidak mengubah Laravel. Arti setiap tanda ada di tabel di bawah.
 - **Membutuhkan** menyebut pekerjaan yang harus selesai lebih dulu.
 - **Selesai jika** adalah satu-satunya tolok ukur selesai.
 - **Kotak centang** (`[ ]` belum, `[x]` sudah) ada di setiap butir pekerjaan dan di daftar status pada awal bagian 4. Centang butir saat selesai; centang kotak **Selesai jika** hanya setelah syaratnya terbukti, lalu centang pekerjaan itu di daftar status.
 - Setiap rujukan "dokumen X bagian Y" menunjuk bagian dokumen perancangan yang menjadi sumber detailnya. Bila ada pertentangan, dokumen 00 (Project Overview) dan 01 (Use Case) menjadi acuan utama, dan dokumen 05 yang disesuaikan. Bila saat membangun ditemukan hal yang bertentangan dengan dokumen 00-04, perbarui dokumen terkait lalu catat di bagian 9.
 - Ide atau bug baru yang muncul di tengah jalan dicatat di Parkir (bagian 8), tidak dikerjakan saat itu.
+
+### Tanda tempat kerja
+
+Empat tanda pertama adalah tempat **menulis kode**. Tanda sisanya adalah alat atau tempat untuk **menjalankan, menguji, atau mengatur**.
+
+| Tanda               | Artinya                                                                                                                                                                                     |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Laravel Backend** | Bagian proyek Laravel yang dipakai bersama oleh Web dan API: file `.env`, migration (file pembuat tabel), model, `EbookService`, dan objek MySQL (procedure, trigger, function). Tidak punya halaman dan tidak punya alamat `/api`. |
+| **Laravel API**     | Bagian proyek Laravel yang melayani Android dan Postman lewat alamat `/api/...` dengan jawaban JSON dan token Sanctum: route API, controller API, `EbookResource`.                           |
+| **Laravel Web**     | Bagian proyek Laravel yang melayani browser: route web, controller web, view Blade (file tampilan), dan sesi login.                                                                         |
+| **Android**         | Proyek Kotlin di Android Studio. Tidak ada kode Laravel di sini.                                                                                                                            |
+| Terminal            | Perintah (`php artisan`, `composer`, `git`) yang dijalankan di folder proyek Laravel.                                                                                                       |
+| Klien MySQL         | Aplikasi yang Anda pakai untuk membuka database MySQL dan menjalankan SQL secara manual.                                                                                                    |
+| Postman             | Aplikasi untuk mengirim request ke API dan melihat jawabannya.                                                                                                                              |
+| Browser             | Browser di komputer untuk memakai halaman Web.                                                                                                                                              |
+| HP fisik            | HP Android yang dipakai menjalankan aplikasi Android.                                                                                                                                       |
+| Cloudflare          | Dashboard web Cloudflare (untuk bucket R2).                                                                                                                                                 |
+| php.ini             | File pengaturan PHP di komputer, bukan bagian proyek Laravel.                                                                                                                               |
+| Dokumen             | Menulis keputusan, wireframe, atau README, atau memperbarui dokumen perancangan.                                                                                                            |
 
 ---
 
@@ -68,240 +87,273 @@ Hari yang pekerjaannya selesai lebih cepat dapat menarik pekerjaan hari berikutn
 
 Centang pekerjaan di sini setelah kotak **Selesai jika**-nya tercentang.
 
-- [ ] C01 · Web · Setup, register, login, logout (4 Okt)
-- [ ] C02 · Backend · Tabel ebook dan model (4 Okt)
-- [ ] C03 · Backend · Objek database: procedure, trigger, function (5 Okt)
-- [ ] C04 · Backend · Autentikasi API (5 Okt)
-- [ ] C05 · Backend · Layanan penyimpanan ebook (5 Okt)
-- [ ] C06 · Backend · Layanan ubah status dan akses file (5 Okt)
-- [ ] C07 · Backend · API daftar dan ubah status (6 Okt)
-- [ ] C08 · Backend · API upload dan unduh (6 Okt)
-- [ ] C09 · Uji · Pengujian API menyeluruh (6 Okt)
-- [ ] C10 · Web · Daftar koleksi dan ubah status (6 Okt)
-- [ ] C11 · Web · Upload dan buka PDF (7 Okt)
+- [ ] C01 · Laravel Web · Setup, register, login, logout (4 Okt)
+- [ ] C02 · Laravel Backend · Tabel ebook dan model (4 Okt)
+- [ ] C03 · Laravel Backend · Objek database: procedure, trigger, function (5 Okt)
+- [ ] C04 · Laravel Backend dan Laravel API · Autentikasi API (5 Okt)
+- [ ] C05 · Laravel Backend · Layanan penyimpanan ebook (5 Okt)
+- [ ] C06 · Laravel Backend · Layanan ubah status dan akses file (5 Okt)
+- [ ] C07 · Laravel API · API daftar dan ubah status (6 Okt)
+- [ ] C08 · Laravel API · API upload dan unduh (6 Okt)
+- [ ] C09 · Uji di Postman · Pengujian API menyeluruh (6 Okt)
+- [ ] C10 · Laravel Web · Daftar koleksi dan ubah status (6 Okt)
+- [ ] C11 · Laravel Web · Upload dan buka PDF (7 Okt)
 - [ ] C12 · Android · Setup proyek dan koneksi ke backend (7 Okt)
 - [ ] C13 · Android · Login dan register (7 Okt)
 - [ ] C14 · Android · Daftar koleksi (8 Okt)
 - [ ] C15 · Android · Ubah status baca (8 Okt)
 - [ ] C16 · Android · Pemilih file (8 Okt)
 - [ ] C17 · Android · Upload multipart (8 Okt)
-- [ ] C18 · Uji · Pengujian upload end-to-end (9 Okt)
+- [ ] C18 · Uji di Browser dan HP fisik · Pengujian upload end-to-end (9 Okt)
 - [ ] C19 · Android · Unduh PDF (9 Okt)
 - [ ] C20 · Android · Penampil PDF (9 Okt)
-- [ ] C21 · Backend · Setup Cloudflare R2 (9 Okt)
-- [ ] C22 · Backend · Pindah ke R2 (10 Okt)
+- [ ] C21 · Laravel Backend dan Cloudflare · Setup Cloudflare R2 (9 Okt)
+- [ ] C22 · Laravel Backend dan Cloudflare · Pindah ke R2 (10 Okt)
 - [ ] C23 · Android · Akses offline, logout, dan penanganan 401 (10 Okt)
-- [ ] C24 · Uji · Pengujian lintas platform dan pesan error (10 Okt)
-- [ ] C25 · Uji · Pengujian end-to-end Web dan Android (10 Okt)
-- [ ] C26 · Backend · Regresi dan finalisasi (11 Okt)
+- [ ] C24 · Laravel Web, Laravel API, dan Android · Pengujian lintas platform dan pesan error (10 Okt)
+- [ ] C25 · Uji di Browser dan HP fisik · Pengujian end-to-end Web dan Android (10 Okt)
+- [ ] C26 · Regresi dan finalisasi (11 Okt)
 
 ### Epic A: Dasar Backend (P0)
 
-#### C01 · Web · Setup, register, login, logout · P0 · 4 Okt
+#### C01 · Laravel Web · Setup, register, login, logout · P0 · 4 Okt
+
+**Dikerjakan di:** Terminal, Klien MySQL, Laravel Backend (hanya setup dan tabel `users`), Laravel Web, Browser. Android dan Laravel API tidak terlibat.
 
 **Setup**
 
-- [x] Proyek Laravel baru.
-- [x] Database MySQL kosong, lalu isi koneksinya di file `.env` (file pengaturan Laravel).
-- [x] Tiga pengaturan di `.env` (`SESSION_DRIVER=file`, `CACHE_STORE=file`, `QUEUE_CONNECTION=sync`) agar sesi, cache, dan antrean tidak membutuhkan tabel di database.
-- [x] Hapus bawaan Laravel yang tidak dipakai: tabel `password_reset_tokens`, `sessions`, cache, dan jobs, serta kolom `email_verified_at` dan `remember_token` di tabel `users`.
-- [x] Migration (file pembuat tabel) `users` sesuai dokumen 03 bagian 3: `name` (maks 100 karakter), `email` unik, `password`, `created_at`, `updated_at`.
-- [x] Satu layout Blade (kerangka halaman yang dipakai bersama) dengan CSS biasa, tanpa Tailwind, Vite, atau Node.js.
-- [x] File `AuthController` (satu file yang menampung logika register, login, dan logout).
+- [x] **[Terminal]** Proyek Laravel baru.
+- [x] **[Klien MySQL]** Database MySQL kosong.
+- [x] **[Laravel Backend]** Isi koneksi database di file `.env` (file pengaturan Laravel).
+- [x] **[Laravel Backend]** Tiga pengaturan di `.env` (`SESSION_DRIVER=file`, `CACHE_STORE=file`, `QUEUE_CONNECTION=sync`) agar sesi, cache, dan antrean tidak membutuhkan tabel di database.
+- [x] **[Laravel Backend]** Hapus bawaan Laravel yang tidak dipakai: tabel `password_reset_tokens`, `sessions`, cache, dan jobs, serta kolom `email_verified_at` dan `remember_token` di tabel `users`.
+- [x] **[Laravel Backend]** Migration (file pembuat tabel) `users` sesuai dokumen 03 bagian 3: `name` (maks 100 karakter), `email` unik, `password`, `created_at`, `updated_at`.
+- [x] **[Laravel Web]** Satu layout Blade (kerangka halaman yang dipakai bersama) dengan CSS biasa, tanpa Tailwind, Vite, atau Node.js.
+- [x] **[Laravel Web]** File `AuthController` untuk Web (satu file yang menampung logika register, login, dan logout halaman Web).
 
 **Register**
 
-- [x] Dua route (alamat halaman): `GET /register` untuk menampilkan form, `POST /register` untuk memproses form.
-- [x] Satu view (file tampilan) berisi form dengan kolom nama, email, password, konfirmasi password, tombol daftar, dan tautan ke halaman login.
-- [x] Method di `AuthController` yang menampilkan form.
-- [x] Method di `AuthController` yang memeriksa isian: nama wajib diisi dan maksimal 100 karakter; email wajib diisi, berformat email, maksimal 255 karakter, dan belum dipakai akun lain; password wajib diisi, minimal 8 karakter, dan sama dengan konfirmasinya (dokumen 04 bagian 5.1).
-- [x] Penyimpanan user baru ke tabel `users`, dengan password di-hash (diacak satu arah sehingga tidak tersimpan sebagai teks asli).
-- [x] Jika berhasil: arahkan ke halaman login dengan pesan sukses (dokumen 02 bagian 5.1: akun dibuat, lalu login).
-- [x] Jika gagal: kembali ke form, tampilkan pesan error berbahasa Indonesia, dan isian nama serta email tetap terisi.
+- [x] **[Laravel Web]** Dua route (alamat halaman): `GET /register` untuk menampilkan form, `POST /register` untuk memproses form.
+- [x] **[Laravel Web]** Satu view (file tampilan) berisi form dengan kolom nama, email, password, konfirmasi password, tombol daftar, dan tautan ke halaman login.
+- [x] **[Laravel Web]** Method di `AuthController` yang menampilkan form.
+- [x] **[Laravel Web]** Method di `AuthController` yang memeriksa isian: nama wajib diisi dan maksimal 100 karakter; email wajib diisi, berformat email, maksimal 255 karakter, dan belum dipakai akun lain; password wajib diisi, minimal 8 karakter, dan sama dengan konfirmasinya (dokumen 04 bagian 5.1).
+- [x] **[Laravel Web]** Penyimpanan user baru ke tabel `users`, dengan password di-hash (diacak satu arah sehingga tidak tersimpan sebagai teks asli).
+- [x] **[Laravel Web]** Jika berhasil: arahkan ke halaman login dengan pesan sukses (dokumen 02 bagian 5.1: akun dibuat, lalu login).
+- [x] **[Laravel Web]** Jika gagal: kembali ke form, tampilkan pesan error berbahasa Indonesia, dan isian nama serta email tetap terisi.
 
 **Login**
 
-- [x] Dua route: `GET /login` dan `POST /login`.
-- [x] Satu view berisi form email, password, dan tombol masuk.
-- [x] Method yang menampilkan form, dan method yang memeriksa bahwa email dan password terisi.
-- [x] Pencocokan email dan password dengan tabel `users`. Di Laravel ini dilakukan oleh `Auth::attempt`, yaitu fungsi yang membandingkan isian dengan data user dan, bila cocok, membuat sesi login.
-- [x] Jika cocok: buat ulang ID sesi (mencegah pembajakan sesi), lalu arahkan ke `/ebooks`.
-- [x] Jika tidak cocok: kembali ke form dengan pesan "Email atau password salah" (tidak membedakan mana yang salah).
-- [x] Batas 5 percobaan per menit pada `POST /login`.
-- [x] Halaman `/ebooks` sementara yang hanya menampilkan nama user dan hanya bisa dibuka setelah login. Jika belum login, user diarahkan ke halaman login. Halaman ini diganti pada C10.
+- [x] **[Laravel Web]** Dua route: `GET /login` dan `POST /login`.
+- [x] **[Laravel Web]** Satu view berisi form email, password, dan tombol masuk.
+- [x] **[Laravel Web]** Method yang menampilkan form, dan method yang memeriksa bahwa email dan password terisi.
+- [x] **[Laravel Web]** Pencocokan email dan password dengan tabel `users`. Di Laravel ini dilakukan oleh `Auth::attempt`, yaitu fungsi yang membandingkan isian dengan data user dan, bila cocok, membuat sesi login.
+- [x] **[Laravel Web]** Jika cocok: buat ulang ID sesi (mencegah pembajakan sesi), lalu arahkan ke `/ebooks`.
+- [x] **[Laravel Web]** Jika tidak cocok: kembali ke form dengan pesan "Email atau password salah" (tidak membedakan mana yang salah).
+- [x] **[Laravel Web]** Batas 5 percobaan per menit pada `POST /login`.
+- [x] **[Laravel Web]** Halaman `/ebooks` sementara yang hanya menampilkan nama user dan hanya bisa dibuka setelah login. Jika belum login, user diarahkan ke halaman login. Halaman ini diganti pada C10.
 
 **Logout**
 
-- [x] Route `POST /logout` dan tombol logout di `/ebooks`.
-- [x] Akhiri sesi, buat ulang token CSRF (kode pengaman form), lalu kembali ke login.
+- [x] **[Laravel Web]** Route `POST /logout` dan tombol logout di `/ebooks`.
+- [x] **[Laravel Web]** Akhiri sesi, buat ulang token CSRF (kode pengaman form), lalu kembali ke login.
 
 **Penutup**
 
-- [x] Inisialisasi Git dan commit pertama.
+- [x] **[Terminal]** Inisialisasi Git dan commit pertama.
 
-- [x] **Selesai jika:** register, login, dan logout berjalan di browser; tabel `users` sesuai dokumen 03 bagian 3 tanpa kolom atau tabel bawaan yang tidak dipakai.
+- [x] **Selesai jika:** **[Browser]** register, login, dan logout berjalan; **[Klien MySQL]** tabel `users` sesuai dokumen 03 bagian 3 tanpa kolom atau tabel bawaan yang tidak dipakai.
 
-#### C02 · Backend · Tabel ebook dan model · P0 · 4 Okt
+#### C02 · Laravel Backend · Tabel ebook dan model · P0 · 4 Okt
 
 Membutuhkan: C01.
+
+**Dikerjakan di:** Laravel Backend, Terminal, Klien MySQL. Android, Laravel API, dan Laravel Web tidak terlibat.
 
 **Tabel**
 
-- [x] Migration `ebooks` (dokumen 03 bagian 4): `id`, `user_id` (kunci asing ke `users.id`, yaitu penanda bahwa setiap ebook dimiliki satu user), `title`, `file_path`, `file_hash` (CHAR 64, hasil SHA-256 isi file), `is_read` (bawaan false), `created_at`, `updated_at`.
-- [x] Constraint unik pada pasangan `(user_id, file_hash)` agar satu user tidak punya dua PDF yang sama, dan index pada `user_id` (dokumen 03 bagian 12). => karena hal ini fitur delete ebooks dipertimbangkan untuk masuk lebih cepat.
-- [x] Migration `ebook_status_history` (dokumen 03 bagian 5): `id`, `ebook_id` (kunci asing ke `ebooks.id`), `old_status`, `new_status`, `changed_at`.
+- [x] **[Laravel Backend]** Migration `ebooks` (dokumen 03 bagian 4): `id`, `user_id` (kunci asing ke `users.id`, yaitu penanda bahwa setiap ebook dimiliki satu user), `title`, `file_path`, `file_hash` (CHAR 64, hasil SHA-256 isi file), `is_read` (bawaan false), `created_at`, `updated_at`.
+- [x] **[Laravel Backend]** Constraint unik pada pasangan `(user_id, file_hash)` agar satu user tidak punya dua PDF yang sama, dan index pada `user_id` (dokumen 03 bagian 12). => karena hal ini fitur delete ebooks dipertimbangkan untuk masuk lebih cepat.
+- [x] **[Laravel Backend]** Migration `ebook_status_history` (dokumen 03 bagian 5): `id`, `ebook_id` (kunci asing ke `ebooks.id`), `old_status`, `new_status`, `changed_at`.
 
 **Model**
 
-- [x] Model `Ebook`: `is_read` dibaca sebagai boolean; relasi ke `User` (milik satu user) dan ke riwayat status (punya banyak).
-- [x] Model `User`: relasi punya banyak `Ebook`.
+- [x] **[Laravel Backend]** Model `Ebook`: `is_read` dibaca sebagai boolean; relasi ke `User` (milik satu user) dan ke riwayat status (punya banyak).
+- [x] **[Laravel Backend]** Model `User`: relasi punya banyak `Ebook`.
 
-- [x] **Selesai jika:** `php artisan migrate:fresh` berhasil dan ketiga tabel beserta kunci asing, index, dan constraint unik terlihat benar di klien MySQL (dokumen 03 dan 04).
+- [x] **Selesai jika:** **[Terminal]** `php artisan migrate:fresh` berhasil dan **[Klien MySQL]** ketiga tabel beserta kunci asing, index, dan constraint unik terlihat benar (dokumen 03 dan 04).
 
-#### C03 · Backend · Objek database: procedure, trigger, function · P0 · 5 Okt
+#### C03 · Laravel Backend · Objek database: procedure, trigger, function · P0 · 5 Okt
 
 Membutuhkan: C02.
+
+**Dikerjakan di:** Laravel Backend (menulis migration), Terminal, Klien MySQL (menguji). Android, Laravel API, dan Laravel Web tidak terlibat.
 
 **Cara pembuatan**
 
-- [x] Satu migration khusus yang membuat semua objek di bawah memakai `DB::unprepared()` (menjalankan SQL mentah). Migration ini tidak boleh berada di dalam transaksi karena perintah pembuatan objek di MySQL otomatis meng-commit.
+- [x] **[Laravel Backend]** Satu migration khusus yang membuat semua objek di bawah memakai `DB::unprepared()` (menjalankan SQL mentah). Migration ini tidak boleh berada di dalam transaksi karena perintah pembuatan objek di MySQL otomatis meng-commit.
 
 **Stored procedure** (dokumen 03 bagian 7.1)
 
-- [x] `sp_mark_ebook_read(user_id, ebook_id)`: memeriksa bahwa ebook milik user (jika bukan, menghasilkan error), lalu mengubah `is_read` menjadi true dan `updated_at` menjadi `NOW()`. `updated_at` harus diisi di sini karena perubahan lewat procedure tidak melewati Eloquent yang biasanya mengisinya.
-- [x] `sp_mark_ebook_unread(user_id, ebook_id)`: sama, dengan `is_read` menjadi false.
-- [x] Procedure tidak mengisi tabel riwayat; itu tugas trigger.
+- [x] **[Laravel Backend]** `sp_mark_ebook_read(user_id, ebook_id)`: memeriksa bahwa ebook milik user (jika bukan, menghasilkan error), lalu mengubah `is_read` menjadi true dan `updated_at` menjadi `NOW()`. `updated_at` harus diisi di sini karena perubahan lewat procedure tidak melewati Eloquent yang biasanya mengisinya.
+- [x] **[Laravel Backend]** `sp_mark_ebook_unread(user_id, ebook_id)`: sama, dengan `is_read` menjadi false.
+- [x] **[Laravel Backend]** Procedure tidak mengisi tabel riwayat; itu tugas trigger.
 
 **Trigger** (dokumen 03 bagian 7.2)
 
-- [x] Trigger `AFTER UPDATE` pada `ebooks`: menambah satu baris ke `ebook_status_history` (`old_status`, `new_status`, `changed_at`) hanya bila `OLD.is_read <> NEW.is_read`.
+- [x] **[Laravel Backend]** Trigger `AFTER UPDATE` pada `ebooks`: menambah satu baris ke `ebook_status_history` (`old_status`, `new_status`, `changed_at`) hanya bila `OLD.is_read <> NEW.is_read`.
 
 **Function** (dokumen 03 bagian 7.3)
 
-- [x] `fn_count_read_ebooks(user_id)`: mengembalikan jumlah ebook milik user dengan `is_read` true.
+- [x] **[Laravel Backend]** `fn_count_read_ebooks(user_id)`: mengembalikan jumlah ebook milik user dengan `is_read` true.
 
-**Pengujian manual di klien MySQL**
+**Pengujian manual**
 
-- [x] Memanggil procedure mengubah status dan menambah tepat satu baris riwayat.
-- [x] Memanggil procedure kedua kali dengan nilai yang sama tidak menambah riwayat.
-- [x] Memanggil procedure pada ebook milik user lain menghasilkan error.
-- [x] Function mengembalikan jumlah yang benar.
+- [x] **[Klien MySQL]** Memanggil procedure mengubah status dan menambah tepat satu baris riwayat.
+- [x] **[Klien MySQL]** Memanggil procedure kedua kali dengan nilai yang sama tidak menambah riwayat.
+- [x] **[Klien MySQL]** Memanggil procedure pada ebook milik user lain menghasilkan error.
+- [x] **[Klien MySQL]** Function mengembalikan jumlah yang benar.
 
 - [x] **Selesai jika:** keempat objek database teruji manual.
 
-#### C04 · Backend · Autentikasi API · P0 · 5 Okt
+#### C04 · Laravel Backend dan Laravel API · Autentikasi API · P0 · 5 Okt
 
 Membutuhkan: C01.
 
-- [x] Sanctum (paket token bawaan Laravel untuk API) terpasang dengan `php artisan install:api`; `HasApiTokens` ditambahkan pada model `User`.
-- [x] `POST /api/register`: aturan isian sama dengan register Web; respons 201 berisi `id`, `name`, `email`, **tanpa token** (dokumen 04 bagian 5.1).
-- [x] `POST /api/login`: menerima `email`, `password`, dan `device_name` (opsional, bawaan "android"); respons 200 berisi `token`, `token_type` "Bearer", dan data user (dokumen 04 bagian 5.2).
-- [x] `POST /api/login` memberi 401 `invalid_credentials` bila salah, 422 bila isian kurang, dan 429 `too_many_attempts` bila lebih dari 5 percobaan per menit.
-- [x] `POST /api/logout`: mencabut token yang dipakai pada request tersebut; respons 200 dengan pesan "Logout berhasil." (dokumen 04 bagian 5.3).
-- [ ] Format error mengikuti dokumen 04 bagian 3.4; semua request memakai header `Accept: application/json`.
-- [ ] Pengujian di Postman (aplikasi untuk mencoba API).
+**Dikerjakan di:** Terminal, Laravel Backend (hanya model `User`), Laravel API, Postman. **Android tidak terlibat.** Aplikasi Android baru memakai endpoint ini pada C13 (pekerjaan login dan register Android). Laravel Web tidak diubah.
 
-- [ ] **Selesai jika:** register, login, dan logout lulus; token yang sudah di-logout ditolak dengan 401.
+**Pemasangan**
 
-#### C05 · Backend · Layanan penyimpanan ebook · P0 · 5 Okt
+- [x] **[Terminal]** Pasang Sanctum (paket token bawaan Laravel untuk API) dengan `php artisan install:api`.
+- [x] **[Laravel Backend]** Tambahkan `HasApiTokens` pada model `User`.
+
+**Endpoint**
+
+- [x] **[Laravel API]** `POST /api/register`: aturan isian sama dengan register Web; respons 201 berisi `id`, `name`, `email`, **tanpa token** (dokumen 04 bagian 5.1).
+- [x] **[Laravel API]** `POST /api/login`: menerima `email`, `password`, dan `device_name` (opsional, bawaan "android"); respons 200 berisi `token`, `token_type` "Bearer", dan data user (dokumen 04 bagian 5.2).
+- [x] **[Laravel API]** `POST /api/login` memberi 401 `invalid_credentials` bila salah, 422 bila isian kurang, dan 429 `too_many_attempts` bila lebih dari 5 percobaan per menit.
+- [x] **[Laravel API]** `POST /api/logout`: mencabut token yang dipakai pada request tersebut; respons 200 dengan pesan "Logout berhasil." (dokumen 04 bagian 5.3).
+- [ ] **[Laravel API]** Jawaban error ditulis dalam format dokumen 04 bagian 3.4.
+
+**Pengujian**
+
+- [ ] **[Postman]** Setiap request diberi header `Accept: application/json`. Header ini **dikirim oleh pihak yang memanggil API** (di sini Postman, nanti Android pada C13), bukan oleh Laravel; tanpa header ini Laravel dapat menjawab dengan halaman HTML, bukan JSON (dokumen 04 bagian 3.1).
+- [ ] **[Postman]** Uji register, login, dan logout.
+
+- [ ] **Selesai jika:** **[Postman]** register, login, dan logout lulus; token yang sudah di-logout ditolak dengan 401.
+
+#### C05 · Laravel Backend · Layanan penyimpanan ebook · P0 · 5 Okt
 
 Membutuhkan: C02.
 
-- [ ] File `app/Services/EbookService.php`: satu kelas yang dipakai bersama oleh Web dan API agar logika tidak ditulis dua kali (dokumen 04 bagian 8).
-- [ ] Pengaturan disk penyimpanan dari `.env` (`EBOOK_DISK`, bawaan `local`), sehingga pindah ke Cloudflare R2 nanti hanya perubahan pengaturan.
-- Method `store` (dokumen 04 bagian 5.5):
+**Dikerjakan di:** Laravel Backend, Terminal. Android, Laravel API, dan Laravel Web tidak terlibat; Web dan API baru memanggil layanan ini pada C07, C08, dan C11.
+
+- [ ] **[Laravel Backend]** File `app/Services/EbookService.php`: satu kelas yang dipakai bersama oleh Web dan API agar logika tidak ditulis dua kali (dokumen 04 bagian 8).
+- [ ] **[Laravel Backend]** Pengaturan disk penyimpanan dari `.env` (`EBOOK_DISK`, bawaan `local`), sehingga pindah ke Cloudflare R2 nanti hanya perubahan pengaturan.
+- **[Laravel Backend]** Method `store` (dokumen 04 bagian 5.5):
     - [ ] menghitung SHA-256 isi file (`hash_file`);
     - [ ] memeriksa apakah user sudah punya file dengan hash sama; jika ya, melempar `DuplicateEbookException` yang membawa `existing_id`;
     - [ ] menyimpan file ke kunci `ebooks/user-{id}/{uuid}.pdf`;
     - [ ] menyimpan baris `ebooks` di dalam `DB::transaction`; judul diambil dari nama file tanpa ekstensi bila kosong;
     - [ ] bila penyimpanan baris gagal: ROLLBACK, lalu hapus file yang tadi disimpan (compensating action, yaitu langkah pembalik yang dijalankan Laravel karena ROLLBACK tidak mengurus file); bila penghapusan file gagal, catat `file_path` ke log;
     - [ ] kegagalan _duplicate key_ dari constraint unik (misalnya dua upload bersamaan) diperlakukan sebagai duplikat: file dihapus dan hasilnya sama dengan duplikat.
-- [ ] Pengujian lewat `php artisan tinker` (konsol interaktif Laravel): berhasil, duplikat, dan kegagalan buatan.
+- [ ] **[Terminal]** Pengujian lewat `php artisan tinker` (konsol interaktif Laravel): berhasil, duplikat, dan kegagalan buatan.
 
 - [ ] **Selesai jika:** ebook tersimpan (file dan baris), duplikat ditolak, dan kegagalan penyimpanan baris tidak meninggalkan file yatim.
 
-#### C06 · Backend · Layanan ubah status dan akses file · P0 · 5 Okt
+#### C06 · Laravel Backend · Layanan ubah status dan akses file · P0 · 5 Okt
 
 Membutuhkan: C03, C05.
 
-- Method `setReadStatus` pada `EbookService` (dokumen 04 bagian 5.7):
+**Dikerjakan di:** Laravel Backend, Terminal. Android, Laravel API, dan Laravel Web tidak terlibat.
+
+- **[Laravel Backend]** Method `setReadStatus` pada `EbookService` (dokumen 04 bagian 5.7):
     - [ ] mencari ebook milik user; bila tidak ada, `ModelNotFoundException`;
     - [ ] bersifat idempotent: bila status sudah sama dengan yang diminta, procedure tidak dipanggil dan keadaan terkini dikembalikan;
     - [ ] bila berbeda, memanggil `sp_mark_ebook_read` atau `sp_mark_ebook_unread` di dalam `DB::transaction`.
-- [ ] Pengujian ROLLBACK: error dipaksa di dalam transaksi, lalu status dan riwayat sama-sama tidak berubah.
-- [ ] Method `streamFile` (dokumen 04 bagian 5.6): memeriksa kepemilikan; memeriksa file ada di disk (bila tidak, exception `file_missing`); mengembalikan stream PDF dengan `Content-Disposition: inline`.
-- [ ] Pengujian lewat `tinker`.
+- [ ] **[Terminal]** Pengujian ROLLBACK lewat `tinker`: error dipaksa di dalam transaksi, lalu status dan riwayat sama-sama tidak berubah.
+- [ ] **[Laravel Backend]** Method `streamFile` (dokumen 04 bagian 5.6): memeriksa kepemilikan; memeriksa file ada di disk (bila tidak, exception `file_missing`); mengembalikan stream PDF dengan `Content-Disposition: inline`.
+- [ ] **[Terminal]** Pengujian `streamFile` lewat `tinker`.
 
 - [ ] **Selesai jika:** COMMIT dan ROLLBACK terbukti benar pada perubahan status, dan akses file hanya untuk pemiliknya.
 
 ### Epic B: Ebook API (P0)
 
-#### C07 · Backend · API daftar dan ubah status · P0 · 6 Okt
+#### C07 · Laravel API · API daftar dan ubah status · P0 · 6 Okt
 
 Membutuhkan: C04, C06.
 
-- [ ] `EbookResource` (bentuk data ebook yang dikirim ke klien): `id`, `title`, `is_read`, `created_at`, `updated_at`; tanpa `user_id`, `file_path`, `file_hash` (dokumen 04 bagian 4).
-- [ ] `GET /api/ebooks`: ebook milik user, urut `created_at` menurun, tanpa pagination; `meta.total` dan `meta.read_count` (dari `fn_count_read_ebooks`); koleksi kosong menghasilkan `data: []` dengan nilai 0 (dokumen 04 bagian 5.4).
-- [ ] `PATCH /api/ebooks/{id}`: `is_read` wajib boolean, memanggil `setReadStatus`, respons 200 berisi data terkini (dokumen 04 bagian 5.7).
-- [ ] Penanganan error JSON secara global: 401 `unauthenticated`, 404 `ebook_not_found` (ebook milik user lain diperlakukan sama dengan tidak ada), 500 `server_error` (dokumen 04 bagian 3.4 sampai 3.6).
-- [ ] Pengujian: koleksi kosong, berisi, tanpa token; `PATCH` dengan status sama (riwayat tidak bertambah), pada ebook user lain (404), dan dengan body kosong (422).
+**Dikerjakan di:** Laravel API, Postman. Android dan Laravel Web tidak terlibat; Laravel Backend hanya dipanggil, tidak diubah.
 
-- [ ] **Selesai jika:** respons sesuai dokumen 04 bagian 5.4 dan 5.7.
+- [ ] **[Laravel API]** `EbookResource` (bentuk data ebook yang dikirim ke klien): `id`, `title`, `is_read`, `created_at`, `updated_at`; tanpa `user_id`, `file_path`, `file_hash` (dokumen 04 bagian 4).
+- [ ] **[Laravel API]** `GET /api/ebooks`: ebook milik user, urut `created_at` menurun, tanpa pagination; `meta.total` dan `meta.read_count` (dari `fn_count_read_ebooks`); koleksi kosong menghasilkan `data: []` dengan nilai 0 (dokumen 04 bagian 5.4).
+- [ ] **[Laravel API]** `PATCH /api/ebooks/{id}`: `is_read` wajib boolean, memanggil `setReadStatus`, respons 200 berisi data terkini (dokumen 04 bagian 5.7).
+- [ ] **[Laravel API]** Penanganan error JSON secara global: 401 `unauthenticated`, 404 `ebook_not_found` (ebook milik user lain diperlakukan sama dengan tidak ada), 500 `server_error` (dokumen 04 bagian 3.4 sampai 3.6).
+- [ ] **[Postman]** Pengujian: koleksi kosong, berisi, tanpa token; `PATCH` dengan status sama (riwayat tidak bertambah), pada ebook user lain (404), dan dengan body kosong (422).
 
-#### C08 · Backend · API upload dan unduh · P0 · 6 Okt
+- [ ] **Selesai jika:** **[Postman]** respons sesuai dokumen 04 bagian 5.4 dan 5.7.
+
+#### C08 · Laravel API · API upload dan unduh · P0 · 6 Okt
 
 Membutuhkan: C05, C07.
 
-- [ ] Pengaturan `php.ini`: `upload_max_filesize = 20M` dan `post_max_size = 25M`, lalu server dijalankan ulang (dokumen 04 bagian 7.1).
-- [ ] `POST /api/ebooks` (dokumen 04 bagian 5.5): `file` wajib PDF (ekstensi `pdf` dan MIME `application/pdf`) maksimal 20480 KB; `title` opsional maksimal 255; memanggil `EbookService::store`; respons 201.
-- [ ] `DuplicateEbookException` dipetakan ke 409 `duplicate_ebook` dengan pesan "PDF ini sudah ada di koleksi Anda." dan `data.existing_id`.
-- [ ] `GET /api/ebooks/{id}/file` (dokumen 04 bagian 5.6): header `Content-Type`, `Content-Length`, dan `Content-Disposition: inline`; 404 `ebook_not_found` dan 404 `file_missing`.
-- [ ] Pengujian Postman: upload valid, duplikat, bukan PDF, di atas 20 MB; hasil unduhan dibuka.
+**Dikerjakan di:** php.ini, Laravel API, Postman. Android dan Laravel Web tidak terlibat; Laravel Backend hanya dipanggil, tidak diubah.
 
-- [ ] **Selesai jika:** keempat kasus upload benar dan PDF hasil unduhan dapat dibuka.
+- [ ] **[php.ini]** `upload_max_filesize = 20M` dan `post_max_size = 25M`, lalu server dijalankan ulang (dokumen 04 bagian 7.1).
+- [ ] **[Laravel API]** `POST /api/ebooks` (dokumen 04 bagian 5.5): `file` wajib PDF (ekstensi `pdf` dan MIME `application/pdf`) maksimal 20480 KB; `title` opsional maksimal 255; memanggil `EbookService::store`; respons 201.
+- [ ] **[Laravel API]** `DuplicateEbookException` dipetakan ke 409 `duplicate_ebook` dengan pesan "PDF ini sudah ada di koleksi Anda." dan `data.existing_id`.
+- [ ] **[Laravel API]** `GET /api/ebooks/{id}/file` (dokumen 04 bagian 5.6): header `Content-Type`, `Content-Length`, dan `Content-Disposition: inline`; 404 `ebook_not_found` dan 404 `file_missing`.
+- [ ] **[Postman]** Pengujian: upload valid, duplikat, bukan PDF, di atas 20 MB; hasil unduhan dibuka.
 
-#### C09 · Uji · Pengujian API menyeluruh · P0 · 6 Okt
+- [ ] **Selesai jika:** **[Postman]** keempat kasus upload benar dan PDF hasil unduhan dapat dibuka.
+
+#### C09 · Uji di Postman · Pengujian API menyeluruh · P0 · 6 Okt
 
 Membutuhkan: C08.
 
-- [ ] Postman collection berisi 7 endpoint dengan environment (`base_url` dan `token`).
-- [ ] Seluruh skenario pada matriks uji API (bagian 6) dijalankan.
-- [ ] Bug yang ditemukan diperbaiki, lalu beri tag Git `api-stable`.
+**Dikerjakan di:** Postman, Terminal (tag Git), dan Laravel API atau Laravel Backend bila ada bug yang diperbaiki. Android dan Laravel Web tidak terlibat.
+
+- [ ] **[Postman]** Postman collection berisi 7 endpoint dengan environment (`base_url` dan `token`).
+- [ ] **[Postman]** Seluruh skenario pada matriks uji API (bagian 6) dijalankan.
+- [ ] **[Laravel API]** Bug yang ditemukan diperbaiki, lalu **[Terminal]** beri tag Git `api-stable`.
 
 - [ ] **Selesai jika:** seluruh baris matriks uji API lulus.
 
 ### Epic C: Web (P1)
 
-#### C10 · Web · Daftar koleksi dan ubah status · P1 · 6 Okt
+#### C10 · Laravel Web · Daftar koleksi dan ubah status · P1 · 6 Okt
 
 Membutuhkan: C06, C01.
 
+**Dikerjakan di:** Dokumen, Laravel Web, Browser, Klien MySQL. Android dan Laravel API tidak terlibat; Laravel Backend hanya dipanggil.
+
 **Rancangan layar (dikerjakan lebih dulu agar tampilan jelas)**
 
-- [ ] Wireframe (sketsa kasar tata letak) empat layar: Login, Daftar Ebook, Upload, dan Empty State (tampilan saat koleksi kosong), berupa sketsa tangan atau ASCII yang menentukan elemen, tombol, dan pesan.
-- [ ] Wireframe Login dan Register berlaku untuk Web dan Android; halaman Web dari C01 tidak dikerjakan ulang.
-- [ ] Wireframe disimpan di repositori, misalnya folder `docs/`.
+- [ ] **[Dokumen]** Wireframe (sketsa kasar tata letak) empat layar: Login, Daftar Ebook, Upload, dan Empty State (tampilan saat koleksi kosong), berupa sketsa tangan atau ASCII yang menentukan elemen, tombol, dan pesan.
+- [ ] **[Dokumen]** Wireframe Login dan Register berlaku untuk Web dan Android; halaman Web dari C01 tidak dikerjakan ulang.
+- [ ] **[Dokumen]** Wireframe disimpan di repositori, misalnya folder `docs/`.
 
 **Halaman**
 
-- [ ] Route `GET /ebooks` dalam grup `auth` (hanya untuk user yang sudah login) dan `WebEbookController@index`, menggantikan halaman sementara dari C01 (dokumen 04 bagian 8).
-- [ ] View daftar berisi judul, status baca, dan tanggal; Empty State sesuai wireframe; jumlah ebook yang sudah dibaca dari `fn_count_read_ebooks`.
-- [ ] Kontrol ubah status: form dengan `@method('PATCH')` ke `PATCH /ebooks/{id}` yang memanggil `EbookService::setReadStatus`.
-- [ ] Setelah status diubah, tabel `ebook_status_history` terisi.
+- [ ] **[Laravel Web]** Route `GET /ebooks` dalam grup `auth` (hanya untuk user yang sudah login) dan `WebEbookController@index`, menggantikan halaman sementara dari C01 (dokumen 04 bagian 8).
+- [ ] **[Laravel Web]** View daftar berisi judul, status baca, dan tanggal; Empty State sesuai wireframe; jumlah ebook yang sudah dibaca dari `fn_count_read_ebooks`.
+- [ ] **[Laravel Web]** Kontrol ubah status: form dengan `@method('PATCH')` ke `PATCH /ebooks/{id}` yang memanggil `EbookService::setReadStatus`.
+- [ ] **[Klien MySQL]** Setelah status diubah dari Browser, tabel `ebook_status_history` terisi.
 
-- [ ] **Selesai jika:** setelah login user melihat koleksinya sendiri (atau Empty State) dan dapat mengubah status baca.
+- [ ] **Selesai jika:** **[Browser]** setelah login user melihat koleksinya sendiri (atau Empty State) dan dapat mengubah status baca.
 
-#### C11 · Web · Upload dan buka PDF · P1 · 7 Okt
+#### C11 · Laravel Web · Upload dan buka PDF · P1 · 7 Okt
 
 Membutuhkan: C10, C05.
 
-- [ ] Route `POST /ebooks` dan view form upload (`multipart/form-data`, yaitu jenis form yang dapat mengirim file) sesuai wireframe.
-- [ ] Validasi: file harus PDF, maksimal 20480 KB; `title` opsional.
-- [ ] Pesan error berbahasa Indonesia untuk file bukan PDF, lebih dari 20 MB, dan duplikat ("PDF ini sudah ada di koleksi Anda.").
-- [ ] Route `GET /ebooks/{id}/file` dan tautan buka PDF di daftar, yang membuka PDF di penampil bawaan browser.
-- [ ] Ebook milik user lain menghasilkan 404.
+**Dikerjakan di:** Laravel Web, Browser. Android dan Laravel API tidak terlibat; Laravel Backend hanya dipanggil.
 
-- [ ] **Selesai jika:** upload, penolakan duplikat, dan buka PDF berjalan dari browser. **Pekerjaan ini menutup Gate 7 Oktober** (bagian 6).
+- [ ] **[Laravel Web]** Route `POST /ebooks` dan view form upload (`multipart/form-data`, yaitu jenis form yang dapat mengirim file) sesuai wireframe.
+- [ ] **[Laravel Web]** Validasi: file harus PDF, maksimal 20480 KB; `title` opsional.
+- [ ] **[Laravel Web]** Pesan error berbahasa Indonesia untuk file bukan PDF, lebih dari 20 MB, dan duplikat ("PDF ini sudah ada di koleksi Anda.").
+- [ ] **[Laravel Web]** Route `GET /ebooks/{id}/file` dan tautan buka PDF di daftar, yang membuka PDF di penampil bawaan browser.
+- [ ] **[Laravel Web]** Ebook milik user lain menghasilkan 404.
+
+- [ ] **Selesai jika:** **[Browser]** upload, penolakan duplikat, dan buka PDF berjalan. **Pekerjaan ini menutup Gate 7 Oktober** (bagian 6).
 
 ### Epic D: Android (P1)
 
@@ -309,16 +361,19 @@ Membutuhkan: C10, C05.
 
 Membutuhkan: C04.
 
+**Dikerjakan di:** Dokumen, Android, Terminal (hanya menjalankan server Laravel), HP fisik. Laravel tidak diubah; yang dipakai adalah `POST /api/login` dari C04.
+
 **Keputusan yang harus tertulis**
 
-- [ ] Struktur proyek: package dan lapisan sederhana (misalnya `data/api`, `data/model`, `ui/login`, `ui/ebooks`, `util`) dengan satu paragraf aturan.
-- [ ] Akses backend dari HP fisik. Karena pengujian memakai HP fisik, rekomendasinya jaringan lokal: server dijalankan dengan `php artisan serve --host=0.0.0.0`, HP dan komputer pada Wi-Fi yang sama. Hosting online tidak direkomendasikan karena menambah pekerjaan. Tulis keputusan akhir di sini.
+- [ ] **[Dokumen]** Struktur proyek Android: package dan lapisan sederhana (misalnya `data/api`, `data/model`, `ui/login`, `ui/ebooks`, `util`) dengan satu paragraf aturan.
+- [ ] **[Dokumen]** Akses backend dari HP fisik. Karena pengujian memakai HP fisik, rekomendasinya jaringan lokal: server Laravel dijalankan dengan `php artisan serve --host=0.0.0.0` dan HP serta komputer berada pada Wi-Fi yang sama. Hosting online tidak direkomendasikan karena menambah pekerjaan. Tulis keputusan akhir di sini.
 
 **Proyek**
 
-- [ ] Proyek Kotlin dengan ViewBinding (cara mengakses elemen layar tanpa `findViewById`), dependency Retrofit (pustaka pemanggil API), converter Gson (pengubah JSON), OkHttp logging-interceptor (pencatat request di Logcat), dan RecyclerView (komponen daftar).
-- [ ] `AndroidManifest`: izin `INTERNET` dan izin HTTP tanpa enkripsi (cleartext) khusus pengembangan.
-- [ ] Uji sambung: memanggil `POST /api/login` dengan data tetap dan melihat respons di Logcat (jendela log Android Studio).
+- [ ] **[Android]** Proyek Kotlin dengan ViewBinding (cara mengakses elemen layar tanpa `findViewById`), dependency Retrofit (pustaka pemanggil API), converter Gson (pengubah JSON), OkHttp logging-interceptor (pencatat request di Logcat), dan RecyclerView (komponen daftar).
+- [ ] **[Android]** `AndroidManifest`: izin `INTERNET` dan izin HTTP tanpa enkripsi (cleartext) khusus pengembangan.
+- [ ] **[Terminal]** Jalankan Laravel dengan `php artisan serve --host=0.0.0.0` sesuai keputusan di atas.
+- [ ] **[Android]** Uji sambung dari **[HP fisik]**: memanggil `POST /api/login` dengan data tetap dan melihat respons di Logcat (jendela log Android Studio).
 
 - [ ] **Selesai jika:** Android menerima respons dari Laravel dan dua keputusan di atas tertulis.
 
@@ -326,33 +381,40 @@ Membutuhkan: C04.
 
 Membutuhkan: C12.
 
-- [ ] Wireframe Login dan Register dari C10 disesuaikan untuk Android (elemen dan pesan error).
-- [ ] `ApiService` (daftar endpoint untuk Retrofit), model request dan respons, dan `ApiClient` dengan interceptor yang menambah `Accept: application/json` dan `Authorization: Bearer {token}` bila token ada.
-- [ ] `TokenStore` menyimpan token di `SharedPreferences` privat (`MODE_PRIVATE`); dicatat sebagai utang teknis karena belum terenkripsi (dokumen 04 bagian 3.2).
-- [ ] `LoginActivity`: kolom email dan password, tombol, indikator loading, dan pesan untuk 401, 422, 429, dan tanpa koneksi.
-- [ ] `RegisterActivity`: kolom nama, email, password, dan konfirmasi password; memanggil `POST /api/register`; menampilkan error 422 (termasuk email sudah terdaftar); setelah 201 kembali ke Login dengan pesan sukses (tanpa token, dokumen 04 bagian 5.1).
-- [ ] Saat aplikasi dibuka dan token sudah ada, langsung ke daftar ebook.
+**Dikerjakan di:** Dokumen, Android, HP fisik. Laravel tidak diubah; yang dipakai adalah `POST /api/register` dan `POST /api/login` dari C04.
 
-- [ ] **Selesai jika:** register dan login berhasil dari HP fisik dan token tersimpan.
+- [ ] **[Dokumen]** Wireframe Login dan Register dari C10 disesuaikan untuk Android (elemen dan pesan error).
+- [ ] **[Android]** `ApiService` (daftar endpoint untuk Retrofit), model request dan respons.
+- [ ] **[Android]** `ApiClient` dengan interceptor yang menambah header `Accept: application/json` pada setiap request dan `Authorization: Bearer {token}` bila token ada. Di sini Android yang mengirim header `Accept`, sama seperti Postman pada C04.
+- [ ] **[Android]** `TokenStore` menyimpan token di `SharedPreferences` privat (`MODE_PRIVATE`); dicatat sebagai utang teknis karena belum terenkripsi (dokumen 04 bagian 3.2).
+- [ ] **[Android]** `LoginActivity`: kolom email dan password, tombol, indikator loading, dan pesan untuk 401, 422, 429, dan tanpa koneksi.
+- [ ] **[Android]** `RegisterActivity`: kolom nama, email, password, dan konfirmasi password; memanggil `POST /api/register`; menampilkan error 422 (termasuk email sudah terdaftar); setelah 201 kembali ke Login dengan pesan sukses (tanpa token, dokumen 04 bagian 5.1).
+- [ ] **[Android]** Saat aplikasi dibuka dan token sudah ada, langsung ke daftar ebook.
+
+- [ ] **Selesai jika:** **[HP fisik]** register dan login berhasil dan token tersimpan.
 
 #### C14 · Android · Daftar koleksi · P1 · 8 Okt
 
 Membutuhkan: C13, C07.
 
-- [ ] Wireframe Daftar Ebook dan Empty State disesuaikan untuk Android.
-- [ ] Layout daftar dan item (judul dan kontrol status).
-- [ ] `RecyclerView` dan adapter yang memanggil `GET /api/ebooks`.
-- [ ] Tampilan loading, Empty State, dan error dengan tombol muat ulang; jumlah ebook yang sudah dibaca diambil dari `meta.read_count`.
+**Dikerjakan di:** Dokumen, Android, HP fisik, Browser (untuk mengunggah ebook uji). Laravel tidak diubah; yang dipakai adalah `GET /api/ebooks` dari C07.
 
-- [ ] **Selesai jika:** ebook yang diunggah lewat Web muncul di Android.
+- [ ] **[Dokumen]** Wireframe Daftar Ebook dan Empty State disesuaikan untuk Android.
+- [ ] **[Android]** Layout daftar dan item (judul dan kontrol status).
+- [ ] **[Android]** `RecyclerView` dan adapter yang memanggil `GET /api/ebooks`.
+- [ ] **[Android]** Tampilan loading, Empty State, dan error dengan tombol muat ulang; jumlah ebook yang sudah dibaca diambil dari `meta.read_count`.
+
+- [ ] **Selesai jika:** ebook yang diunggah lewat **[Browser]** (Web) muncul di **[HP fisik]**.
 
 #### C15 · Android · Ubah status baca · P1 · 8 Okt
 
 Membutuhkan: C14.
 
-- [ ] Kotak centang pada item memanggil `PATCH /api/ebooks/{id}`; item diperbarui dari respons.
-- [ ] Bila gagal, status dikembalikan ke sebelumnya dan pesan ditampilkan (dokumen 01, UC-09 dan UC-10: status lama dipertahankan saat penyimpanan gagal).
-- [ ] Diuji dua arah: ubah di Android lalu lihat di Web, dan sebaliknya.
+**Dikerjakan di:** Android, HP fisik, Browser. Laravel tidak diubah; yang dipakai adalah `PATCH /api/ebooks/{id}` dari C07.
+
+- [ ] **[Android]** Kotak centang pada item memanggil `PATCH /api/ebooks/{id}`; item diperbarui dari respons.
+- [ ] **[Android]** Bila gagal, status dikembalikan ke sebelumnya dan pesan ditampilkan (dokumen 01, UC-09 dan UC-10: status lama dipertahankan saat penyimpanan gagal).
+- [ ] **[HP fisik]** dan **[Browser]** Diuji dua arah: ubah di Android lalu lihat di Web, dan sebaliknya.
 
 - [ ] **Selesai jika:** status konsisten antara Android dan Web.
 
@@ -360,35 +422,41 @@ Membutuhkan: C14.
 
 Membutuhkan: C14.
 
-- [ ] Wireframe Upload disesuaikan untuk Android (tombol, nama dan ukuran file, pesan).
-- [ ] Pemilih file memakai `ActivityResultContracts.OpenDocument` dengan tipe `application/pdf`.
-- [ ] Nama file dibaca lewat `ContentResolver` (`OpenableColumns.DISPLAY_NAME`).
-- [ ] Isi `Uri` (alamat file dari pemilih) disalin ke file sementara di `cacheDir`.
-- [ ] File lebih dari 20 MB ditolak sebelum dikirim.
+**Dikerjakan di:** Dokumen, Android, HP fisik. Laravel tidak terlibat.
 
-- [ ] **Selesai jika:** nama dan ukuran file terbaca dan file sementara terbentuk.
+- [ ] **[Dokumen]** Wireframe Upload disesuaikan untuk Android (tombol, nama dan ukuran file, pesan).
+- [ ] **[Android]** Pemilih file memakai `ActivityResultContracts.OpenDocument` dengan tipe `application/pdf`.
+- [ ] **[Android]** Nama file dibaca lewat `ContentResolver` (`OpenableColumns.DISPLAY_NAME`).
+- [ ] **[Android]** Isi `Uri` (alamat file dari pemilih) disalin ke file sementara di `cacheDir`.
+- [ ] **[Android]** File lebih dari 20 MB ditolak sebelum dikirim.
+
+- [ ] **Selesai jika:** **[HP fisik]** nama dan ukuran file terbaca dan file sementara terbentuk.
 
 #### C17 · Android · Upload multipart · P1 · 8 Okt · risiko tinggi
 
 Membutuhkan: C16, C08.
 
-- [ ] Retrofit `@Multipart` mengirim file (`application/pdf`) dan `title` opsional.
-- [ ] Batas waktu tulis dan baca OkHttp dinaikkan karena unggahan 20 MB pada koneksi lambat dapat melampaui bawaan (dokumen 04 bagian 7.1).
-- [ ] Sebelum mengirim, koneksi diperiksa lewat `ConnectivityManager`; bila offline tampil "coba lagi saat online", tanpa antrean (dokumen 01 bagian 1.2 dan dokumen 02 bagian 7).
-- [ ] Pemetaan error ke pesan: 409 duplikat, 413 atau 422 file terlalu besar atau bukan PDF, 401 sesi habis, 500 gagal di server.
-- [ ] Saat sukses: kembali ke daftar, muat ulang, dan hapus file sementara.
-- [ ] Tombol upload tidak dapat ditekan dua kali selama proses berjalan.
+**Dikerjakan di:** Android, HP fisik. Laravel tidak diubah; yang dipakai adalah `POST /api/ebooks` dari C08.
 
-- [ ] **Selesai jika:** PDF kecil berhasil terunggah dari Android.
+- [ ] **[Android]** Retrofit `@Multipart` mengirim file (`application/pdf`) dan `title` opsional.
+- [ ] **[Android]** Batas waktu tulis dan baca OkHttp dinaikkan karena unggahan 20 MB pada koneksi lambat dapat melampaui bawaan (dokumen 04 bagian 7.1).
+- [ ] **[Android]** Sebelum mengirim, koneksi diperiksa lewat `ConnectivityManager`; bila offline tampil "coba lagi saat online", tanpa antrean (dokumen 01 bagian 1.2 dan dokumen 02 bagian 7).
+- [ ] **[Android]** Pemetaan error ke pesan: 409 duplikat, 413 atau 422 file terlalu besar atau bukan PDF, 401 sesi habis, 500 gagal di server.
+- [ ] **[Android]** Saat sukses: kembali ke daftar, muat ulang, dan hapus file sementara.
+- [ ] **[Android]** Tombol upload tidak dapat ditekan dua kali selama proses berjalan.
 
-#### C18 · Uji · Pengujian upload end-to-end · P1 · 9 Okt
+- [ ] **Selesai jika:** **[HP fisik]** PDF kecil berhasil terunggah.
+
+#### C18 · Uji di Browser dan HP fisik · Pengujian upload end-to-end · P1 · 9 Okt
 
 Membutuhkan: C17, C11.
 
-- [ ] PDF kecil muncul di Android dan Web.
-- [ ] PDF yang sama dikirim ulang menghasilkan pesan duplikat (409).
-- [ ] Mode pesawat menghasilkan pesan offline dan tidak ada upload tertunda.
-- [ ] PDF sekitar 15-20 MB berhasil (atau batas waktu disesuaikan); di atas 20 MB menghasilkan pesan yang jelas.
+**Dikerjakan di:** HP fisik, Browser, dan perbaikan di Android, Laravel Web, atau Laravel API bila ada bug.
+
+- [ ] **[HP fisik]** dan **[Browser]** PDF kecil yang diunggah dari Android muncul di Android dan Web.
+- [ ] **[HP fisik]** PDF yang sama dikirim ulang menghasilkan pesan duplikat (409).
+- [ ] **[HP fisik]** Mode pesawat menghasilkan pesan offline dan tidak ada upload tertunda.
+- [ ] **[HP fisik]** PDF sekitar 15-20 MB berhasil (atau batas waktu disesuaikan); di atas 20 MB menghasilkan pesan yang jelas.
 
 - [ ] **Selesai jika:** keempat skenario berperilaku benar.
 
@@ -396,52 +464,61 @@ Membutuhkan: C17, C11.
 
 Membutuhkan: C14, C08.
 
+**Dikerjakan di:** Dokumen, Android, HP fisik. Laravel tidak diubah; yang dipakai adalah `GET /api/ebooks/{id}/file` dari C08.
+
 **Keputusan yang harus tertulis**
 
-- [ ] Penyimpanan lokal Android. Rekomendasi: PDF diunduh ke `filesDir/pdfs/{id}.pdf` (folder privat aplikasi); file hasil unduhan menjadi "file lokal" yang dipakai ulang selama masih ada; aplikasi tidak melacak file asli di folder Download; folder `pdfs` dihapus saat logout. Konfirmasi atau ubah, lalu tulis keputusan akhir.
-- [ ] Dokumen 00 dan 01 (bagian yang menjelaskan akses PDF Android dan UC-08) diperbarui agar istilah "file lokal" jelas mengacu pada file hasil unduhan; catat di bagian 9.
+- [ ] **[Dokumen]** Penyimpanan lokal Android. Rekomendasi: PDF diunduh ke `filesDir/pdfs/{id}.pdf` (folder privat aplikasi); file hasil unduhan menjadi "file lokal" yang dipakai ulang selama masih ada; aplikasi tidak melacak file asli di folder Download; folder `pdfs` dihapus saat logout. Konfirmasi atau ubah, lalu tulis keputusan akhir.
+- [ ] **[Dokumen]** Dokumen 00 dan 01 (bagian yang menjelaskan akses PDF Android dan UC-08) diperbarui agar istilah "file lokal" jelas mengacu pada file hasil unduhan; catat di bagian 9.
 
 **Unduhan**
 
-- [ ] Retrofit dengan `@Streaming` untuk `GET /api/ebooks/{id}/file`, agar seluruh file tidak dimuat ke memori sekaligus.
-- [ ] Isi ditulis ke `{id}.pdf.part`, lalu namanya diganti menjadi `{id}.pdf` hanya setelah unduhan selesai, supaya file setengah jadi tidak pernah dianggap utuh.
-- [ ] Indikator loading selama mengunduh.
+- [ ] **[Android]** Retrofit dengan `@Streaming` untuk `GET /api/ebooks/{id}/file`, agar seluruh file tidak dimuat ke memori sekaligus.
+- [ ] **[Android]** Isi ditulis ke `{id}.pdf.part`, lalu namanya diganti menjadi `{id}.pdf` hanya setelah unduhan selesai, supaya file setengah jadi tidak pernah dianggap utuh.
+- [ ] **[Android]** Indikator loading selama mengunduh.
 
-- [ ] **Selesai jika:** file `{id}.pdf` utuh tersimpan di penyimpanan aplikasi dan keputusan tertulis.
+- [ ] **Selesai jika:** **[HP fisik]** file `{id}.pdf` utuh tersimpan di penyimpanan aplikasi dan keputusan tertulis.
 
 #### C20 · Android · Penampil PDF · P1 · 9 Okt · risiko tinggi
 
 Membutuhkan: C19.
 
-- [ ] `FileProvider` (komponen yang memberi aplikasi lain izin sementara membaca file milik aplikasi ini) dideklarasikan di manifest beserta `res/xml/file_paths.xml`.
-- [ ] `Intent` (permintaan membuka aplikasi lain) `ACTION_VIEW` bertipe `application/pdf` dengan `FLAG_GRANT_READ_URI_PERMISSION`.
-- [ ] Bila tidak ada aplikasi PDF (`ActivityNotFoundException`), tampil pesan "tidak ada aplikasi PDF".
-- [ ] HP yang dipakai memiliki aplikasi penampil PDF.
+**Dikerjakan di:** Android, HP fisik. Laravel tidak terlibat.
 
-- [ ] **Selesai jika:** PDF terbuka di penampil eksternal.
+- [ ] **[Android]** `FileProvider` (komponen yang memberi aplikasi lain izin sementara membaca file milik aplikasi ini) dideklarasikan di manifest beserta `res/xml/file_paths.xml`.
+- [ ] **[Android]** `Intent` (permintaan membuka aplikasi lain) `ACTION_VIEW` bertipe `application/pdf` dengan `FLAG_GRANT_READ_URI_PERMISSION`.
+- [ ] **[Android]** Bila tidak ada aplikasi PDF (`ActivityNotFoundException`), tampil pesan "tidak ada aplikasi PDF".
+- [ ] **[HP fisik]** HP yang dipakai memiliki aplikasi penampil PDF.
+
+- [ ] **Selesai jika:** **[HP fisik]** PDF terbuka di penampil eksternal.
 
 ### Epic E: Cloudflare R2 (P0)
 
-#### C21 · Backend · Setup Cloudflare R2 · P0 · 9 Okt
+#### C21 · Laravel Backend dan Cloudflare · Setup Cloudflare R2 · P0 · 9 Okt
 
 Membutuhkan: C05.
 
-- [ ] Bucket (wadah penyimpanan) **privat** di Cloudflare R2.
-- [ ] API token dengan izin Object Read and Write; endpoint, access key, dan secret key dicatat.
-- [ ] Paket `league/flysystem-aws-s3-v3` dipasang lewat Composer.
-- [ ] Disk `r2` di `config/filesystems.php` (driver `s3`, endpoint R2, region `auto`); opsi _path style_ disesuaikan bila koneksi gagal.
-- [ ] Uji tulis dan baca file kecil lewat `tinker`.
+**Dikerjakan di:** Cloudflare, Terminal, Laravel Backend. Android, Laravel API, dan Laravel Web tidak terlibat.
+
+- [ ] **[Cloudflare]** Bucket (wadah penyimpanan) **privat** di Cloudflare R2.
+- [ ] **[Cloudflare]** API token dengan izin Object Read and Write; endpoint, access key, dan secret key dicatat.
+- [ ] **[Terminal]** Paket `league/flysystem-aws-s3-v3` dipasang lewat Composer.
+- [ ] **[Laravel Backend]** Disk `r2` di `config/filesystems.php` (driver `s3`, endpoint R2, region `auto`); opsi _path style_ disesuaikan bila koneksi gagal.
+- [ ] **[Terminal]** Uji tulis dan baca file kecil lewat `tinker`.
 
 - [ ] **Selesai jika:** Laravel dapat menulis dan membaca objek di bucket R2.
 
-#### C22 · Backend · Pindah ke R2 · P0 · 10 Okt
+#### C22 · Laravel Backend dan Cloudflare · Pindah ke R2 · P0 · 10 Okt
 
 Membutuhkan: C21, C11, C08.
 
-- [ ] `EBOOK_DISK=r2` di `.env`; upload dari Web dan API menghasilkan objek di bucket.
-- [ ] PDF dari R2 terbuka lewat Web dan Android.
-- [ ] Uji compensating action: penyimpanan baris dipaksa gagal, lalu objek R2 harus terhapus.
-- [ ] Bucket tidak dapat diakses publik.
+**Dikerjakan di:** Laravel Backend (hanya `.env`), Cloudflare, Browser, Postman, HP fisik. Tidak ada kode baru di Laravel API, Laravel Web, maupun Android; ketiganya hanya diuji.
+
+- [ ] **[Laravel Backend]** `EBOOK_DISK=r2` di `.env`.
+- [ ] **[Browser]** dan **[Postman]** Upload dari Web dan API menghasilkan objek di bucket (dilihat di **[Cloudflare]**).
+- [ ] **[Browser]** dan **[HP fisik]** PDF dari R2 terbuka lewat Web dan Android.
+- [ ] **[Terminal]** Uji compensating action: penyimpanan baris dipaksa gagal lewat `tinker`, lalu objek R2 harus terhapus.
+- [ ] **[Cloudflare]** Bucket tidak dapat diakses publik.
 
 - [ ] **Selesai jika:** upload dan akses file berjalan penuh melalui R2.
 
@@ -451,44 +528,56 @@ Membutuhkan: C21, C11, C08.
 
 Membutuhkan: C20, C19.
 
-- Saat item diketuk (dokumen 02 bagian 10.1):
+**Dikerjakan di:** Android, HP fisik. Laravel tidak diubah; yang dipakai adalah `POST /api/logout` dari C04.
+
+- **[Android]** Saat item diketuk (dokumen 02 bagian 10.1):
     - [ ] bila `filesDir/pdfs/{id}.pdf` ada, langsung dibuka;
     - [ ] bila tidak ada dan offline, tampil "Butuh internet untuk membuka PDF";
     - [ ] bila tidak ada dan online, diunduh lalu dibuka;
     - [ ] bila server menjawab 404 `file_missing`, tampil "file tidak tersedia".
-- [ ] Logout memanggil `POST /api/logout`; token lokal **selalu** dihapus meski offline (dokumen 04 bagian 5.3); folder `pdfs` dihapus sesuai keputusan C19.
-- [ ] Interceptor: jawaban 401 menghapus token dan mengembalikan user ke Login.
-- [ ] Pengujian: buka PDF sekali saat online, aktifkan mode pesawat, buka lagi (tetap terbuka); logout lalu login ulang.
+- [ ] **[Android]** Logout memanggil `POST /api/logout`; token lokal **selalu** dihapus meski offline (dokumen 04 bagian 5.3); folder `pdfs` dihapus sesuai keputusan C19.
+- [ ] **[Android]** Interceptor: jawaban 401 menghapus token dan mengembalikan user ke Login.
+- [ ] **[HP fisik]** Pengujian: buka PDF sekali saat online, aktifkan mode pesawat, buka lagi (tetap terbuka); logout lalu login ulang.
 
-- [ ] **Selesai jika:** skenario offline setelah unduhan pertama berhasil dan tidak ada kondisi tersangkut setelah token tidak valid.
+- [ ] **Selesai jika:** **[HP fisik]** skenario offline setelah unduhan pertama berhasil dan tidak ada kondisi tersangkut setelah token tidak valid.
 
-#### C24 · Uji · Pengujian lintas platform dan pesan error · P1 · 10 Okt
+#### C24 · Laravel Web, Laravel API, dan Android · Pengujian lintas platform dan pesan error · P1 · 10 Okt
 
 Membutuhkan: C23, C22.
 
-- [ ] Seluruh skenario matriks lintas platform (bagian 6) dijalankan.
-- [ ] Pesan error berbahasa Indonesia diseragamkan pada Web dan API; Android tidak memiliki layar kosong atau kondisi tanpa pesan.
-- [ ] Diuji: kredensial salah, email sudah terdaftar, password kurang dari 8 karakter.
+**Dikerjakan di:** Browser, HP fisik, Postman, dan perbaikan pesan di Laravel Web, Laravel API, dan Android. Laravel Backend tidak terlibat.
+
+- [ ] **[Browser]** dan **[HP fisik]** Seluruh skenario matriks lintas platform (bagian 6) dijalankan.
+- [ ] **[Laravel Web]** dan **[Laravel API]** Pesan error berbahasa Indonesia diseragamkan.
+- [ ] **[Android]** Tidak ada layar kosong atau kondisi tanpa pesan.
+- [ ] **[Browser]**, **[Postman]**, dan **[HP fisik]** Diuji: kredensial salah, email sudah terdaftar, password kurang dari 8 karakter.
 
 - [ ] **Selesai jika:** seluruh baris matriks lulus atau tercatat sebagai bug.
 
-#### C25 · Uji · Pengujian end-to-end Web dan Android · P1 · 10 Okt
+#### C25 · Uji di Browser dan HP fisik · Pengujian end-to-end Web dan Android · P1 · 10 Okt
 
 Membutuhkan: C24.
 
-- [ ] Skenario dokumen 02 bagian 13 pada Web: Register, Login, Upload, Buka, Read/Unread, Logout; tabel `ebook_status_history` dan `fn_count_read_ebooks` diperiksa.
-- [ ] Skenario yang sama dari Android (register dari Android) di HP fisik.
-- [ ] Bug yang menghalangi alur P0 diperbaiki.
+**Dikerjakan di:** Browser, HP fisik, Klien MySQL, dan perbaikan di bagian mana pun yang bermasalah.
+
+- [ ] **[Browser]** Skenario dokumen 02 bagian 13 pada Web: Register, Login, Upload, Buka, Read/Unread, Logout.
+- [ ] **[Klien MySQL]** Tabel `ebook_status_history` dan `fn_count_read_ebooks` diperiksa.
+- [ ] **[HP fisik]** Skenario yang sama dari Android (register dari Android).
+- [ ] Bug yang menghalangi alur P0 diperbaiki di bagian yang bermasalah.
 
 - [ ] **Selesai jika:** kedua skenario berjalan tanpa campur tangan manual.
 
-#### C26 · Backend · Regresi dan finalisasi · P0/P1 · 11 Okt
+#### C26 · Regresi dan finalisasi · P0/P1 · 11 Okt
 
 Membutuhkan: C25.
 
-- [ ] Daftar periksa Gate 12 Oktober (bagian 6) dijalankan ulang; hanya bug yang menghalangi P0 dan P1 yang diperbaiki.
-- [ ] Tag Git rilis dan `README` berisi langkah menjalankan Laravel dan Android.
-- [ ] Akun dan data demo disiapkan, database dicadangkan, dan skenario demo dilatih satu kali.
+**Dikerjakan di:** Browser, HP fisik, Terminal, Klien MySQL, Dokumen, dan perbaikan di bagian mana pun yang bermasalah.
+
+- [ ] **[Browser]** dan **[HP fisik]** Daftar periksa Gate 12 Oktober (bagian 6) dijalankan ulang; hanya bug yang menghalangi P0 dan P1 yang diperbaiki.
+- [ ] **[Terminal]** Tag Git rilis.
+- [ ] **[Dokumen]** `README` berisi langkah menjalankan Laravel dan Android.
+- [ ] **[Klien MySQL]** Akun dan data demo disiapkan dan database dicadangkan.
+- [ ] **[Browser]** dan **[HP fisik]** Skenario demo dilatih satu kali.
 
 - [ ] **Selesai jika:** Gate 12 Oktober terpenuhi dan proyek dapat dijalankan ulang mengikuti `README`.
 
@@ -496,19 +585,43 @@ Membutuhkan: C25.
 
 Tidak dijadwalkan.
 
-- [ ] **Polish tampilan minimal:** judul layar, label, dan nama aplikasi konsisten; tarik-untuk-muat-ulang pada daftar Android.
-- [ ] **Penelitian Local Discovery (fitur penemuan PDF otomatis di Android):** penelitian kelayakan, bukan janji fitur. Saya tidak yakin pendekatan mana yang layak pada versi Android HP Anda karena pembatasan akses penyimpanan (scoped storage). Uji `MediaStore` dan/atau pemilihan folder lewat SAF (Storage Access Framework); putuskan jalan atau tidak. Bila tidak, catat sebagai keterbatasan dan jadikan pemilih file jalur utama (dokumen 00 bagian 15.1).
+- [ ] **[Android]** **Polish tampilan minimal:** judul layar, label, dan nama aplikasi konsisten; tarik-untuk-muat-ulang pada daftar Android.
+- [ ] **[Android]** **Penelitian Local Discovery (fitur penemuan PDF otomatis di Android):** penelitian kelayakan, bukan janji fitur. Saya tidak yakin pendekatan mana yang layak pada versi Android HP Anda karena pembatasan akses penyimpanan (scoped storage). Uji `MediaStore` dan/atau pemilihan folder lewat SAF (Storage Access Framework); putuskan jalan atau tidak. Bila tidak, catat sebagai keterbatasan dan jadikan pemilih file jalur utama (dokumen 00 bagian 15.1).
 
 ---
 
-## 5. Pemetaan Singkat Pekerjaan per Platform
+## 5. Pemetaan Pekerjaan per Tempat Kerja
 
-| Platform | Pekerjaan                                        |
-| -------- | ------------------------------------------------ |
-| Backend  | C02, C03, C04, C05, C06, C07, C08, C21, C22, C26 |
-| Web      | C01, C10, C11                                    |
-| Android  | C12, C13, C14, C15, C16, C17, C19, C20, C23      |
-| Uji      | C09, C18, C24, C25                               |
+**ya** = ada yang dibuat atau diubah di tempat itu. **pakai** = hanya dipanggil atau diuji, tanpa dibuat atau diubah. **-** = tidak terlibat.
+
+| Pekerjaan | Laravel Backend | Laravel API | Laravel Web | Android |
+| --------- | --------------- | ----------- | ----------- | ------- |
+| C01       | ya              | -           | ya          | -       |
+| C02       | ya              | -           | -           | -       |
+| C03       | ya              | -           | -           | -       |
+| C04       | ya              | ya          | -           | -       |
+| C05       | ya              | -           | -           | -       |
+| C06       | ya              | -           | -           | -       |
+| C07       | pakai           | ya          | -           | -       |
+| C08       | pakai           | ya          | -           | -       |
+| C09       | -               | pakai       | -           | -       |
+| C10       | pakai           | -           | ya          | -       |
+| C11       | pakai           | -           | ya          | -       |
+| C12       | -               | pakai       | -           | ya      |
+| C13       | -               | pakai       | -           | ya      |
+| C14       | -               | pakai       | -           | ya      |
+| C15       | -               | pakai       | -           | ya      |
+| C16       | -               | -           | -           | ya      |
+| C17       | -               | pakai       | -           | ya      |
+| C18       | -               | pakai       | pakai       | pakai   |
+| C19       | -               | pakai       | -           | ya      |
+| C20       | -               | -           | -           | ya      |
+| C21       | ya              | -           | -           | -       |
+| C22       | ya              | pakai       | pakai       | pakai   |
+| C23       | -               | pakai       | -           | ya      |
+| C24       | -               | ya          | ya          | ya      |
+| C25       | pakai           | pakai       | pakai       | pakai   |
+| C26       | pakai           | pakai       | pakai       | pakai   |
 
 ---
 
@@ -544,7 +657,7 @@ Tidak dijadwalkan.
 - [ ] Pengujian end-to-end selesai
 - [ ] P2: Local Discovery berfungsi **atau** file picker stabil sebagai fallback
 
-### Matriks uji API (dipakai pada C09)
+### Matriks uji API (dipakai pada C09, dijalankan di Postman)
 
 | #   | Skenario                             | Hasil yang diharapkan                 | Lulus |
 | --- | ------------------------------------ | ------------------------------------- | ----- |
@@ -567,7 +680,7 @@ Tidak dijadwalkan.
 | 17  | `GET file`, file hilang dari storage | 404 `file_missing`                    | [ ]   |
 | 18  | Logout lalu pakai token lama         | 401                                   | [ ]   |
 
-### Matriks lintas platform (dipakai pada C24)
+### Matriks lintas platform (dipakai pada C24, dijalankan di Browser dan HP fisik)
 
 | #   | Skenario                                                                           | Lulus |
 | --- | ---------------------------------------------------------------------------------- | ----- |
@@ -619,4 +732,5 @@ Diisi setiap kali ada perubahan pada dokumen perancangan.
 | C19       | Penyimpanan lokal Android: lokasi dan sifat file hasil unduhan                                                                                                                                                                              | 00, 01                  | [ ]     |
 | C01       | Autentikasi Web dibuat sendiri, bukan Breeze; register Web diarahkan ke login sesuai 02 bagian 5.1                                                                                                                                          | 05 (C01, C10, Parkir)   | [x]     |
 | (semua)   | Dokumen 05 diubah dari jadwal berisi perintah menjadi daftar hasil per pekerjaan (versi 3); jadwal dihitung ulang untuk jam kerja 16.00-23.00/00; aturan kerja, durasi 90 menit, slot cadangan, dan catatan perubahan per pekerjaan dihapus | 05                      | [x]     |
+| (semua)   | Tanda platform tunggal di judul pekerjaan ambigu (C04 disangka bagian Android). Setiap pekerjaan kini punya baris "Dikerjakan di" dan setiap butir diberi tanda tempat kerja (Laravel Backend, Laravel API, Laravel Web, Android, dan alat bantu); ditambah tabel pemetaan di bagian 5. Header `Accept` dinyatakan dikirim oleh Postman atau Android, bukan Laravel | 05                      | [x]     |
 |           |                                                                                                                                                                                                                                             |                         | [ ]     |
