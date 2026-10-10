@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 uses(RefreshDatabase::class);
@@ -237,6 +238,7 @@ it('logs the user out and revokes the active token', function () {
   ]);
 
   $token = $user->createToken('android')->plainTextToken;
+  $otherDeviceToken = $user->createToken('tablet')->plainTextToken;
 
   $this->withToken($token)
     ->postJson('/api/logout')
@@ -245,7 +247,42 @@ it('logs the user out and revokes the active token', function () {
       'message' => 'Logout berhasil.',
     ]);
 
-  $this->assertDatabaseCount('personal_access_tokens', 0);
+  $this->assertDatabaseCount('personal_access_tokens', 1);
+  $this->assertDatabaseHas('personal_access_tokens', [
+    'tokenable_id' => $user->id,
+    'name' => 'tablet',
+  ]);
+
+  Auth::forgetGuards();
+  $this->withToken($token)
+    ->getJson('/api/user')
+    ->assertUnauthorized()
+    ->assertExactJson([
+      'message' => 'Sesi tidak valid. Silakan login kembali.',
+      'code' => 'unauthenticated',
+    ]);
+
+  Auth::forgetGuards();
+  $this->withToken($otherDeviceToken)
+    ->getJson('/api/user')
+    ->assertOk()
+    ->assertJsonPath('id', $user->id);
+});
+
+it('returns the standard JSON error for missing or invalid API tokens', function () {
+  $expectedError = [
+    'message' => 'Sesi tidak valid. Silakan login kembali.',
+    'code' => 'unauthenticated',
+  ];
+
+  $this->get('/api/user')
+    ->assertUnauthorized()
+    ->assertExactJson($expectedError);
+
+  $this->withToken('invalid-token')
+    ->getJson('/api/user')
+    ->assertUnauthorized()
+    ->assertExactJson($expectedError);
 });
 
 it('returns 422 when the email is already registered', function () {
