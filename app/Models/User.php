@@ -8,23 +8,23 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-  use HasApiTokens;
+    use HasApiTokens;
 
-  protected $fillable = [
-    'name',
-    'email',
-    'password',
-  ];
-
-  protected function casts(): array
-  {
-    return [
-      'password' => 'hashed',
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
     ];
-  }
 
-  public function ebooks(): HasMany
-  {
-    return $this->hasMany(Ebook::class);
-  }
+    protected function casts(): array
+    {
+        return [
+            'password' => 'hashed',
+        ];
+    }
+
+    public function ebooks(): HasMany
+    {
+        return $this->hasMany(Ebook::class);
+    }
 }
