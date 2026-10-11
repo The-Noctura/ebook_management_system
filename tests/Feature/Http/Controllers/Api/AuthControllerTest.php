@@ -4,6 +4,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
 
 uses(RefreshDatabase::class);
 
@@ -101,6 +102,8 @@ it('validates required login fields and device name', function () {
 
   $response
     ->assertUnprocessable()
+    ->assertJsonStructure(['message', 'errors' => ['email', 'password']])
+    ->assertJsonMissingPath('code')
     ->assertJsonValidationErrors(['email', 'password']);
 
   $invalidDeviceNameResponse = $this->postJson('/api/login', [
@@ -283,6 +286,37 @@ it('returns the standard JSON error for missing or invalid API tokens', function
     ->getJson('/api/user')
     ->assertUnauthorized()
     ->assertExactJson($expectedError);
+});
+
+it('returns a generic not found error for an unknown API route', function () {
+  $this->get('/api/unknown-endpoint')
+    ->assertNotFound()
+    ->assertExactJson([
+      'message' => 'Endpoint tidak ditemukan.',
+      'code' => 'not_found',
+    ]);
+});
+
+it('returns a JSON error for an unsupported API method', function () {
+  $this->get('/api/register')
+    ->assertMethodNotAllowed()
+    ->assertExactJson([
+      'message' => 'Permintaan tidak dapat diproses.',
+      'code' => 'http_error',
+    ]);
+});
+
+it('returns a safe server error response for unexpected API exceptions', function () {
+  Route::get('/api/test-server-error', function () {
+    throw new RuntimeException('Internal exception details.');
+  });
+
+  $this->get('/api/test-server-error')
+    ->assertInternalServerError()
+    ->assertExactJson([
+      'message' => 'Terjadi kesalahan pada server.',
+      'code' => 'server_error',
+    ]);
 });
 
 it('returns 422 when the email is already registered', function () {
