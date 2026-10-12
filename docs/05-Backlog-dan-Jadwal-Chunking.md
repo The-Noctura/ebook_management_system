@@ -87,10 +87,10 @@ Hari yang pekerjaannya selesai lebih cepat dapat menarik pekerjaan hari berikutn
 
 Centang pekerjaan di sini setelah kotak **Selesai jika**-nya tercentang.
 
-- [ ] C01 · Laravel Web · Setup, register, login, logout (4 Okt)
-- [ ] C02 · Laravel Backend · Tabel ebook dan model (4 Okt)
-- [ ] C03 · Laravel Backend · Objek database: procedure, trigger, function (5 Okt)
-- [ ] C04 · Laravel Backend dan Laravel API · Autentikasi API (5 Okt)
+- [x] C01 · Laravel Web · Setup, register, login, logout (4 Okt)
+- [x] C02 · Laravel Backend · Tabel ebook dan model (4 Okt)
+- [x] C03 · Laravel Backend · Objek database: procedure, trigger, function (5 Okt)
+- [x] C04 · Laravel Backend dan Laravel API · Autentikasi API (5 Okt)
 - [ ] C05 · Laravel Backend · Layanan penyimpanan ebook (5 Okt)
 - [ ] C06 · Laravel Backend · Layanan ubah status dan akses file (5 Okt)
 - [ ] C07 · Laravel API · API daftar dan ubah status (6 Okt)
