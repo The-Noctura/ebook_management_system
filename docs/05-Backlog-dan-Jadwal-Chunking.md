@@ -236,10 +236,10 @@ Membutuhkan: C01.
 
 **Pengujian**
 
-- [ ] **[Postman]** Setiap request diberi header `Accept: application/json`. Header ini **dikirim oleh pihak yang memanggil API** (di sini Postman, nanti Android pada C13), bukan oleh Laravel; tanpa header ini Laravel dapat menjawab dengan halaman HTML, bukan JSON (dokumen 04 bagian 3.1).
-- [ ] **[Postman]** Uji register, login, dan logout.
+- [x] **[Postman]** Setiap request diberi header `Accept: application/json`. Header ini **dikirim oleh pihak yang memanggil API** (di sini Postman, nanti Android pada C13), bukan oleh Laravel; tanpa header ini Laravel dapat menjawab dengan halaman HTML, bukan JSON (dokumen 04 bagian 3.1).
+- [x] **[Postman]** Uji register, login, dan logout.
 
-- [ ] **Selesai jika:** **[Postman]** register, login, dan logout lulus; token yang sudah di-logout ditolak dengan 401.
+- [x] **Selesai jika:** **[Postman]** register, login, dan logout lulus; token yang sudah di-logout ditolak dengan 401.
 
 #### C05 · Laravel Backend · Layanan penyimpanan ebook · P0 · 5 Okt
 
