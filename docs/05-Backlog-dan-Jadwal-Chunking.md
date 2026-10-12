@@ -247,8 +247,8 @@ Membutuhkan: C02.
 
 **Dikerjakan di:** Laravel Backend, Terminal. Android, Laravel API, dan Laravel Web tidak terlibat; Web dan API baru memanggil layanan ini pada C07, C08, dan C11.
 
-- [ ] **[Laravel Backend]** File `app/Services/EbookService.php`: satu kelas yang dipakai bersama oleh Web dan API agar logika tidak ditulis dua kali (dokumen 04 bagian 8).
-- [ ] **[Laravel Backend]** Pengaturan disk penyimpanan dari `.env` (`EBOOK_DISK`, bawaan `local`), sehingga pindah ke Cloudflare R2 nanti hanya perubahan pengaturan.
+- [x] **[Laravel Backend]** File `app/Services/EbookService.php`: satu kelas yang dipakai bersama oleh Web dan API agar logika tidak ditulis dua kali (dokumen 04 bagian 8).
+- [x] **[Laravel Backend]** Pengaturan disk penyimpanan dari `.env` (`EBOOK_DISK`, bawaan `local`), sehingga pindah ke Cloudflare R2 nanti hanya perubahan pengaturan.
 - **[Laravel Backend]** Method `store` (dokumen 04 bagian 5.5):
     - [ ] menghitung SHA-256 isi file (`hash_file`);
     - [ ] memeriksa apakah user sudah punya file dengan hash sama; jika ya, melempar `DuplicateEbookException` yang membawa `existing_id`;
