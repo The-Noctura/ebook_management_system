@@ -250,15 +250,15 @@ Membutuhkan: C02.
 - [x] **[Laravel Backend]** File `app/Services/EbookService.php`: satu kelas yang dipakai bersama oleh Web dan API agar logika tidak ditulis dua kali (dokumen 04 bagian 8).
 - [x] **[Laravel Backend]** Pengaturan disk penyimpanan dari `.env` (`EBOOK_DISK`, bawaan `local`), sehingga pindah ke Cloudflare R2 nanti hanya perubahan pengaturan.
 - **[Laravel Backend]** Method `store` (dokumen 04 bagian 5.5):
-    - [ ] menghitung SHA-256 isi file (`hash_file`);
-    - [ ] memeriksa apakah user sudah punya file dengan hash sama; jika ya, melempar `DuplicateEbookException` yang membawa `existing_id`;
-    - [ ] menyimpan file ke kunci `ebooks/user-{id}/{uuid}.pdf`;
-    - [ ] menyimpan baris `ebooks` di dalam `DB::transaction`; judul diambil dari nama file tanpa ekstensi bila kosong;
-    - [ ] bila penyimpanan baris gagal: ROLLBACK, lalu hapus file yang tadi disimpan (compensating action, yaitu langkah pembalik yang dijalankan Laravel karena ROLLBACK tidak mengurus file); bila penghapusan file gagal, catat `file_path` ke log;
-    - [ ] kegagalan _duplicate key_ dari constraint unik (misalnya dua upload bersamaan) diperlakukan sebagai duplikat: file dihapus dan hasilnya sama dengan duplikat.
-- [ ] **[Terminal]** Pengujian lewat `php artisan tinker` (konsol interaktif Laravel): berhasil, duplikat, dan kegagalan buatan.
+    - [x] menghitung SHA-256 isi file (`hash_file`);
+    - [x] memeriksa apakah user sudah punya file dengan hash sama; jika ya, melempar `DuplicateEbookException` yang membawa `existing_id`;
+    - [x] menyimpan file ke kunci `ebooks/user-{id}/{uuid}.pdf`;
+    - [x] menyimpan baris `ebooks` di dalam `DB::transaction`; judul diambil dari nama file tanpa ekstensi bila kosong;
+    - [x] bila penyimpanan baris gagal: ROLLBACK, lalu hapus file yang tadi disimpan (compensating action, yaitu langkah pembalik yang dijalankan Laravel karena ROLLBACK tidak mengurus file); bila penghapusan file gagal, catat `file_path` ke log;
+    - [x] kegagalan _duplicate key_ dari constraint unik (misalnya dua upload bersamaan) diperlakukan sebagai duplikat: file dihapus dan hasilnya sama dengan duplikat.
+- [x] **[Terminal]** Pengujian lewat `php artisan tinker` (konsol interaktif Laravel): berhasil, duplikat, dan kegagalan buatan.
 
-- [ ] **Selesai jika:** ebook tersimpan (file dan baris), duplikat ditolak, dan kegagalan penyimpanan baris tidak meninggalkan file yatim.
+- [x] **Selesai jika:** ebook tersimpan (file dan baris), duplikat ditolak, dan kegagalan penyimpanan baris tidak meninggalkan file yatim.
 
 #### C06 · Laravel Backend · Layanan ubah status dan akses file · P0 · 5 Okt
 
