@@ -267,14 +267,14 @@ Membutuhkan: C03, C05.
 **Dikerjakan di:** Laravel Backend, Terminal. Android, Laravel API, dan Laravel Web tidak terlibat.
 
 - **[Laravel Backend]** Method `setReadStatus` pada `EbookService` (dokumen 04 bagian 5.7):
-    - [ ] mencari ebook milik user; bila tidak ada, `ModelNotFoundException`;
-    - [ ] bersifat idempotent: bila status sudah sama dengan yang diminta, procedure tidak dipanggil dan keadaan terkini dikembalikan;
-    - [ ] bila berbeda, memanggil `sp_mark_ebook_read` atau `sp_mark_ebook_unread` di dalam `DB::transaction`.
-- [ ] **[Terminal]** Pengujian ROLLBACK lewat `tinker`: error dipaksa di dalam transaksi, lalu status dan riwayat sama-sama tidak berubah.
-- [ ] **[Laravel Backend]** Method `streamFile` (dokumen 04 bagian 5.6): memeriksa kepemilikan; memeriksa file ada di disk (bila tidak, exception `file_missing`); mengembalikan stream PDF dengan `Content-Disposition: inline`.
-- [ ] **[Terminal]** Pengujian `streamFile` lewat `tinker`.
+    - [x] mencari ebook milik user; bila tidak ada, `ModelNotFoundException`;
+    - [x] bersifat idempotent: bila status sudah sama dengan yang diminta, procedure tidak dipanggil dan keadaan terkini dikembalikan;
+    - [x] bila berbeda, memanggil `sp_mark_ebook_read` atau `sp_mark_ebook_unread` di dalam `DB::transaction`.
+- [x] **[Terminal]** Pengujian ROLLBACK lewat `tinker`: error dipaksa di dalam transaksi, lalu status dan riwayat sama-sama tidak berubah.
+- [x] **[Laravel Backend]** Method `streamFile` (dokumen 04 bagian 5.6): memeriksa kepemilikan; memeriksa file ada di disk (bila tidak, exception `file_missing`); mengembalikan stream PDF dengan `Content-Disposition: inline`.
+- [x] **[Terminal]** Pengujian `streamFile` lewat `tinker`.
 
-- [ ] **Selesai jika:** COMMIT dan ROLLBACK terbukti benar pada perubahan status, dan akses file hanya untuk pemiliknya.
+- [x] **Selesai jika:** COMMIT dan ROLLBACK terbukti benar pada perubahan status, dan akses file hanya untuk pemiliknya.
 
 ### Epic B: Ebook API (P0)
 
