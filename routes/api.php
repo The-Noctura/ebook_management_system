@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\EbookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,3 +17,9 @@ Route::post('/logout', [AuthController::class, 'logout'])
 Route::get('/user', function (Request $request) {
   return $request->user();
 })->middleware('auth:sanctum');
+
+Route::get('/ebooks', [EbookController::class, 'index'])
+  ->middleware('auth:sanctum');
+Route::patch('/ebooks/{id}', [EbookController::class, 'update'])
+  ->whereNumber('id')
+  ->middleware('auth:sanctum');

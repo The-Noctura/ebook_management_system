@@ -78,8 +78,8 @@ Error validasi (422) menggunakan format standar Laravel:
 
 ```json
 {
-  "message": "The file field must be a file of type: pdf.",
-  "errors": { "file": ["The file field must be a file of type: pdf."] }
+    "message": "The file field must be a file of type: pdf.",
+    "errors": { "file": ["The file field must be a file of type: pdf."] }
 }
 ```
 
@@ -87,8 +87,8 @@ Error lainnya menggunakan format:
 
 ```json
 {
-  "message": "Pesan yang dapat ditampilkan kepada user.",
-  "code": "kode_mesin"
+    "message": "Pesan yang dapat ditampilkan kepada user.",
+    "code": "kode_mesin"
 }
 ```
 
@@ -119,11 +119,11 @@ Ebook milik user lain diperlakukan **sama dengan ebook yang tidak ada**: respons
 
 ```json
 {
-  "id": 15,
-  "title": "Clean Code",
-  "is_read": false,
-  "created_at": "2026-10-03T08:15:00+00:00",
-  "updated_at": "2026-10-03T08:15:00+00:00"
+    "id": 15,
+    "title": "Clean Code",
+    "is_read": false,
+    "created_at": "2026-10-03T08:15:00+00:00",
+    "updated_at": "2026-10-03T08:15:00+00:00"
 }
 ```
 
@@ -141,10 +141,10 @@ Field yang **tidak** diekspos: `user_id`, `file_path` (kunci internal R2), `file
 
 ```json
 {
-  "name": "Noctura",
-  "email": "user@example.com",
-  "password": "rahasia123",
-  "password_confirmation": "rahasia123"
+    "name": "Noctura",
+    "email": "user@example.com",
+    "password": "rahasia123",
+    "password_confirmation": "rahasia123"
 }
 ```
 
@@ -160,7 +160,7 @@ Field yang **tidak** diekspos: `user_id`, `file_path` (kunci internal R2), `file
 
 ```json
 {
-  "data": { "id": 1, "name": "Noctura", "email": "user@example.com" }
+    "data": { "id": 1, "name": "Noctura", "email": "user@example.com" }
 }
 ```
 
@@ -178,9 +178,9 @@ Register **tidak** mengembalikan token. Sesuai alur pada 02-User-Flow, setelah a
 
 ```json
 {
-  "email": "user@example.com",
-  "password": "rahasia123",
-  "device_name": "android"
+    "email": "user@example.com",
+    "password": "rahasia123",
+    "device_name": "android"
 }
 ```
 
@@ -190,11 +190,11 @@ Register **tidak** mengembalikan token. Sesuai alur pada 02-User-Flow, setelah a
 
 ```json
 {
-  "data": {
-    "token": "1|abcdef...",
-    "token_type": "Bearer",
-    "user": { "id": 1, "name": "Noctura", "email": "user@example.com" }
-  }
+    "data": {
+        "token": "1|abcdef...",
+        "token_type": "Bearer",
+        "user": { "id": 1, "name": "Noctura", "email": "user@example.com" }
+    }
 }
 ```
 
@@ -238,23 +238,23 @@ Setelah respons, Android menghapus token lokal dan kembali ke layar login. Jika 
 
 ```json
 {
-  "data": [
-    {
-      "id": 15,
-      "title": "Clean Code",
-      "is_read": false,
-      "created_at": "2026-10-03T08:15:00+00:00",
-      "updated_at": "2026-10-03T08:15:00+00:00"
-    },
-    {
-      "id": 12,
-      "title": "Atomic Habits",
-      "is_read": true,
-      "created_at": "2026-10-02T10:00:00+00:00",
-      "updated_at": "2026-10-03T07:30:00+00:00"
-    }
-  ],
-  "meta": { "total": 2, "read_count": 1 }
+    "data": [
+        {
+            "id": 15,
+            "title": "Clean Code",
+            "is_read": false,
+            "created_at": "2026-10-03T08:15:00+00:00",
+            "updated_at": "2026-10-03T08:15:00+00:00"
+        },
+        {
+            "id": 12,
+            "title": "Atomic Habits",
+            "is_read": true,
+            "created_at": "2026-10-02T10:00:00+00:00",
+            "updated_at": "2026-10-03T07:30:00+00:00"
+        }
+    ],
+    "meta": { "total": 2, "read_count": 1 }
 }
 ```
 
@@ -282,13 +282,13 @@ Setelah respons, Android menghapus token lokal dan kembali ke layar login. Jika 
 
 ```json
 {
-  "data": {
-    "id": 16,
-    "title": "Kotlin Basics",
-    "is_read": false,
-    "created_at": "2026-10-03T09:00:00+00:00",
-    "updated_at": "2026-10-03T09:00:00+00:00"
-  }
+    "data": {
+        "id": 16,
+        "title": "Kotlin Basics",
+        "is_read": false,
+        "created_at": "2026-10-03T09:00:00+00:00",
+        "updated_at": "2026-10-03T09:00:00+00:00"
+    }
 }
 ```
 
@@ -306,9 +306,9 @@ Contoh 409:
 
 ```json
 {
-  "message": "PDF ini sudah ada di koleksi Anda.",
-  "code": "duplicate_ebook",
-  "data": { "existing_id": 12 }
+    "message": "PDF ini sudah ada di koleksi Anda.",
+    "code": "duplicate_ebook",
+    "data": { "existing_id": 12 }
 }
 ```
 
@@ -399,13 +399,13 @@ Field lain pada body diabaikan. Pengubahan judul berada di luar MVP.
 
 ```json
 {
-  "data": {
-    "id": 15,
-    "title": "Clean Code",
-    "is_read": true,
-    "created_at": "2026-10-03T08:15:00+00:00",
-    "updated_at": "2026-10-03T09:30:00+00:00"
-  }
+    "data": {
+        "id": 15,
+        "title": "Clean Code",
+        "is_read": true,
+        "created_at": "2026-10-03T08:15:00+00:00",
+        "updated_at": "2026-10-03T09:30:00+00:00"
+    }
 }
 ```
 
@@ -459,7 +459,7 @@ Tambahkan aturan: satu user tidak boleh memiliki dua ebook dengan `file_hash` ya
 
 ### 6.4 Catatan untuk Stored Procedure
 
-Procedure `sp_mark_ebook_read` dan `sp_mark_ebook_unread` memperbarui `ebooks` langsung di MySQL, sehingga Eloquent tidak mengisi `updated_at` secara otomatis. Procedure harus menyertakan `updated_at = NOW()` pada `UPDATE`. Tanpa itu, `updated_at` pada respons PATCH tidak berubah.
+Procedure `sp_mark_ebook_read` dan `sp_mark_ebook_unread` memperbarui `ebooks` langsung di MySQL, sehingga Eloquent tidak mengisi `updated_at` secara otomatis. Procedure harus menyertakan `updated_at = NOW()` pada `UPDATE`. Tanpa itu, `updated_at` pada respons PATCH tidak berubah. Koneksi MySQL Laravel dikonfigurasi dengan `'timezone' => '+00:00'` pada `config/database.php`, sehingga `NOW()` di Procedure dan Trigger menghasilkan UTC, konsisten dengan timestamp yang diisi Eloquent.
 
 ---
 

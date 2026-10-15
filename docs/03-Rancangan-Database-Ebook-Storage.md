@@ -246,6 +246,10 @@ mengisi `updated_at` secara otomatis. Perintah `UPDATE` di dalam
 Procedure harus menyertakan `updated_at = NOW()`. Tanpa itu,
 `updated_at` pada respons API tidak berubah setelah status diubah.
 
+Koneksi MySQL Laravel dikonfigurasi dengan `'timezone' => '+00:00'` pada
+`config/database.php`, sehingga `NOW()` di Procedure dan Trigger
+menghasilkan UTC, konsisten dengan timestamp yang diisi Eloquent.
+
 ```text
 Laravel
    │
