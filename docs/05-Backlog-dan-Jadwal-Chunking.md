@@ -288,9 +288,9 @@ Membutuhkan: C04, C06.
 - [x] **[Laravel API]** `GET /api/ebooks`: ebook milik user, urut `created_at` menurun, tanpa pagination; `meta.total` dan `meta.read_count` (dari `fn_count_read_ebooks`); koleksi kosong menghasilkan `data: []` dengan nilai 0 (dokumen 04 bagian 5.4).
 - [ ] **[Laravel API]** `PATCH /api/ebooks/{id}`: `is_read` wajib boolean, memanggil `setReadStatus`, respons 200 berisi data terkini (dokumen 04 bagian 5.7).
 - [ ] **[Laravel API]** Penanganan error JSON secara global: 401 `unauthenticated`, 404 `ebook_not_found` (ebook milik user lain diperlakukan sama dengan tidak ada), 500 `server_error` (dokumen 04 bagian 3.4 sampai 3.6).
-- [ ] **[Postman]** Pengujian: koleksi kosong, berisi, tanpa token; `PATCH` dengan status sama (riwayat tidak bertambah), pada ebook user lain (404), dan dengan body kosong (422).
+- [x] **[Postman]** Pengujian: koleksi kosong, berisi, tanpa token; `PATCH` dengan status sama (riwayat tidak bertambah), pada ebook user lain (404), dan dengan body kosong (422).
 
-- [ ] **Selesai jika:** **[Postman]** respons sesuai dokumen 04 bagian 5.4 dan 5.7.
+- [x] **Selesai jika:** **[Postman]** respons sesuai dokumen 04 bagian 5.4 dan 5.7.
 
 #### C08 · Laravel API · API upload dan unduh · P0 · 6 Okt
 
