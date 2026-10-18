@@ -91,9 +91,9 @@ Centang pekerjaan di sini setelah kotak **Selesai jika**-nya tercentang.
 - [x] C02 · Laravel Backend · Tabel ebook dan model (4 Okt)
 - [x] C03 · Laravel Backend · Objek database: procedure, trigger, function (5 Okt)
 - [x] C04 · Laravel Backend dan Laravel API · Autentikasi API (5 Okt)
-- [ ] C05 · Laravel Backend · Layanan penyimpanan ebook (5 Okt)
-- [ ] C06 · Laravel Backend · Layanan ubah status dan akses file (5 Okt)
-- [ ] C07 · Laravel API · API daftar dan ubah status (6 Okt)
+- [x] C05 · Laravel Backend · Layanan penyimpanan ebook (5 Okt)
+- [x] C06 · Laravel Backend · Layanan ubah status dan akses file (5 Okt)
+- [x] C07 · Laravel API · API daftar dan ubah status (6 Okt)
 - [ ] C08 · Laravel API · API upload dan unduh (6 Okt)
 - [ ] C09 · Uji di Postman · Pengujian API menyeluruh (6 Okt)
 - [ ] C10 · Laravel Web · Daftar koleksi dan ubah status (6 Okt)
@@ -286,8 +286,8 @@ Membutuhkan: C04, C06.
 
 - [x] **[Laravel API]** `EbookResource` (bentuk data ebook yang dikirim ke klien): `id`, `title`, `is_read`, `created_at`, `updated_at`; tanpa `user_id`, `file_path`, `file_hash` (dokumen 04 bagian 4).
 - [x] **[Laravel API]** `GET /api/ebooks`: ebook milik user, urut `created_at` menurun, tanpa pagination; `meta.total` dan `meta.read_count` (dari `fn_count_read_ebooks`); koleksi kosong menghasilkan `data: []` dengan nilai 0 (dokumen 04 bagian 5.4).
-- [ ] **[Laravel API]** `PATCH /api/ebooks/{id}`: `is_read` wajib boolean, memanggil `setReadStatus`, respons 200 berisi data terkini (dokumen 04 bagian 5.7).
-- [ ] **[Laravel API]** Penanganan error JSON secara global: 401 `unauthenticated`, 404 `ebook_not_found` (ebook milik user lain diperlakukan sama dengan tidak ada), 500 `server_error` (dokumen 04 bagian 3.4 sampai 3.6).
+- [x] **[Laravel API]** `PATCH /api/ebooks/{id}`: `is_read` wajib boolean, memanggil `setReadStatus`, respons 200 berisi data terkini (dokumen 04 bagian 5.7).
+- [x] **[Laravel API]** Penanganan error JSON secara global: 401 `unauthenticated`, 404 `ebook_not_found` (ebook milik user lain diperlakukan sama dengan tidak ada), 500 `server_error` (dokumen 04 bagian 3.4 sampai 3.6).
 - [x] **[Postman]** Pengujian: koleksi kosong, berisi, tanpa token; `PATCH` dengan status sama (riwayat tidak bertambah), pada ebook user lain (404), dan dengan body kosong (422).
 
 - [x] **Selesai jika:** **[Postman]** respons sesuai dokumen 04 bagian 5.4 dan 5.7.
