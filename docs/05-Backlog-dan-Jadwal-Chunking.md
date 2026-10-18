@@ -302,9 +302,9 @@ Membutuhkan: C05, C07.
 - [x] **[Laravel API]** `POST /api/ebooks` (dokumen 04 bagian 5.5): `file` wajib PDF (ekstensi `pdf` dan MIME `application/pdf`) maksimal 20480 KB; `title` opsional maksimal 255; memanggil `EbookService::store`; respons 201.
 - [x] **[Laravel API]** `DuplicateEbookException` dipetakan ke 409 `duplicate_ebook` dengan pesan "PDF ini sudah ada di koleksi Anda." dan `data.existing_id`.
 - [x] **[Laravel API]** `GET /api/ebooks/{id}/file` (dokumen 04 bagian 5.6): header `Content-Type`, `Content-Length`, dan `Content-Disposition: inline`; 404 `ebook_not_found` dan 404 `file_missing`.
-- [ ] **[Postman]** Pengujian: upload valid, duplikat, bukan PDF, di atas 20 MB; hasil unduhan dibuka.
+- [x] **[Postman]** Pengujian: upload valid, duplikat, bukan PDF, di atas 20 MB; hasil unduhan dibuka.
 
-- [ ] **Selesai jika:** **[Postman]** keempat kasus upload benar dan PDF hasil unduhan dapat dibuka.
+- [x] **Selesai jika:** **[Postman]** keempat kasus upload benar dan PDF hasil unduhan dapat dibuka.
 
 #### C09 · Uji di Postman · Pengujian API menyeluruh · P0 · 6 Okt
 
@@ -312,11 +312,11 @@ Membutuhkan: C08.
 
 **Dikerjakan di:** Postman, Terminal (tag Git), dan Laravel API atau Laravel Backend bila ada bug yang diperbaiki. Android dan Laravel Web tidak terlibat.
 
-- [ ] **[Postman]** Postman collection berisi 7 endpoint dengan environment (`base_url` dan `token`).
-- [ ] **[Postman]** Seluruh skenario pada matriks uji API (bagian 6) dijalankan.
-- [ ] **[Laravel API]** Bug yang ditemukan diperbaiki, lalu **[Terminal]** beri tag Git `api-stable`.
+- [x] **[Postman]** Postman collection berisi 7 endpoint dengan environment (`base_url` dan `token`).
+- [x] **[Postman]** Seluruh skenario pada matriks uji API (bagian 6) dijalankan.
+- [x] **[Laravel API]** Bug yang ditemukan diperbaiki, lalu **[Terminal]** beri tag Git `api-stable`.
 
-- [ ] **Selesai jika:** seluruh baris matriks uji API lulus.
+- [x] **Selesai jika:** seluruh baris matriks uji API lulus.
 
 ### Epic C: Web (P1)
 
