@@ -20,6 +20,11 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/ebooks', [EbookController::class, 'index'])
   ->middleware('auth:sanctum');
+Route::post('/ebooks', [EbookController::class, 'store'])
+  ->middleware('auth:sanctum');
+Route::get('/ebooks/{id}/file', [EbookController::class, 'file'])
+  ->whereNumber('id')
+  ->middleware('auth:sanctum');
 Route::patch('/ebooks/{id}', [EbookController::class, 'update'])
   ->whereNumber('id')
   ->middleware('auth:sanctum');

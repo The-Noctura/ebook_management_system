@@ -24,6 +24,23 @@ class ApiErrorResponse
       return null;
     }
 
+    // 409: PDF duplikat dalam koleksi user (dokumen 04 bagian 5.5).
+    if ($exception instanceof DuplicateEbookException) {
+      return response()->json([
+        'message' => $exception->getMessage(),
+        'code' => 'duplicate_ebook',
+        'data' => ['existing_id' => $exception->existingId],
+      ], 409);
+    }
+
+    // 404: baris ebook ada, tetapi file tidak ada di storage (dokumen 04 bagian 5.6).
+    if ($exception instanceof EbookFileMissingException) {
+      return response()->json([
+        'message' => 'File ebook tidak tersedia.',
+        'code' => 'file_missing',
+      ], 404);
+    }
+
     $status = match (true) {
       $exception instanceof AuthenticationException => 401,
       $exception instanceof HttpExceptionInterface => $exception->getStatusCode(),
@@ -52,6 +69,11 @@ class ApiErrorResponse
       'server_error' => 'Terjadi kesalahan pada server.',
       default => 'Permintaan tidak dapat diproses.',
     };
+
+    // 413 datang dari ValidatePostSize (body melebihi post_max_size); dokumen 04 bagian 7.1.
+    if ($status === 413) {
+      $message = 'Ukuran file melebihi batas 20 MB.';
+    }
 
     $headers = $exception instanceof HttpExceptionInterface ? $exception->getHeaders() : [];
 
