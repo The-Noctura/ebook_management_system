@@ -2,13 +2,14 @@
 
 ## Ebook Storage & To-Do List
 
-| Item                      | Detail                                                                                                    |
-| ------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Versi                     | 3 (menggantikan versi 2)                                                                                  |
-| Tanggal disusun           | 5 Oktober 2026                                                                                            |
-| Acuan                     | 00-Project-Overview, 01-Use-Case, 02-User-Flow, 03-Rancangan-Database-Ebook-Storage, 04-API-Specification |
-| Milestone (tidak berubah) | Core MVP Functional 7 Oktober 2026; Full MVP 12 Oktober 2026                                              |
-| Jam kerja                 | 16.00 sampai 23.00 atau 00.00 (6-8 jam per hari)                                                          |
+| Item                      | Detail                                                                                                                      |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Versi                     | 3 (menggantikan versi 2)                                                                                                    |
+| Tanggal disusun           | 5 Oktober 2026                                                                                                              |
+| Revisi terakhir           | 19 Oktober 2026: penerapan dokumen 06 dan Tailwind pada Web (lihat bagian 9)                                                |
+| Acuan                     | 00-Project-Overview, 01-Use-Case, 02-User-Flow, 03-Rancangan-Database-Ebook-Storage, 04-API-Specification, 06-Design-System |
+| Milestone (tidak berubah) | Core MVP Functional 7 Oktober 2026; Full MVP 12 Oktober 2026                                                                |
+| Jam kerja                 | 16.00 sampai 23.00 atau 00.00 (6-8 jam per hari)                                                                            |
 
 ---
 
@@ -32,9 +33,9 @@ Empat tanda pertama adalah tempat **menulis kode**. Tanda sisanya adalah alat at
 | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Laravel Backend** | Bagian proyek Laravel yang dipakai bersama oleh Web dan API: file `.env`, migration (file pembuat tabel), model, `EbookService`, dan objek MySQL (procedure, trigger, function). Tidak punya halaman dan tidak punya alamat `/api`. |
 | **Laravel API**     | Bagian proyek Laravel yang melayani Android dan Postman lewat alamat `/api/...` dengan jawaban JSON dan token Sanctum: route API, controller API, `EbookResource`.                                                                  |
-| **Laravel Web**     | Bagian proyek Laravel yang melayani browser: route web, controller web, view Blade (file tampilan), dan sesi login.                                                                                                                 |
+| **Laravel Web**     | Bagian proyek Laravel yang melayani browser: route web, controller web, view Blade (file tampilan), komponen Blade, CSS Tailwind (`resources/css/app.css`), dan sesi login.                                                         |
 | **Android**         | Proyek Kotlin di Android Studio. Tidak ada kode Laravel di sini.                                                                                                                                                                    |
-| Terminal            | Perintah (`php artisan`, `composer`, `git`) yang dijalankan di folder proyek Laravel.                                                                                                                                               |
+| Terminal            | Perintah (`php artisan`, `composer`, `npm`, `git`) yang dijalankan di folder proyek Laravel.                                                                                                                                        |
 | Klien MySQL         | Aplikasi yang Anda pakai untuk membuka database MySQL dan menjalankan SQL secara manual.                                                                                                                                            |
 | Postman             | Aplikasi untuk mengirim request ke API dan melihat jawabannya.                                                                                                                                                                      |
 | Browser             | Browser di komputer untuk memakai halaman Web.                                                                                                                                                                                      |
@@ -51,6 +52,7 @@ Semua durasi di bawah adalah **perkiraan saya**, bukan ukuran pasti.
 
 - Total beban C03 sampai C26 sekitar **39 jam**. C01 dan C02 dijadwalkan 4 Oktober.
 - Waktu tersedia 5 sampai 12 Oktober pada 6-8 jam per hari adalah sekitar 48 sampai 64 jam, sehingga ada sisa sekitar 9 sampai 25 jam sebagai penyangga.
+- Penerapan dokumen 06 (Design System) menambah sekitar **3 sampai 4 jam**, perkiraan saya, yaitu token dan komponen Tailwind di C10, tampilan Upload di C11, serta tema Android di C12 dan C14. Tambahan ini **belum termasuk** dalam angka 39 jam dan belum diselipkan ke tabel jadwal.
 - Jadwal tidak memperhitungkan hari ketika pekerjaan lain (tim Roblox, startup) mengambil waktu. Bila ada hari yang sudah pasti kosong, jadwal perlu dihitung ulang.
 
 | Target                                   | Nilai    | Catatan                                                                                                                        |
@@ -94,8 +96,8 @@ Centang pekerjaan di sini setelah kotak **Selesai jika**-nya tercentang.
 - [x] C05 · Laravel Backend · Layanan penyimpanan ebook (5 Okt)
 - [x] C06 · Laravel Backend · Layanan ubah status dan akses file (5 Okt)
 - [x] C07 · Laravel API · API daftar dan ubah status (6 Okt)
-- [ ] C08 · Laravel API · API upload dan unduh (6 Okt)
-- [ ] C09 · Uji di Postman · Pengujian API menyeluruh (6 Okt)
+- [x] C08 · Laravel API · API upload dan unduh (6 Okt)
+- [x] C09 · Uji di Postman · Pengujian API menyeluruh (6 Okt)
 - [ ] C10 · Laravel Web · Daftar koleksi dan ubah status (6 Okt)
 - [ ] C11 · Laravel Web · Upload dan buka PDF (7 Okt)
 - [ ] C12 · Android · Setup proyek dan koneksi ke backend (7 Okt)
@@ -128,7 +130,7 @@ Centang pekerjaan di sini setelah kotak **Selesai jika**-nya tercentang.
 - [x] **[Laravel Backend]** Tiga pengaturan di `.env` (`SESSION_DRIVER=file`, `CACHE_STORE=file`, `QUEUE_CONNECTION=sync`) agar sesi, cache, dan antrean tidak membutuhkan tabel di database.
 - [x] **[Laravel Backend]** Hapus bawaan Laravel yang tidak dipakai: tabel `password_reset_tokens`, `sessions`, cache, dan jobs, serta kolom `email_verified_at` dan `remember_token` di tabel `users`.
 - [x] **[Laravel Backend]** Migration (file pembuat tabel) `users` sesuai dokumen 03 bagian 3: `name` (maks 100 karakter), `email` unik, `password`, `created_at`, `updated_at`.
-- [x] **[Laravel Web]** Satu layout Blade (kerangka halaman yang dipakai bersama) dengan CSS biasa, tanpa Tailwind, Vite, atau Node.js.
+- [x] **[Laravel Web]** Satu layout Blade (kerangka halaman yang dipakai bersama) dengan CSS biasa, tanpa Tailwind, Vite, atau Node.js. _(Diganti 19 Oktober 2026: Web kini memakai Tailwind CSS lewat Vite dan Node.js sesuai dokumen 06 bagian 10; penyesuaian tampilan dikerjakan di C10. Lihat bagian 9.)_
 - [x] **[Laravel Web]** File `AuthController` untuk Web (satu file yang menampung logika register, login, dan logout halaman Web).
 
 **Register**
@@ -324,22 +326,30 @@ Membutuhkan: C08.
 
 Membutuhkan: C06, C01.
 
-**Dikerjakan di:** Dokumen, Laravel Web, Browser, Klien MySQL. Android dan Laravel API tidak terlibat; Laravel Backend hanya dipanggil.
+**Dikerjakan di:** Dokumen, Terminal (hanya `npm`), Laravel Web, Browser, Klien MySQL. Android dan Laravel API tidak terlibat; Laravel Backend hanya dipanggil.
 
 **Rancangan layar (dikerjakan lebih dulu agar tampilan jelas)**
 
-- [x] **[Dokumen]** Wireframe (sketsa kasar tata letak) empat layar: Login, Daftar Ebook, Upload, dan Empty State (tampilan saat koleksi kosong), berupa sketsa tangan atau ASCII yang menentukan elemen, tombol, dan pesan.
-- [x] **[Dokumen]** Wireframe Login dan Register berlaku untuk Web dan Android; halaman Web dari C01 tidak dikerjakan ulang.
+- [ ] **[Dokumen]** Wireframe (sketsa kasar tata letak) empat layar: Login, Daftar Ebook, Upload, dan Empty State (tampilan saat koleksi kosong), berupa sketsa tangan atau ASCII yang menentukan elemen, tombol, dan pesan.
+- [ ] **[Dokumen]** Wireframe Login dan Register berlaku untuk Web dan Android. Logika Login dan Register dari C01 tidak dikerjakan ulang; hanya tampilannya disesuaikan pada butir Design system di bawah.
 - [x] **[Dokumen]** Wireframe disimpan di repositori, misalnya folder `docs/`.
+
+**Design system Web (dokumen 06)**
+
+- [x] **[Terminal]** `npm run dev` berjalan dan `npm run build` berhasil. Versi Tailwind diperiksa di `package.json`; dokumen 06 bagian 10 mengasumsikan v4.
+- [ ] **[Laravel Web]** Token warna, radius, tipografi, easing, dan animasi dari dokumen 06 bagian 10.2 ditulis di `resources/css/app.css`.
+- [x] **[Laravel Web]** Layout Blade memuat aset dengan `@vite`.
+- [ ] **[Laravel Web]** Komponen Blade `button`, `card`, `chip`, dan `field` (dokumen 06 bagian 10.4), serta komponen ikon SVG inline `x-icon.*` untuk ikon yang dibutuhkan layar.
+- [ ] **[Laravel Web]** Login dan Register dari C01 disesuaikan tampilannya (dua kolom di desktop, pita merah di mobile) memakai komponen tersebut; logika tidak berubah.
 
 **Halaman**
 
 - [x] **[Laravel Web]** Route `GET /ebooks` dalam grup `auth` (hanya untuk user yang sudah login) dan `WebEbookController@index`, menggantikan halaman sementara dari C01 (dokumen 04 bagian 8).
-- [x] **[Laravel Web]** View daftar berisi judul, status baca, dan tanggal; Empty State sesuai wireframe; jumlah ebook yang sudah dibaca dari `fn_count_read_ebooks`.
-- [x] **[Laravel Web]** Kontrol ubah status: form dengan `@method('PATCH')` ke `PATCH /ebooks/{id}` yang memanggil `EbookService::setReadStatus`.
-- [x] **[Klien MySQL]** Setelah status diubah dari Browser, tabel `ebook_status_history` terisi.
+- [ ] **[Laravel Web]** View daftar berisi judul, status baca, dan tanggal; Empty State sesuai wireframe; jumlah ebook yang sudah dibaca dari `fn_count_read_ebooks`. Tampilan memakai bilah atas merah, grid kartu di desktop, dan komponen `card` serta `chip` (dokumen 06 bagian 7 dan 8).
+- [ ] **[Laravel Web]** Kontrol ubah status: form dengan `@method('PATCH')` ke `PATCH /ebooks/{id}` yang memanggil `EbookService::setReadStatus`.
+- [ ] **[Klien MySQL]** Setelah status diubah dari Browser, tabel `ebook_status_history` terisi.
 
-- [x] **Selesai jika:** **[Browser]** setelah login user melihat koleksinya sendiri (atau Empty State) dan dapat mengubah status baca.
+- [ ] **Selesai jika:** **[Browser]** setelah login user melihat koleksinya sendiri (atau Empty State) dan dapat mengubah status baca, dan tampilan lolos daftar periksa dokumen 06 bagian 14.
 
 #### C11 · Laravel Web · Upload dan buka PDF · P1 · 7 Okt
 
@@ -347,7 +357,7 @@ Membutuhkan: C10, C05.
 
 **Dikerjakan di:** Laravel Web, Browser. Android dan Laravel API tidak terlibat; Laravel Backend hanya dipanggil.
 
-- [ ] **[Laravel Web]** Route `POST /ebooks` dan view form upload (`multipart/form-data`, yaitu jenis form yang dapat mengirim file) sesuai wireframe.
+- [ ] **[Laravel Web]** Route `POST /ebooks` dan view form upload (`multipart/form-data`, yaitu jenis form yang dapat mengirim file) sesuai wireframe. Tampilan mengikuti dokumen 06 bagian 8.1 (dua kolom di desktop dengan kotak aturan upload); tombol nonaktif selama proses agar tidak terkirim dua kali.
 - [ ] **[Laravel Web]** Validasi: file harus PDF, maksimal 20480 KB; `title` opsional.
 - [ ] **[Laravel Web]** Pesan error berbahasa Indonesia untuk file bukan PDF, lebih dari 20 MB, dan duplikat ("PDF ini sudah ada di koleksi Anda.").
 - [ ] **[Laravel Web]** Route `GET /ebooks/{id}/file` dan tautan buka PDF di daftar, yang membuka PDF di penampil bawaan browser.
@@ -371,6 +381,7 @@ Membutuhkan: C04.
 **Proyek**
 
 - [ ] **[Android]** Proyek Kotlin dengan ViewBinding (cara mengakses elemen layar tanpa `findViewById`), dependency Retrofit (pustaka pemanggil API), converter Gson (pengubah JSON), OkHttp logging-interceptor (pencatat request di Logcat), dan RecyclerView (komponen daftar).
+- [ ] **[Android]** Material Components dan resource tema dari dokumen 06 bagian 11: `colors.xml`, `dimens.xml`, `themes.xml`, interpolator, dan `Motion.kt`. Tanpa `values-night` karena tema gelap tidak dipakai.
 - [ ] **[Android]** `AndroidManifest`: izin `INTERNET` dan izin HTTP tanpa enkripsi (cleartext) khusus pengembangan.
 - [ ] **[Terminal]** Jalankan Laravel dengan `php artisan serve --host=0.0.0.0` sesuai keputusan di atas.
 - [ ] **[Android]** Uji sambung dari **[HP fisik]**: memanggil `POST /api/login` dengan data tetap dan melihat respons di Logcat (jendela log Android Studio).
@@ -400,7 +411,7 @@ Membutuhkan: C13, C07.
 **Dikerjakan di:** Dokumen, Android, HP fisik, Browser (untuk mengunggah ebook uji). Laravel tidak diubah; yang dipakai adalah `GET /api/ebooks` dari C07.
 
 - [ ] **[Dokumen]** Wireframe Daftar Ebook dan Empty State disesuaikan untuk Android.
-- [ ] **[Android]** Layout daftar dan item (judul dan kontrol status).
+- [ ] **[Android]** Layout daftar dan item (judul dan kontrol status) mengikuti dokumen 06 bagian 7: bilah atas merah, kartu ebook, chip status baca, dan tombol Tambah PDF mengambang.
 - [ ] **[Android]** `RecyclerView` dan adapter yang memanggil `GET /api/ebooks`.
 - [ ] **[Android]** Tampilan loading, Empty State, dan error dengan tombol muat ulang; jumlah ebook yang sudah dibaca diambil dari `meta.read_count`.
 
@@ -574,7 +585,7 @@ Membutuhkan: C25.
 **Dikerjakan di:** Browser, HP fisik, Terminal, Klien MySQL, Dokumen, dan perbaikan di bagian mana pun yang bermasalah.
 
 - [ ] **[Browser]** dan **[HP fisik]** Daftar periksa Gate 12 Oktober (bagian 6) dijalankan ulang; hanya bug yang menghalangi P0 dan P1 yang diperbaiki.
-- [ ] **[Terminal]** Tag Git rilis.
+- [ ] **[Terminal]** `npm run build` berhasil dan `public/build` terbentuk, lalu tag Git rilis.
 - [ ] **[Dokumen]** `README` berisi langkah menjalankan Laravel dan Android.
 - [ ] **[Klien MySQL]** Akun dan data demo disiapkan dan database dicadangkan.
 - [ ] **[Browser]** dan **[HP fisik]** Skenario demo dilatih satu kali.
@@ -699,8 +710,9 @@ Tidak dijadwalkan.
 Bila waktu tidak cukup, korbankan dari atas ke bawah:
 
 1. Item P2 (polish dan penelitian Local Discovery); keduanya sudah tidak dijadwalkan.
-2. Pengujian file besar pada C18 (kurangi menjadi satu uji).
-3. Penyeragaman pesan error pada C24 (pertahankan hanya pesan yang menghalangi alur P0).
+2. Penyesuaian tampilan Login dan Register Web ke dokumen 06 (logika dari C01 tetap berfungsi tanpa itu).
+3. Pengujian file besar pada C18 (kurangi menjadi satu uji).
+4. Penyeragaman pesan error pada C24 (pertahankan hanya pesan yang menghalangi alur P0).
 
 **Tidak dapat dipotong:**
 
@@ -718,6 +730,8 @@ Catat ide atau bug baru di sini; jangan dikerjakan di tengah pekerjaan lain.
 - [ ] Temuan review dokumen 00-05 (pagi 4 Okt) yang tidak menghalangi C01-C02.
 - [ ] Urutan integrasi Cloudflare R2: dokumen 05 menjadwalkan R2 (C21-C22) pada 9-10 Okt, yaitu setelah Web dan Android berjalan, sedangkan dokumen 00 bagian 20 menempatkan integrasi R2 pada langkah 10, sebelum Web dan Android. Belum diputuskan mana yang berlaku (dibahas nanti).
 - [ ] Penyimpanan lokal Android: makna "file lokal" (folder Download atau penyimpanan privat aplikasi; apakah file sementara pasca-upload dipindahkan ke `filesDir/pdfs/{id}.pdf`) dan pembaruan dokumen 00, 01, 02 terkait; diputuskan paling lambat saat mengerjakan C19 (dibahas nanti).
+- [ ] Wireframe Login, Register, Daftar Ebook, Upload, dan Empty State di `docs/` ditulis sebelum dokumen 06 dan masih berasumsi satu kolom di desktop. Sesuaikan dengan dokumen 06 bagian 8.1 bila masih dipakai sebagai acuan.
+- [ ] Dokumen 00 bagian 1.1 masih menyebut enam dokumen perancangan; dokumen 06 perlu ditambahkan ke daftar itu.
 - [ ] (tambahkan di sini)
 
 ---
@@ -726,12 +740,15 @@ Catat ide atau bug baru di sini; jangan dikerjakan di tengah pekerjaan lain.
 
 Diisi setiap kali ada perubahan pada dokumen perancangan.
 
-| Pekerjaan | Perubahan atau temuan                                                                                                                                                                                                                                                                                                                                               | Dokumen yang diperbarui | Selesai |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | ------- |
-| C13       | Token memakai `SharedPreferences` privat (04 bagian 3.2)                                                                                                                                                                                                                                                                                                            | 04                      | [x]     |
-| C19       | Penyimpanan lokal Android: lokasi dan sifat file hasil unduhan                                                                                                                                                                                                                                                                                                      | 00, 01                  | [ ]     |
-| C01       | Autentikasi Web dibuat sendiri, bukan Breeze; register Web diarahkan ke login sesuai 02 bagian 5.1                                                                                                                                                                                                                                                                  | 05 (C01, C10, Parkir)   | [x]     |
-| (semua)   | Dokumen 05 diubah dari jadwal berisi perintah menjadi daftar hasil per pekerjaan (versi 3); jadwal dihitung ulang untuk jam kerja 16.00-23.00/00; aturan kerja, durasi 90 menit, slot cadangan, dan catatan perubahan per pekerjaan dihapus                                                                                                                         | 05                      | [x]     |
-| (semua)   | Tanda platform tunggal di judul pekerjaan ambigu (C04 disangka bagian Android). Setiap pekerjaan kini punya baris "Dikerjakan di" dan setiap butir diberi tanda tempat kerja (Laravel Backend, Laravel API, Laravel Web, Android, dan alat bantu); ditambah tabel pemetaan di bagian 5. Header `Accept` dinyatakan dikirim oleh Postman atau Android, bukan Laravel | 05                      | [x]     |
-| C07       | Zona waktu koneksi MySQL diatur ke UTC (`'timezone' => '+00:00'` di `config/database.php`) agar `NOW()` pada procedure dan trigger konsisten dengan timestamp Eloquent                                                                                                                                                                                              | 03, 04                  | [x]     |
-|           |                                                                                                                                                                                                                                                                                                                                                                     |                         | [ ]     |
+| Pekerjaan | Perubahan atau temuan                                                                                                                                                                                                                                                                                                                                               | Dokumen yang diperbarui                                         | Selesai |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------- |
+| C13       | Token memakai `SharedPreferences` privat (04 bagian 3.2)                                                                                                                                                                                                                                                                                                            | 04                                                              | [x]     |
+| C19       | Penyimpanan lokal Android: lokasi dan sifat file hasil unduhan                                                                                                                                                                                                                                                                                                      | 00, 01                                                          | [ ]     |
+| C01       | Autentikasi Web dibuat sendiri, bukan Breeze; register Web diarahkan ke login sesuai 02 bagian 5.1                                                                                                                                                                                                                                                                  | 05 (C01, C10, Parkir)                                           | [x]     |
+| (semua)   | Dokumen 05 diubah dari jadwal berisi perintah menjadi daftar hasil per pekerjaan (versi 3); jadwal dihitung ulang untuk jam kerja 16.00-23.00/00; aturan kerja, durasi 90 menit, slot cadangan, dan catatan perubahan per pekerjaan dihapus                                                                                                                         | 05                                                              | [x]     |
+| (semua)   | Tanda platform tunggal di judul pekerjaan ambigu (C04 disangka bagian Android). Setiap pekerjaan kini punya baris "Dikerjakan di" dan setiap butir diberi tanda tempat kerja (Laravel Backend, Laravel API, Laravel Web, Android, dan alat bantu); ditambah tabel pemetaan di bagian 5. Header `Accept` dinyatakan dikirim oleh Postman atau Android, bukan Laravel | 05                                                              | [x]     |
+| C07       | Zona waktu koneksi MySQL diatur ke UTC (`'timezone' => '+00:00'` di `config/database.php`) agar `NOW()` pada procedure dan trigger konsisten dengan timestamp Eloquent                                                                                                                                                                                              | 03, 04                                                          | [x]     |
+| C01, C10  | Web memakai Tailwind CSS lewat Vite dan Node.js (sudah terpasang), menggantikan butir C01 "CSS biasa, tanpa Tailwind, Vite, atau Node.js". Token dan komponen Blade ada di dokumen 06 bagian 10; penyesuaian tampilan Login dan Register dikerjakan di C10                                                                                                          | 05 (C01, C10), 06                                               | [x]     |
+| (semua)   | Ditambah dokumen 06 Design System (versi 1.2): putih 60%, merah 30%, hitam 10%; flat dan rounded; gerak sebagai respons; desktop rapat. Menjadi acuan C10, C11, C12, dan C14. Beban tambahan sekitar 3 sampai 4 jam dicatat di bagian 2                                                                                                                             | 05 (Acuan, bagian 2, C10, C11, C12, C14, C26, Cut Line, Parkir) | [x]     |
+| (semua)   | Dokumen 00 bagian 1.1 masih menyebut enam dokumen; perlu ditambah dokumen 06                                                                                                                                                                                                                                                                                        | 00                                                              | [ ]     |
+|           |                                                                                                                                                                                                                                                                                                                                                                     |                                                                 | [ ]     |
