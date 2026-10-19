@@ -1,14 +1,119 @@
 @import "tailwindcss";
-@import "./design-system.css";
-
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source "../views";
+@source "../views/**/*.blade.php";
 
 @theme {
-    /* Dokumen 06 bagian 4: font sistem, tanpa unduhan font. */
-    --font-sans:
-        system-ui, -apple-system, "Segoe UI", Roboto, ui-sans-serif, sans-serif,
-        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-        "Noto Color Emoji";
+    /* Warna: hanya token semantik (dokumen 06 bagian 3.3) */
+    --color-*: initial;
+    --color-white: #ffffff;
+    --color-background: #ffffff;
+    --color-surface: #f6f3f3;
+    --color-outline: #e4dcdc;
+    --color-outline-strong: #8a8080;
+    --color-primary: #c62828;
+    --color-primary-hover: #a91e1e;
+    --color-primary-pressed: #8e1818;
+    --color-on-primary: #ffffff;
+    --color-primary-tint: #fdecec;
+    --color-ink: #141010;
+    --color-ink-hover: #2e2626;
+    --color-on-ink: #ffffff;
+    --color-text: #141010;
+    --color-text-muted: #5a5050;
+    --color-error: #8e1818;
+
+    /* Bentuk (bagian 5.1) */
+    --radius-*: initial;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-full: 999px;
+
+    /* Flat: tanpa bayangan (bagian 5.3) */
+    --shadow-*: initial;
+    --inset-shadow-*: initial;
+    --drop-shadow-*: initial;
+
+    /* Tipografi (bagian 4) */
+    --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --text-*: initial;
+    --text-title-lg: 1.5rem;
+    --text-title-lg--line-height: 2rem;
+    --text-title-md: 1.125rem;
+    --text-title-md--line-height: 1.5rem;
+    --text-body: 1rem;
+    --text-body--line-height: 1.5rem;
+    --text-body-sm: 0.875rem;
+    --text-body-sm--line-height: 1.25rem;
+    --text-label: 0.875rem;
+    --text-label--line-height: 1.25rem;
+    --text-caption: 0.75rem;
+    --text-caption--line-height: 1rem;
+
+    /* Titik lebar (bagian 8.1): sm = 600px, lg tetap 1024px */
+    --breakpoint-sm: 600px;
+
+    /* Easing (bagian 6.2) */
+    --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+    /* Animasi bernama (bagian 6.4) */
+    --animate-enter: enter 300ms cubic-bezier(0, 0, 0.2, 1) both;
+    --animate-shake: shake 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    @keyframes enter {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    @keyframes shake {
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+        20%,
+        60% {
+            transform: translateX(-4px);
+        }
+        40%,
+        80% {
+            transform: translateX(4px);
+        }
+    }
+}
+
+@layer base {
+    body {
+        @apply bg-background font-sans text-body text-text antialiased;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+    }
+
+    /* Cincin fokus putih di atas bilah atas merah */
+    .topbar :focus-visible {
+        outline-color: var(--color-white);
+    }
+}
+
+/* Kurangi gerakan (dokumen 06 bagian 6.5 butir 5) */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+    }
+    .animate-shake {
+        animation: none;
+    }
 }

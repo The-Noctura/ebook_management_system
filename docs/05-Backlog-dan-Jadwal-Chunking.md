@@ -337,7 +337,7 @@ Membutuhkan: C06, C01.
 **Design system Web (dokumen 06)**
 
 - [x] **[Terminal]** `npm run dev` berjalan dan `npm run build` berhasil. Versi Tailwind diperiksa di `package.json`; dokumen 06 bagian 10 mengasumsikan v4.
-- [ ] **[Laravel Web]** Token warna, radius, tipografi, easing, dan animasi dari dokumen 06 bagian 10.2 ditulis di `resources/css/app.css`.
+- [x] **[Laravel Web]** Token warna, radius, tipografi, easing, dan animasi dari dokumen 06 bagian 10.2 ditulis di `resources/css/app.css`.
 - [x] **[Laravel Web]** Layout Blade memuat aset dengan `@vite`.
 - [ ] **[Laravel Web]** Komponen Blade `button`, `card`, `chip`, dan `field` (dokumen 06 bagian 10.4), serta komponen ikon SVG inline `x-icon.*` untuk ikon yang dibutuhkan layar.
 - [ ] **[Laravel Web]** Login dan Register dari C01 disesuaikan tampilannya (dua kolom di desktop, pita merah di mobile) memakai komponen tersebut; logika tidak berubah.
