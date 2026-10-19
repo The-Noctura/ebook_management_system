@@ -1,4 +1,4 @@
-@props(['title' => config('app.name', 'Laravel')])
+@props(['title' => config('app.name', 'Laravel'), 'bare' => false])
 
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -9,20 +9,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title }}</title>
 
+    @vite(['resources/css/app.css'])
+
     <style>
-        :root {
-            color-scheme: light;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            color: #1f2937;
-            background-color: #f8fafc;
-        }
-
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-        }
-
         body {
             min-width: 320px;
             min-height: 100vh;
@@ -38,10 +27,17 @@
     </style>
 </head>
 
-<body>
-    <main class="page-content">
+{{-- Warna latar dan teks mengikuti token Design System (terang/gelap otomatis) --}}
+
+<body class="bg-background text-text">
+    @if ($bare)
+        {{-- Halaman yang mengatur lebar dan jaraknya sendiri (mis. daftar ebook) --}}
         {{ $slot }}
-    </main>
+    @else
+        <main class="page-content">
+            {{ $slot }}
+        </main>
+    @endif
 </body>
 
 </html>

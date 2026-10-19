@@ -1,0 +1,80 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Services\EbookService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
+use Throwable;
+
+class WebEbookController extends Controller
+{
+  public function __construct(private readonly EbookService $ebooks) {}
+
+  /**
+   * GET /ebooks: daftar koleksi milik user yang sedang login.
+   * Koleksi kosong dan koleksi gagal dimuat adalah dua keadaan berbeda
+   * (wireframe Empty State bagian 2.2).
+   */
+  public function index(Request $request): View
+  {
+    $user = $request->user();
+
+    try {
+      $ebooks = $user->ebooks()->orderByDesc('created_at')->orderByDesc('id')->get();
+
+      // Pada koleksi kosong fungsi tidak perlu dipanggil (wireframe Empty State).
+      $readCount = $ebooks->isEmpty()
+        ? 0
+        : (int) DB::selectOne('SELECT fn_count_read_ebooks(?) AS total', [$user->id])->total;
+
+      $loadFailed = false;
+    } catch (QueryException $e) {
+      report($e);
+
+      $ebooks = collect();
+      $readCount = 0;
+      $loadFailed = true;
+    }
+
+    return view('ebooks.index', compact('ebooks', 'readCount', 'loadFailed'));
+  }
+
+  /**
+   * PATCH /ebooks/{id}: ubah status baca (UC-09 dan UC-10).
+   * Transaksi, procedure, dan idempotensi ada di EbookService::setReadStatus.
+   */
+  public function update(Request $request, int $id): RedirectResponse
+  {
+    $data = $request->validate(
+      ['is_read' => ['required', 'boolean']],
+      [
+        'is_read.required' => 'Status baca wajib diisi.',
+        'is_read.boolean' => 'Status baca tidak valid.',
+      ]
+    );
+
+    $back = route('ebooks.index') . '#ebook-' . $id;
+
+    try {
+      $ebook = $this->ebooks->setReadStatus($request->user(), $id, (bool) $data['is_read']);
+    } catch (ModelNotFoundException $e) {
+      throw $e; // ebook tidak ada atau milik user lain: Laravel menjawab 404
+    } catch (Throwable $e) {
+      report($e);
+
+      return redirect()->to($back)
+        ->with('error', 'Status baca belum dapat diubah. Status sebelumnya dipertahankan. Coba lagi.');
+    }
+
+    $message = $ebook->is_read
+      ? "“{$ebook->title}” ditandai sudah dibaca."
+      : "“{$ebook->title}” ditandai belum dibaca.";
+
+    return redirect()->to($back)->with('success', $message);
+  }
+}

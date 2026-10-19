@@ -1,12 +1,14 @@
 @import "tailwindcss";
+@import "./design-system.css";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source "../views";
 
 @theme {
+    /* Dokumen 06 bagian 4: font sistem, tanpa unduhan font. */
     --font-sans:
-        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        system-ui, -apple-system, "Segoe UI", Roboto, ui-sans-serif, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
 }

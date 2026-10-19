@@ -149,7 +149,7 @@
         <div class="auth-footer">
             Sudah memiliki akun?
             <!-- Placeholder Tautan Login -->
-            <a href="{{ route('login.form') }}" class="auth-link">Masuk di sini</a>
+            <a href="{{ route('login') }}" class="auth-link">Masuk di sini</a>
         </div>
     </div>
 </x-layout>

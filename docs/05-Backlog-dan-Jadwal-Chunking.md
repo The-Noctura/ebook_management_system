@@ -334,12 +334,12 @@ Membutuhkan: C06, C01.
 
 **Halaman**
 
-- [ ] **[Laravel Web]** Route `GET /ebooks` dalam grup `auth` (hanya untuk user yang sudah login) dan `WebEbookController@index`, menggantikan halaman sementara dari C01 (dokumen 04 bagian 8).
-- [ ] **[Laravel Web]** View daftar berisi judul, status baca, dan tanggal; Empty State sesuai wireframe; jumlah ebook yang sudah dibaca dari `fn_count_read_ebooks`.
-- [ ] **[Laravel Web]** Kontrol ubah status: form dengan `@method('PATCH')` ke `PATCH /ebooks/{id}` yang memanggil `EbookService::setReadStatus`.
-- [ ] **[Klien MySQL]** Setelah status diubah dari Browser, tabel `ebook_status_history` terisi.
+- [x] **[Laravel Web]** Route `GET /ebooks` dalam grup `auth` (hanya untuk user yang sudah login) dan `WebEbookController@index`, menggantikan halaman sementara dari C01 (dokumen 04 bagian 8).
+- [x] **[Laravel Web]** View daftar berisi judul, status baca, dan tanggal; Empty State sesuai wireframe; jumlah ebook yang sudah dibaca dari `fn_count_read_ebooks`.
+- [x] **[Laravel Web]** Kontrol ubah status: form dengan `@method('PATCH')` ke `PATCH /ebooks/{id}` yang memanggil `EbookService::setReadStatus`.
+- [x] **[Klien MySQL]** Setelah status diubah dari Browser, tabel `ebook_status_history` terisi.
 
-- [ ] **Selesai jika:** **[Browser]** setelah login user melihat koleksinya sendiri (atau Empty State) dan dapat mengubah status baca.
+- [x] **Selesai jika:** **[Browser]** setelah login user melihat koleksinya sendiri (atau Empty State) dan dapat mengubah status baca.
 
 #### C11 · Laravel Web · Upload dan buka PDF · P1 · 7 Okt
 
