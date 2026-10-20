@@ -1,169 +1,116 @@
-# Wireframe 2: Register
+# Wireframe 2: Register (revisi 3)
 
-Dokumen ini adalah wireframe halaman Register versi **Web** untuk proyek Ebook Storage & To-Do List. Halaman Register sudah dibuat pada chunk C01 (setup, register, login, logout Web); wireframe ini mendokumentasikan dan merapikannya sebagai bagian dari chunk C10 (rancangan layar Web). Versi Android disesuaikan nanti pada chunk C13 (login dan register Android).
+Satu spesifikasi **isi** untuk Web dan Android. **Layout, warna, gerak, dan komponen mengikuti dokumen 06**; bila berbeda, dokumen 06 yang berlaku. Ketentuan Login (Wireframe 1) berlaku di sini: layout dua kolom/pita merah, komponen pesan, tombol tampilkan password.
 
-Ketentuan Login (Wireframe 1) berlaku di sini: label tetap di atas kolom, placeholder berupa ajakan, tombol tampilkan password, dropdown syarat password dengan animasi, indikator Caps Lock, dan label tombol yang menyebut tujuan. Perbedaannya, dropdown di Register berupa **daftar centang yang berubah live**.
-
----
-
-## 1. Keadaan default
-
-```text
-┌──────────────────────────────────────────────┐
-│  Ebook Storage                               │
-├──────────────────────────────────────────────┤
-│                                              │
-│          ┌──────────────────────────┐        │
-│          │  Buat Akun Baru          │        │
-│          │                          │        │
-│          │  Nama                    │        │
-│          │  ┌────────────────────┐  │        │
-│          │  │ Ketik nama Anda    │  │        │
-│          │  └────────────────────┘  │        │
-│          │                          │        │
-│          │  Email                   │        │
-│          │  ┌────────────────────┐  │        │
-│          │  │ Ketik email aktif  │  │        │
-│          │  │ Anda               │  │        │
-│          │  └────────────────────┘  │        │
-│          │                          │        │
-│          │  Password                │        │
-│          │  ┌──────────────┬─────┐  │        │
-│          │  │ Buat password│ 👁  │  │        │
-│          │  │ baru         │     │  │        │
-│          │  └──────────────┴─────┘  │        │
-│          │                          │        │
-│          │  Konfirmasi Password     │        │
-│          │  ┌──────────────┬─────┐  │        │
-│          │  │ Ketik ulang  │ 👁  │  │        │
-│          │  │ password Anda│     │  │        │
-│          │  └──────────────┴─────┘  │        │
-│          │                          │        │
-│          │  [ Buat Akun Saya      ] │        │
-│          │                          │        │
-│          │  Sudah punya akun?       │        │
-│          │  Masuk di sini           │        │
-│          └──────────────────────────┘        │
-└──────────────────────────────────────────────┘
-```
+Perubahan dari revisi 2: dropdown daftar centang dan pesan hijau/merah live pada konfirmasi dihapus (diparkir, 05 bagian 8). Sebagai gantinya, hint statis di bawah kolom Password. Semua teks lain dipertahankan.
 
 ---
 
-## 2. Keadaan interaksi
+## 1. Layout
 
-### 2.1 Kolom password difokuskan (dropdown centang)
+Sama dengan Login (Wireframe 1 bagian 1): desktop dua kolom (panel `primary` kiri, form ±360 px kanan), mobile dan Android pita `primary` di atas.
 
-```text
-  Password
-  ┌──────────────────────┬─────┐
-  │ rahasia              │ 👁  │
-  └──────────────────────┴─────┘
-  ┌──────────────────────────────┐   ← slide-down + fade (~200 ms)
-  │ Password harus:              │
-  │ ✓ Minimal 8 karakter         │   ← hijau saat terpenuhi
-  └──────────────────────────────┘
-
-  Sebelum terpenuhi:
-  │ ○ Minimal 8 karakter         │   ← abu-abu
-```
-
-### 2.2 Kolom konfirmasi password
-
-Konfirmasi password tidak masuk dropdown. Ia punya pesan sendiri di bawah kolomnya:
+Isi panel form:
 
 ```text
-  Konfirmasi Password
-  ┌──────────────────────┬─────┐
-  │ rahasia1             │ 👁  │
-  └──────────────────────┴─────┘
-  ✗ Password belum sama         ← merah, muncul saat mengetik
+  Buat Akun Baru
 
-  ┌──────────────────────┬─────┐
-  │ rahasia123           │ 👁  │
-  └──────────────────────┴─────┘
-  ✓ Password sama               ← hijau
-```
-
-### 2.3 Caps Lock
-
-Sama seperti Login. Peringatan `⚠ Caps Lock aktif` muncul di bawah kolom password **dan** kolom konfirmasi saat salah satunya difokuskan, di atas dropdown bila muncul bersamaan.
-
-### 2.4 Tombol saat proses berjalan
-
-```text
-  [ Membuat akun… ]   ← nonaktif, mencegah klik ganda
-```
-
----
-
-## 3. Keadaan pesan
-
-**A. Validasi gagal dari server** (form kembali, isian tetap, password dikosongkan)
-
-```text
   Nama
-  ┌────────────────────┐
-  │ Noctura            │   ← tetap terisi
-  └────────────────────┘
+  ┌────────────────────────┐
+  │ Ketik nama Anda        │
+  └────────────────────────┘
 
   Email
-  ┌────────────────────┐
-  │ user@example.com   │   ← tetap terisi
-  └────────────────────┘
-  Email ini sudah terdaftar.    ← merah
+  ┌────────────────────────┐
+  │ Ketik email aktif Anda │
+  └────────────────────────┘
 
   Password
-  ┌──────────────┬─────┐
-  │              │ 👁  │   ← dikosongkan
-  └──────────────┴─────┘
-```
+  ┌──────────────────┬─────┐
+  │ Buat password baru│ 👁 │
+  └──────────────────┴─────┘
+  Minimal 8 karakter            ← hint statis, caption, text-muted
 
-**B. Berhasil:** tidak ada layar khusus. User diarahkan ke Login dengan banner `✓ Akun berhasil dibuat. Silakan masuk.` (02-User-Flow bagian 5.1).
+  Konfirmasi Password
+  ┌──────────────────┬─────┐
+  │ Ketik ulang password│👁│
+  └──────────────────┴─────┘
+
+  [ Buat Akun Saya ]
+
+  Sudah punya akun?
+  Masuk di sini
+```
 
 ---
 
-## 4. Daftar elemen dan aturan
+## 2. Keadaan dan pesan
 
-| Elemen | Placeholder | Aturan validasi (server, 04-API-Specification bagian 5.1) |
-|---|---|---|
-| Nama | `Ketik nama Anda` | Wajib, maksimal 100 karakter |
-| Email | `Ketik email aktif Anda` | Wajib, format email, maksimal 255, belum terdaftar |
-| Password | `Buat password baru` | Wajib, minimal 8 karakter |
-| Konfirmasi Password | `Ketik ulang password Anda` | Wajib, sama dengan password |
-| Tombol | Label: `Buat Akun Saya`; proses: `Membuat akun…` | Mengirim `POST /register` |
-| Tautan | `Masuk di sini` | Menuju `GET /login` |
+| Keadaan                 | Tampilan                                                                                                                                                                          |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Default                 | Seperti bagian 1                                                                                                                                                                  |
+| Proses berjalan         | Tombol berganti indikator `Membuat akun…`, nonaktif                                                                                                                               |
+| Validasi gagal (server) | Form kembali. Nama dan email tetap terisi; kedua kolom password dikosongkan. Pesan di bawah kolom yang salah: ikon peringatan + teks `error`, kolom bergaris `error` dan bergetar |
+| Berhasil                | Tanpa layar khusus. Diarahkan ke Login dengan snackbar `Akun berhasil dibuat. Silakan masuk.` (02-User-Flow bagian 5.1)                                                           |
+| Tanpa koneksi (Android) | Kotak `primary-tint`: `Tidak ada koneksi. Coba lagi saat online.`                                                                                                                 |
 
-## 5. Pesan error (Bahasa Indonesia)
+Contoh email sudah terdaftar:
 
-| Kondisi | Pesan |
-|---|---|
-| Nama kosong | Nama wajib diisi. |
-| Nama lebih dari 100 karakter | Nama maksimal 100 karakter. |
-| Email kosong | Email wajib diisi. |
-| Format email salah | Format email tidak valid. |
-| Email sudah dipakai | Email ini sudah terdaftar. |
-| Password kosong | Password wajib diisi. |
-| Password kurang dari 8 | Password minimal 8 karakter. |
-| Konfirmasi tidak sama | Konfirmasi password tidak sama. |
+```text
+  Email
+  ┌────────────────────────┐
+  │ user@example.com       │   ← tetap terisi, garis error
+  └────────────────────────┘
+  ⚠ Email ini sudah terdaftar.
+```
+
+---
+
+## 3. Daftar elemen dan aturan
+
+| Elemen              | Placeholder                                    | Aturan validasi (server, 04-API-Specification bagian 5.1)    |
+| ------------------- | ---------------------------------------------- | ------------------------------------------------------------ |
+| Nama                | `Ketik nama Anda`                              | Wajib, maksimal 100 karakter                                 |
+| Email               | `Ketik email aktif Anda`                       | Wajib, format email, maksimal 255, belum terdaftar           |
+| Password            | `Buat password baru`                           | Wajib, minimal 8 karakter. Hint statis: `Minimal 8 karakter` |
+| Konfirmasi Password | `Ketik ulang password Anda`                    | Wajib, sama dengan password                                  |
+| Tombol              | Label `Buat Akun Saya`; proses `Membuat akun…` | Varian `primary`, satu-satunya aksi utama                    |
+| Tautan              | `Masuk di sini`                                | Menuju Login                                                 |
+
+Tombol tampilkan password ada di kedua kolom dan masing-masing independen; keduanya kembali tersembunyi saat form dikirim.
+
+## 4. Pesan error (Bahasa Indonesia)
+
+| Kondisi                      | Pesan                           |
+| ---------------------------- | ------------------------------- |
+| Nama kosong                  | Nama wajib diisi.               |
+| Nama lebih dari 100 karakter | Nama maksimal 100 karakter.     |
+| Email kosong                 | Email wajib diisi.              |
+| Format email salah           | Format email tidak valid.       |
+| Email sudah dipakai          | Email ini sudah terdaftar.      |
+| Password kosong              | Password wajib diisi.           |
+| Password kurang dari 8       | Password minimal 8 karakter.    |
+| Konfirmasi tidak sama        | Konfirmasi password tidak sama. |
+
+---
+
+## 5. Android
+
+Isi sama dengan bagian 2 sampai 4. Tidak ada wireframe terpisah.
+
+| Hal            | Android                                                                                        |
+| -------------- | ---------------------------------------------------------------------------------------------- |
+| Layout         | Versi mobile: pita `primary`, form di bawah                                                    |
+| Kolom          | `TextInputLayout` OutlinedBox; password memakai `endIconMode="password_toggle"` di kedua kolom |
+| Hint           | `helperText` = `Minimal 8 karakter` pada kolom Password                                        |
+| Error 422      | Dipetakan per field ke `TextInputLayout.error`, lalu `shake()` pada kolom                      |
+| Berhasil (201) | Kembali ke Login dengan Snackbar sukses (tanpa token, 04 bagian 5.1)                           |
 
 ---
 
 ## 6. Keputusan dan catatan
 
-1. **Satu syarat saja di dropdown** ("Minimal 8 karakter"), karena hanya itu yang ditegakkan server. Kesamaan dengan konfirmasi ditampilkan di kolom konfirmasi, jadi dropdown tidak menjanjikan aturan yang tidak ada.
-2. **Dropdown hanya untuk kolom Password.** Kolom konfirmasi memakai pesan langsung di bawahnya, supaya dua pop-up tidak saling menumpuk.
-3. **Pengecekan sisi klien hanya bantuan.** Validasi server tetap yang menentukan. Jika JavaScript mati, form tetap berfungsi dan error dari server tampil seperti biasa.
-4. **Tombol tampilkan password dipasang di kedua kolom**, dan masing-masing independen. Keduanya otomatis kembali tersembunyi saat form dikirim.
-5. **Komponen dipakai ulang.** Dropdown, tombol tampilkan, dan indikator Caps Lock cukup ditulis sekali dalam satu file JavaScript dan dipakai di Login dan Register, dengan mode info (Login) dan mode centang (Register). Ini menghemat sebagian estimasi 45-60 menit pada Wireframe 1.
-6. **Android (C13).** Register Android memakai teks placeholder, label, pesan, dan aturan validasi yang sama. Caps Lock tidak dibawa ke Android.
-7. **Cakupan C10.** Dokumen 05 (Backlog dan Jadwal) menyebut empat layar untuk C10: Login, Daftar Ebook, Upload, dan Empty State. Register tidak disebut sebagai layar tersendiri; wireframe ini dianggap tercakup oleh butir "Wireframe Login dan Register berlaku untuk Web dan Android".
-
----
-
-## 7. Status wireframe C10
-
-- [x] Login (revisi 2)
-- [x] Register
-- [ ] Daftar Ebook
-- [ ] Upload
-- [ ] Empty State
+1. Hint statis `Minimal 8 karakter` menggantikan daftar centang live. Hanya satu aturan yang ditegakkan server, jadi tidak ada yang dijanjikan berlebihan.
+2. Kesamaan password dan konfirmasi hanya diperiksa server; pesan tampil setelah submit.
+3. Diparkir (05 bagian 8): daftar centang live, pesan live pada konfirmasi, indikator Caps Lock. Bila dikerjakan kelak, hijau diganti ikon centang hitam dan kuning diganti ikon peringatan merah (06 bagian 3 dan 13).
+4. Jika JavaScript mati, form tetap berfungsi; hanya tombol tampilkan password yang tidak ada.

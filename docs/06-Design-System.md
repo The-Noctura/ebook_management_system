@@ -102,8 +102,7 @@ Merah sekarang warna merek, jadi error tidak boleh hanya "merah". Error selalu m
 - ikon peringatan di depan pesan;
 - kotak `primary-tint` di belakang pesan pada level layar;
 - pada input: garis tepi `error` dan gerak getar singkat (bagian 6.3).
-
-Status sukses tidak diberi warna sendiri: sukses memakai `ink` (snackbar hitam dengan ikon centang).
+  Status sukses tidak diberi warna sendiri: sukses memakai `ink` (snackbar hitam dengan ikon centang).
 
 ### 3.5 Aturan kontras (sudah dihitung)
 
@@ -984,8 +983,7 @@ Agar desain tetap sederhana dan sesuai keputusan awal:
 - Animasi berulang yang menarik perhatian (kecuali placeholder memuat).
 - Warna di luar putih, merah, dan hitam (termasuk warna peringatan, info, atau sukses hijau).
 - Kolom tunggal sempit di tengah pada desktop.
-
-Bila nanti ada kebutuhan baru, tambahkan di dokumen ini dulu, lalu di kode.
+  Bila nanti ada kebutuhan baru, tambahkan di dokumen ini dulu, lalu di kode.
 
 ---
 
