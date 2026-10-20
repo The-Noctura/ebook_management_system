@@ -5,6 +5,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+
 
 return Application::configure(basePath: dirname(__DIR__))
   ->withRouting(
@@ -20,6 +22,14 @@ return Application::configure(basePath: dirname(__DIR__))
     $exceptions->shouldRenderJsonWhen(
       fn(Request $request) => $request->is('api/*') || $request->expectsJson(),
     );
+
+    $exceptions->render(function (ThrottleRequestsException $e, Request $request) {
+      if ($request->routeIs('login.store') && ! $request->expectsJson()) {
+        return back()
+          ->withInput($request->only('email'))
+          ->withErrors(['credentials' => 'Terlalu banyak percobaan. Coba lagi sebentar lagi.']);
+      }
+    });
 
     $exceptions->render(
       fn(Throwable $exception, Request $request) => ApiErrorResponse::from($exception, $request),

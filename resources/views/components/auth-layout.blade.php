@@ -10,13 +10,17 @@
 </head>
 
 <body>
-    <div class="grid min-h-dvh lg:grid-cols-2">
-        <div class="topbar bg-primary px-4 py-3 text-on-primary lg:flex lg:flex-col lg:justify-center lg:p-8">
-            <p class="text-title-md font-semibold lg:text-title-lg">{{ config('app.name') }}</p>
-            <p class="mt-2 hidden max-w-sm text-body lg:block">Satu koleksi PDF pribadi yang dapat dibuka dari Web maupun
-                Android.</p>
-        </div>
-        <main class="mx-auto w-full max-w-sm p-4 lg:self-center">
+    {{-- Mobile (< 1024): pita di atas, form di bawah. Desktop: dua kolom (dokumen 06 bagian 8.1) --}}
+    <div class="grid min-h-dvh grid-rows-[auto_1fr] lg:grid-cols-2 lg:grid-rows-1">
+        <header class="topbar bg-primary text-on-primary lg:flex lg:flex-col lg:justify-center lg:p-8">
+            <div
+                class="mx-auto flex min-h-16 w-full max-w-sm items-center px-4 sm:px-6 lg:mx-0 lg:block lg:min-h-0 lg:max-w-none lg:px-0">
+                <p class="text-title-md font-semibold lg:text-title-lg">{{ config('app.name') }}</p>
+                <p class="mt-2 hidden max-w-sm text-body lg:block">Satu koleksi PDF pribadi yang dapat dibuka dari Web
+                    maupun Android.</p>
+            </div>
+        </header>
+        <main class="mx-auto w-full max-w-sm p-4 sm:p-6 lg:self-center lg:p-4">
             {{ $slot }}
         </main>
     </div>

@@ -27,7 +27,7 @@
     </style>
 </head>
 
-{{-- Warna latar dan teks mengikuti token Design System (terang/gelap otomatis) --}}
+{{-- Warna latar dan teks mengikuti token Design System (hanya tema terang) --}}
 
 <body class="bg-background text-text">
     @if ($bare)
