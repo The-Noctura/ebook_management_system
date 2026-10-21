@@ -1,12 +1,17 @@
 {{--
     Bilah atas (dokumen 06 bagian 7.6; wireframe Daftar Ebook bagian 8).
     Variabel: $summary (string|null), $showAdd (bool), $uploadUrl, $uploadReady.
+    Opsional: $homeUrl, bila ada nama aplikasi menjadi tautan (halaman Upload).
     Di bawah 1024 px ringkasan berada di bawah nama aplikasi; di desktop di kanan.
 --}}
 <header class="topbar bg-primary text-on-primary">
     <div class="mx-auto flex min-h-16 w-full max-w-[1200px] items-center gap-3 px-4 sm:px-6 lg:min-h-14">
         <div class="grid min-w-0 flex-1 leading-tight">
-            <span class="text-title-md font-semibold">Ebook Storage</span>
+            @isset($homeUrl)
+                <a href="{{ $homeUrl }}" class="w-fit rounded-md text-title-md font-semibold">Ebook Storage</a>
+            @else
+                <span class="text-title-md font-semibold">Ebook Storage</span>
+            @endisset
             @if ($summary)
                 <span class="text-body-sm lg:hidden">{{ $summary }}</span>
             @endif

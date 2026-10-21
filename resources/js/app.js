@@ -67,3 +67,101 @@ document.querySelectorAll("[data-new]").forEach((el) => {
         requestAnimationFrame(() => el.removeAttribute("data-new")),
     );
 });
+
+// Tombol dengan data-focus="id": fokus ke elemen itu (mis. "Coba Lagi" di Upload)
+document.querySelectorAll("[data-focus]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+        document.getElementById(btn.dataset.focus)?.focus();
+    });
+});
+
+// ===== Halaman Upload (C11, wireframe Upload bagian 6.4) =====
+// Semua opsional: tanpa JavaScript form tetap berfungsi.
+// Kunci tombol saat submit sudah ditangani oleh data-loading di atas.
+const MAX_UPLOAD_BYTES = 20 * 1024 * 1024; // sama dengan max:20480 KB di server
+
+const uploadForm = document.querySelector("[data-upload-form]");
+
+if (uploadForm) {
+    const fileInput = uploadForm.querySelector("#file");
+    const titleInput = uploadForm.querySelector("#title");
+    const fileError = uploadForm.querySelector("[data-file-error]");
+    const fileErrorText = uploadForm.querySelector("[data-file-error-text]");
+    const serverError = uploadForm.querySelector("#file-msg"); // bisa null
+    const offlineAlert = uploadForm.querySelector("[data-offline-alert]");
+    const defaultPlaceholder = titleInput.placeholder;
+
+    function clearFileError() {
+        fileError.hidden = true;
+        fileInput.removeAttribute("aria-invalid");
+        fileInput.classList.remove("border-error", "animate-shake");
+        fileInput.classList.add("border-outline-strong");
+    }
+
+    function showFileError(message) {
+        serverError?.setAttribute("hidden", "");
+        fileErrorText.textContent = message;
+        fileError.hidden = false;
+        fileInput.setAttribute("aria-invalid", "true");
+        fileInput.classList.remove("border-outline-strong");
+        fileInput.classList.add("border-error");
+        // Mulai ulang animasi getar
+        fileInput.classList.remove("animate-shake");
+        void fileInput.offsetWidth;
+        fileInput.classList.add("animate-shake");
+    }
+
+    // 2. Placeholder Judul mengikuti nama file; 3. tolak file di atas 20 MB
+    fileInput.addEventListener("change", () => {
+        clearFileError();
+        serverError?.setAttribute("hidden", "");
+        offlineAlert.hidden = true;
+
+        const file = fileInput.files[0];
+
+        if (!file) {
+            titleInput.placeholder = defaultPlaceholder;
+            return;
+        }
+
+        if (file.size > MAX_UPLOAD_BYTES) {
+            fileInput.value = "";
+            titleInput.placeholder = defaultPlaceholder;
+            showFileError("Ukuran file maksimal 20 MB.");
+            return;
+        }
+
+        titleInput.placeholder = file.name.replace(/\.[^.]+$/, "");
+    });
+
+    // 3 dan 4. Cek ukuran dan koneksi sebelum dikirim.
+    // Fase capture di document agar berjalan SEBELUM handler data-loading;
+    // bila submit dibatalkan, tombol tidak ikut terkunci.
+    document.addEventListener(
+        "submit",
+        (e) => {
+            if (e.target !== uploadForm) return;
+
+            const block = () => {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+            };
+
+            const file = fileInput.files[0];
+            if (file && file.size > MAX_UPLOAD_BYTES) {
+                block();
+                showFileError("Ukuran file maksimal 20 MB.");
+                return;
+            }
+
+            if (!navigator.onLine) {
+                block();
+                offlineAlert.hidden = false;
+                return;
+            }
+
+            offlineAlert.hidden = true;
+        },
+        true,
+    );
+}

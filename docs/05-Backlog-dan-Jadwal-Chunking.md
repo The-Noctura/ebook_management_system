@@ -334,12 +334,12 @@ Membutuhkan: C10, C05.
 
 **Dikerjakan di:** Laravel Web, Browser. Android dan Laravel API tidak terlibat; Laravel Backend hanya dipanggil.
 
-- [ ] **[Laravel Web]** Route `POST /ebooks` dan view form upload (`multipart/form-data`, yaitu jenis form yang dapat mengirim file) sesuai wireframe. Tampilan mengikuti dokumen 06 bagian 8.1 (dua kolom di desktop dengan kotak aturan upload); tombol nonaktif selama proses agar tidak terkirim dua kali.
-- [ ] **[Laravel Web]** Validasi: file harus PDF, maksimal 20480 KB; `title` opsional.
-- [ ] **[Laravel Web]** Pesan error berbahasa Indonesia untuk file bukan PDF, lebih dari 20 MB, dan duplikat ("PDF ini sudah ada di koleksi Anda.").
-- [ ] **[Laravel Web]** Route `GET /ebooks/{id}/file` dan tautan buka PDF di daftar, yang membuka PDF di penampil bawaan browser.
-- [ ] **[Laravel Web]** Ebook milik user lain menghasilkan 404.
-- [ ] **Selesai jika:** **[Browser]** upload, penolakan duplikat, dan buka PDF berjalan. **Pekerjaan ini menutup Gate 7 Oktober** (bagian 6).
+- [x] **[Laravel Web]** Route `POST /ebooks` dan view form upload (`multipart/form-data`, yaitu jenis form yang dapat mengirim file) sesuai wireframe. Tampilan mengikuti dokumen 06 bagian 8.1 (dua kolom di desktop dengan kotak aturan upload); tombol nonaktif selama proses agar tidak terkirim dua kali.
+- [x] **[Laravel Web]** Validasi: file harus PDF, maksimal 20480 KB; `title` opsional.
+- [x] **[Laravel Web]** Pesan error berbahasa Indonesia untuk file bukan PDF, lebih dari 20 MB, dan duplikat ("PDF ini sudah ada di koleksi Anda.").
+- [x] **[Laravel Web]** Route `GET /ebooks/{id}/file` dan tautan buka PDF di daftar, yang membuka PDF di penampil bawaan browser.
+- [x] **[Laravel Web]** Ebook milik user lain menghasilkan 404.
+- [x] **Selesai jika:** **[Browser]** upload, penolakan duplikat, dan buka PDF berjalan. **Pekerjaan ini menutup Gate 7 Oktober** (bagian 6).
 
 ### Epic D: Android (P1)
 

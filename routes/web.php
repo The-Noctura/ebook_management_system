@@ -21,6 +21,14 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
   Route::get('/ebooks', [WebEbookController::class, 'index'])->name('ebooks.index');
+
+  // C11: upload dan buka PDF. /ebooks/create didaftarkan sebelum route ber-{id}.
+  Route::get('/ebooks/create', [WebEbookController::class, 'create'])->name('ebooks.create');
+  Route::post('/ebooks', [WebEbookController::class, 'store'])->name('ebooks.store');
+  Route::get('/ebooks/{id}/file', [WebEbookController::class, 'file'])
+    ->whereNumber('id')
+    ->name('ebooks.file');
+
   Route::patch('/ebooks/{id}', [WebEbookController::class, 'update'])
     ->whereNumber('id')
     ->name('ebooks.update');
