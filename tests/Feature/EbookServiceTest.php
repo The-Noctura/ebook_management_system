@@ -1,12 +1,16 @@
 <?php
 
 use App\Exceptions\DuplicateEbookException;
+use App\Exceptions\EbookFileMissingException;
 use App\Models\Ebook;
 use App\Models\User;
 use App\Services\EbookService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use RuntimeException;
 
 uses(RefreshDatabase::class);
 
@@ -60,4 +64,154 @@ test('it throws a duplicate exception when the same file already exists for the 
   $this->expectExceptionMessage('PDF ini sudah ada di koleksi Anda.');
 
   $service->store($user, $duplicateFile);
+});
+
+test('it trims a supplied title and limits it to 255 characters', function () {
+  Storage::fake('local');
+  $service = new EbookService;
+  $user = User::create([
+    'name' => 'Title Owner',
+    'email' => 'title-owner@example.com',
+    'password' => 'secret123',
+  ]);
+  $file = UploadedFile::fake()->createWithContent('title.pdf', "%PDF-1.4\nTitle test\n%%EOF");
+  $title = str_repeat('T', 260);
+
+  $ebook = $service->store($user, $file, '  ' . $title . '  ');
+
+  expect($ebook->title)->toBe(str_repeat('T', 255));
+});
+
+test('it allows different users to store identical PDF contents', function () {
+  Storage::fake('local');
+  $service = new EbookService;
+  $firstUser = User::create([
+    'name' => 'First Owner',
+    'email' => 'first-owner@example.com',
+    'password' => 'secret123',
+  ]);
+  $secondUser = User::create([
+    'name' => 'Second Owner',
+    'email' => 'second-owner@example.com',
+    'password' => 'secret123',
+  ]);
+  $content = "%PDF-1.4\nSame content\n%%EOF";
+
+  $firstEbook = $service->store($firstUser, UploadedFile::fake()->createWithContent('first.pdf', $content));
+  $secondEbook = $service->store($secondUser, UploadedFile::fake()->createWithContent('second.pdf', $content));
+
+  expect($secondEbook->file_hash)->toBe($firstEbook->file_hash)
+    ->and($secondEbook->user_id)->toBe($secondUser->id)
+    ->and($secondEbook->id)->not->toBe($firstEbook->id);
+});
+
+test('it removes the stored file when creating the ebook row fails', function () {
+  Storage::fake('local');
+  $service = new EbookService;
+  $user = User::create([
+    'name' => 'Rollback Owner',
+    'email' => 'rollback-owner@example.com',
+    'password' => 'secret123',
+  ]);
+  $file = UploadedFile::fake()->createWithContent('rollback.pdf', "%PDF-1.4\nRollback test\n%%EOF");
+
+  Ebook::creating(function () {
+    throw new RuntimeException('Simulated database failure.');
+  });
+
+  try {
+    $service->store($user, $file);
+    $this->fail('The storage/database failure should be rethrown.');
+  } catch (RuntimeException $exception) {
+    expect($exception->getMessage())->toBe('Simulated database failure.');
+  }
+
+  expect(Storage::disk('local')->allFiles('ebooks'))->toBe([]);
+  $this->assertDatabaseCount('ebooks', 0);
+});
+
+test('it treats an ebook owned by another user as not found when changing read status', function () {
+  $service = new EbookService;
+  $owner = User::create([
+    'name' => 'Owner',
+    'email' => 'owner@example.com',
+    'password' => 'secret123',
+  ]);
+  $otherUser = User::create([
+    'name' => 'Other User',
+    'email' => 'other-user@example.com',
+    'password' => 'secret123',
+  ]);
+  $ebook = Ebook::create([
+    'user_id' => $owner->id,
+    'title' => 'Private PDF',
+    'file_path' => 'ebooks/private.pdf',
+    'file_hash' => str_repeat('c', 64),
+  ]);
+
+  try {
+    $service->setReadStatus($otherUser, $ebook->id, true);
+    $this->fail('An ebook owned by another user must not be found.');
+  } catch (ModelNotFoundException $exception) {
+    expect($exception->getModel())->toBe(Ebook::class);
+  }
+});
+
+test('it calls the matching status procedure in a transaction and returns the refreshed ebook', function (bool $initialStatus, bool $requestedStatus, string $procedure) {
+  $service = new EbookService;
+  $user = User::create([
+    'name' => 'Status Owner',
+    'email' => 'status-owner@example.com',
+    'password' => 'secret123',
+  ]);
+  $ebook = Ebook::create([
+    'user_id' => $user->id,
+    'title' => 'Status PDF',
+    'file_path' => 'ebooks/status.pdf',
+    'file_hash' => str_repeat('e', 64),
+    'is_read' => $initialStatus,
+  ]);
+
+  DB::shouldReceive('transaction')
+    ->once()
+    ->andReturnUsing(fn(Closure $callback) => $callback());
+  DB::shouldReceive('statement')
+    ->once()
+    ->with("CALL {$procedure}(?, ?)", [$user->id, $ebook->id])
+    ->andReturnUsing(function () use ($ebook, $requestedStatus): int {
+      return Ebook::query()
+        ->whereKey($ebook->id)
+        ->update(['is_read' => $requestedStatus]);
+    });
+
+  $updatedEbook = $service->setReadStatus($user, $ebook->id, $requestedStatus);
+
+  expect($updatedEbook->is_read)->toBe($requestedStatus)
+    ->and($updatedEbook->is($ebook))->toBeTrue();
+})->with([
+  'mark as read' => [false, true, 'sp_mark_ebook_read'],
+  'mark as unread' => [true, false, 'sp_mark_ebook_unread'],
+]);
+
+test('it throws a file-missing exception when an owned ebook has no stored PDF', function () {
+  Storage::fake('local');
+  $service = new EbookService;
+  $user = User::create([
+    'name' => 'Missing File Owner',
+    'email' => 'missing-file-owner@example.com',
+    'password' => 'secret123',
+  ]);
+  $ebook = Ebook::create([
+    'user_id' => $user->id,
+    'title' => 'Missing PDF',
+    'file_path' => 'ebooks/missing.pdf',
+    'file_hash' => str_repeat('d', 64),
+  ]);
+
+  try {
+    $service->streamFile($user, $ebook->id);
+    $this->fail('A missing storage object must raise EbookFileMissingException.');
+  } catch (EbookFileMissingException $exception) {
+    expect($exception->ebookId)->toBe($ebook->id);
+  }
 });
