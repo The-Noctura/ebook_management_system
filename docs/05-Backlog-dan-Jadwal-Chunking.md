@@ -95,9 +95,9 @@ Centang pekerjaan di sini setelah kotak **Selesai jika**-nya tercentang.
 - [x] C05 · Laravel Backend · Layanan penyimpanan ebook (5 Okt)
 - [x] C06 · Laravel Backend · Layanan ubah status dan akses file (5 Okt)
 - [x] C07 · Laravel API · API daftar dan ubah status (6 Okt)
-- [ ] C08 · Laravel API · API upload dan unduh (6 Okt)
-- [ ] C09 · Uji di Postman · Pengujian API menyeluruh (6 Okt)
-- [ ] C10 · Laravel Web · Daftar koleksi dan ubah status (6 Okt)
+- [x] C08 · Laravel API · API upload dan unduh (6 Okt)
+- [x] C09 · Uji di Postman · Pengujian API menyeluruh (6 Okt)
+- [x] C10 · Laravel Web · Daftar koleksi dan ubah status (6 Okt)
 - [ ] C11 · Laravel Web · Upload dan buka PDF (7 Okt)
 - [ ] C12 · Android · Setup proyek dan koneksi ke backend (7 Okt)
 - [ ] C13 · Android · Login dan register (7 Okt)
@@ -282,11 +282,11 @@ Membutuhkan: C05, C07.
 **Dikerjakan di:** php.ini, Laravel API, Postman. Android dan Laravel Web tidak terlibat; Laravel Backend hanya dipanggil, tidak diubah.
 
 - [x] **[php.ini]** `upload_max_filesize = 20M` dan `post_max_size = 25M`, lalu server dijalankan ulang (dokumen 04 bagian 7.1).
-- [ ] **[Laravel API]** `POST /api/ebooks` (dokumen 04 bagian 5.5): `file` wajib PDF (ekstensi `pdf` dan MIME `application/pdf`) maksimal 20480 KB; `title` opsional maksimal 255; memanggil `EbookService::store`; respons 201.
-- [ ] **[Laravel API]** `DuplicateEbookException` dipetakan ke 409 `duplicate_ebook` dengan pesan "PDF ini sudah ada di koleksi Anda." dan `data.existing_id`.
-- [ ] **[Laravel API]** `GET /api/ebooks/{id}/file` (dokumen 04 bagian 5.6): header `Content-Type`, `Content-Length`, dan `Content-Disposition: inline`; 404 `ebook_not_found` dan 404 `file_missing`.
-- [ ] **[Postman]** Pengujian: upload valid, duplikat, bukan PDF, di atas 20 MB; hasil unduhan dibuka.
-- [ ] **Selesai jika:** **[Postman]** keempat kasus upload benar dan PDF hasil unduhan dapat dibuka.
+- [x] **[Laravel API]** `POST /api/ebooks` (dokumen 04 bagian 5.5): `file` wajib PDF (ekstensi `pdf` dan MIME `application/pdf`) maksimal 20480 KB; `title` opsional maksimal 255; memanggil `EbookService::store`; respons 201.
+- [x] **[Laravel API]** `DuplicateEbookException` dipetakan ke 409 `duplicate_ebook` dengan pesan "PDF ini sudah ada di koleksi Anda." dan `data.existing_id`.
+- [x] **[Laravel API]** `GET /api/ebooks/{id}/file` (dokumen 04 bagian 5.6): header `Content-Type`, `Content-Length`, dan `Content-Disposition: inline`; 404 `ebook_not_found` dan 404 `file_missing`.
+- [x] **[Postman]** Pengujian: upload valid, duplikat, bukan PDF, di atas 20 MB; hasil unduhan dibuka.
+- [x] **Selesai jika:** **[Postman]** keempat kasus upload benar dan PDF hasil unduhan dapat dibuka.
 
 #### C09 · Uji di Postman · Pengujian API menyeluruh · P0 · 6 Okt
 
@@ -294,10 +294,10 @@ Membutuhkan: C08.
 
 **Dikerjakan di:** Postman, Terminal (tag Git), dan Laravel API atau Laravel Backend bila ada bug yang diperbaiki. Android dan Laravel Web tidak terlibat.
 
-- [ ] **[Postman]** Postman collection berisi 7 endpoint dengan environment (`base_url` dan `token`).
-- [ ] **[Postman]** Seluruh skenario pada matriks uji API (bagian 6) dijalankan.
-- [ ] **[Laravel API]** Bug yang ditemukan diperbaiki, lalu **[Terminal]** beri tag Git `api-stable`.
-- [ ] **Selesai jika:** seluruh baris matriks uji API lulus.
+- [x] **[Postman]** Postman collection berisi 7 endpoint dengan environment (`base_url` dan `token`).
+- [x] **[Postman]** Seluruh skenario pada matriks uji API (bagian 6) dijalankan.
+- [x] **[Laravel API]** Bug yang ditemukan diperbaiki, lalu **[Terminal]** beri tag Git `api-stable`.
+- [x] **Selesai jika:** seluruh baris matriks uji API lulus.
 
 ### Epic C: Web (P1)
 
