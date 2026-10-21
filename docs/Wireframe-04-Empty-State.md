@@ -284,6 +284,6 @@ Catatan implementasi:
 
 - [x] Login (revisi 3)
 - [x] Register (revisi 3)
-- [ ] Daftar Ebook (revisi 4, menunggu review)
-- [ ] Upload (revisi 4, menunggu review)
-- [ ] Empty State (revisi 5, menunggu review)
+- [x] Daftar Ebook (revisi 4)
+- [x] Upload (revisi 4)
+- [x] Empty State (revisi 5)

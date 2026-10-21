@@ -309,7 +309,7 @@ Membutuhkan: C06, C01.
 
 **Rancangan layar (dikerjakan lebih dulu agar tampilan jelas)**
 
-- [ ] **[Dokumen]** Wireframe (sketsa kasar tata letak) empat layar: Login, Daftar Ebook, Upload, dan Empty State (tampilan saat koleksi kosong), berupa sketsa tangan atau ASCII yang menentukan elemen, tombol, dan pesan.
+- [x] **[Dokumen]** Wireframe (sketsa kasar tata letak) empat layar: Login, Daftar Ebook, Upload, dan Empty State (tampilan saat koleksi kosong), berupa sketsa tangan atau ASCII yang menentukan elemen, tombol, dan pesan.
 - [x] **[Dokumen]** Wireframe Login dan Register berlaku untuk Web dan Android. Logika Login dan Register dari C01 tidak dikerjakan ulang; hanya tampilannya disesuaikan pada butir Design system di bawah.
 - [x] **[Dokumen]** Wireframe disimpan di repositori, misalnya folder `docs/`.
       **Design system Web (dokumen 06)**
