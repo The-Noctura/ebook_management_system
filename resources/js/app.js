@@ -59,3 +59,11 @@ document.querySelectorAll("[data-snackbar]").forEach((el) => {
         setTimeout(() => el.remove(), 200);
     }, 4000);
 });
+
+// Sorotan "ebook baru": latar tint memudar ke surface (dokumen 06 bagian 6.4 dan 10.5)
+document.querySelectorAll("[data-new]").forEach((el) => {
+    el.style.transitionDuration = "300ms";
+    requestAnimationFrame(() =>
+        requestAnimationFrame(() => el.removeAttribute("data-new")),
+    );
+});
