@@ -351,8 +351,8 @@ Membutuhkan: C04.
 
 **Keputusan yang harus tertulis**
 
-- [ ] **[Dokumen]** Struktur proyek Android: package dan lapisan sederhana (misalnya `data/api`, `data/model`, `ui/login`, `ui/ebooks`, `util`) dengan satu paragraf aturan.
-- [ ] **[Dokumen]** Akses backend dari HP fisik. Karena pengujian memakai HP fisik, rekomendasinya jaringan lokal: server Laravel dijalankan dengan `php artisan serve --host=0.0.0.0` dan HP serta komputer berada pada Wi-Fi yang sama. Hosting online tidak direkomendasikan karena menambah pekerjaan. Tulis keputusan akhir di sini.
+- [x] **[Dokumen]** Struktur proyek Android: package dan lapisan sederhana (misalnya `data/api`, `data/model`, `ui/login`, `ui/ebooks`, `util`) dengan satu paragraf aturan.
+- [x] **[Dokumen]** Akses backend dari HP fisik. Karena pengujian memakai HP fisik, rekomendasinya jaringan lokal: server Laravel dijalankan dengan `php artisan serve --host=0.0.0.0` dan HP serta komputer berada pada Wi-Fi yang sama. Hosting online tidak direkomendasikan karena menambah pekerjaan. Tulis keputusan akhir di sini.
       **Proyek**
 
 - [ ] **[Android]** Proyek Kotlin dengan ViewBinding (cara mengakses elemen layar tanpa `findViewById`), dependency Retrofit (pustaka pemanggil API), converter Gson (pengubah JSON), OkHttp logging-interceptor (pencatat request di Logcat), dan RecyclerView (komponen daftar).
