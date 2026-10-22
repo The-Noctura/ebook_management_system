@@ -98,7 +98,7 @@ Centang pekerjaan di sini setelah kotak **Selesai jika**-nya tercentang.
 - [x] C08 · Laravel API · API upload dan unduh (6 Okt)
 - [x] C09 · Uji di Postman · Pengujian API menyeluruh (6 Okt)
 - [x] C10 · Laravel Web · Daftar koleksi dan ubah status (6 Okt)
-- [ ] C11 · Laravel Web · Upload dan buka PDF (7 Okt)
+- [x] C11 · Laravel Web · Upload dan buka PDF (7 Okt)
 - [ ] C12 · Android · Setup proyek dan koneksi ke backend (7 Okt)
 - [ ] C13 · Android · Login dan register (7 Okt)
 - [ ] C14 · Android · Daftar koleksi (8 Okt)
@@ -601,16 +601,16 @@ Tidak dijadwalkan.
 
 **P0**
 
-- [ ] MySQL dan Laravel berjalan
-- [ ] Autentikasi dasar (Web dan API) berjalan
-- [ ] PDF dapat diunggah saat online; metadata tersimpan di MySQL
-- [ ] File tersimpan lewat storage abstraction (disk lokal diperbolehkan)
-- [ ] Daftar PDF tampil; read/unread dapat diubah (procedure, trigger, COMMIT/ROLLBACK)
-- [ ] PDF dapat dibuka lewat mekanisme akses yang sesuai
-- [ ] 7 endpoint API lulus uji Postman
+- [x] MySQL dan Laravel berjalan
+- [x] Autentikasi dasar (Web dan API) berjalan
+- [x] PDF dapat diunggah saat online; metadata tersimpan di MySQL
+- [x] File tersimpan lewat storage abstraction (disk lokal diperbolehkan)
+- [x] Daftar PDF tampil; read/unread dapat diubah (procedure, trigger, COMMIT/ROLLBACK)
+- [x] PDF dapat dibuka lewat mekanisme akses yang sesuai
+- [x] 7 endpoint API lulus uji Postman
       **P1**
 
-- [ ] Web: login, daftar, manual upload
+- [x] Web: login, daftar, manual upload
 - [ ] Android: setup dan login (**target lunak**: bergeser ke 8 Okt bila C11-C13 tidak selesai 7 Okt)
 - [ ] Android: menampilkan koleksi (dijadwalkan pada C14, 8 Okt)
 
