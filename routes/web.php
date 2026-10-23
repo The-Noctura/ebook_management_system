@@ -3,10 +3,14 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WebEbookController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-  return view('welcome');
-});
+  // Sudah login -> koleksi. Belum login -> login (nanti diganti landing page, butir 5).
+  return Auth::check()
+    ? redirect()->route('ebooks.index')
+    : redirect()->route('login');
+})->name('home');
 
 // ============ MIDDLEWARE UNTUK YANG BELUM LOGIN ==========
 Route::middleware('guest')->group(function () {
@@ -33,14 +37,4 @@ Route::middleware('auth')->group(function () {
     ->whereNumber('id')
     ->name('ebooks.update');
   Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-});
-
-// Mengakses tampilan halaman 404
-Route::get('/test-404', function () {
-  abort(404);
-});
-
-// Mengakses tampilan halaman 500
-Route::get('/test-500', function () {
-  abort(500);
 });
