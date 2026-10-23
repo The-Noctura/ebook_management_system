@@ -12,7 +12,7 @@ Route::get('/', function () {
 Route::middleware('guest')->group(function () {
   // ========== REGISTER ==========
   Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
-  Route::post('/register', [AuthController::class, 'register'])->name('register.store');
+  Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:5,1')->name('register.store');
 
   // ========== LOGIN ==========
   Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
