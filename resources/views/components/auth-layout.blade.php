@@ -16,8 +16,8 @@
             <div
                 class="mx-auto flex min-h-16 w-full max-w-sm items-center px-4 sm:px-6 lg:mx-0 lg:block lg:min-h-0 lg:max-w-none lg:px-0">
                 <p class="text-title-md font-semibold lg:text-title-lg">{{ config('app.name') }}</p>
-                <p class="mt-2 hidden max-w-sm text-body lg:block">Satu koleksi PDF pribadi yang dapat dibuka dari Web
-                    maupun Android.</p>
+                <p class="mt-2 hidden max-w-sm text-body lg:block">Satu koleksi PDF pribadi yang dapat dibuka dari
+                    browser mana pun.</p>
             </div>
         </header>
         <main class="mx-auto w-full max-w-sm p-4 sm:p-6 lg:self-center lg:p-4">

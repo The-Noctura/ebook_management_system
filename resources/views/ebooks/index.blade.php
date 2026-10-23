@@ -48,7 +48,7 @@
                 <div class="grid gap-1">
                     <h2 class="text-title-md font-semibold text-text">Koleksi Anda masih kosong</h2>
                     <p class="text-body-sm text-text lg:text-body">
-                        Tambahkan PDF pertama Anda agar bisa dibuka dan ditandai dari Web maupun Android.
+                        Tambahkan PDF pertama Anda agar bisa dibuka dan ditandai dari browser mana pun.
                     </p>
                 </div>
 
