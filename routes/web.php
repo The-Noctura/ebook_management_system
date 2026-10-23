@@ -34,3 +34,13 @@ Route::middleware('auth')->group(function () {
     ->name('ebooks.update');
   Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+
+// Mengakses tampilan halaman 404
+Route::get('/test-404', function () {
+  abort(404);
+});
+
+// Mengakses tampilan halaman 500
+Route::get('/test-500', function () {
+  abort(500);
+});
