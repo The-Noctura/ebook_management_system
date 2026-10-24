@@ -104,6 +104,13 @@
     }
 }
 
+/* Gulir halus untuk anchor landing page; mati bila "kurangi gerakan" aktif */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
 /* Kurangi gerakan (dokumen 06 bagian 6.5 butir 5) */
 @media (prefers-reduced-motion: reduce) {
     *,

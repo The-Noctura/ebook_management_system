@@ -1,10 +1,11 @@
-{{-- Tautan bergaya tombol (pil). Varian: primary | secondary | inverse. Pakai `disabled` bila tujuan belum ada. --}}
+{{-- Tautan bergaya tombol (pil). Varian: primary | secondary | inverse | text. Pakai `disabled` bila tujuan belum ada. --}}
 @props(['variant' => 'primary', 'href' => '#', 'disabled' => false])
 @php
     $variants = [
         'primary' => 'border-transparent bg-primary text-on-primary hover:bg-primary-hover active:bg-primary-pressed',
         'secondary' => 'border-outline-strong bg-transparent text-text hover:border-ink hover:bg-ink hover:text-on-ink',
         'inverse' => 'border-transparent bg-white text-primary hover:bg-primary-tint',
+        'text' => 'border-transparent bg-transparent text-primary hover:bg-primary-tint',
     ];
 @endphp
 <a {{ $disabled ? '' : "href=$href" }}

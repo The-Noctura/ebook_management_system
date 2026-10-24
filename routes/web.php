@@ -9,7 +9,7 @@ Route::get('/', function () {
   // Sudah login -> koleksi. Belum login -> login (nanti diganti landing page, butir 5).
   return Auth::check()
     ? redirect()->route('ebooks.index')
-    : redirect()->route('login');
+    : view('landing');
 })->name('home');
 
 // ============ MIDDLEWARE UNTUK YANG BELUM LOGIN ==========
