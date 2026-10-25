@@ -165,6 +165,37 @@ class EbookService
     );
   }
 
+  /**
+   * Menghapus ebook milik user secara permanen (baris MySQL, lalu file di storage).
+   *
+   * Urutan: baris dihapus dalam transaksi lebih dulu; file dihapus setelah COMMIT.
+   * Riwayat status ikut terhapus lewat ON DELETE CASCADE. Bila penghapusan file gagal,
+   * hasilnya tetap sukses (ebook sudah hilang dari koleksi) dan file_path dicatat ke log.
+   *
+   * @return Ebook model yang baru dihapus (atributnya masih dapat dibaca)
+   * @throws ModelNotFoundException bila ebook tidak ada atau bukan milik user
+   */
+  public function destroy(User $user, int $ebookId): Ebook
+  {
+    // 1. Kepemilikan: ebook milik user lain diperlakukan sama dengan tidak ada.
+    $ebook = Ebook::where('user_id', $user->id)->findOrFail($ebookId);
+
+    // 2. Hapus baris dalam transaksi. Jumlah baris terhapus 0 berarti ebook sudah
+    //    dihapus oleh permintaan lain yang berjalan bersamaan.
+    $deleted = DB::transaction(
+      fn(): int => Ebook::where('user_id', $user->id)->whereKey($ebook->id)->delete()
+    );
+
+    if ($deleted === 0) {
+      throw (new ModelNotFoundException)->setModel(Ebook::class, [$ebookId]);
+    }
+
+    // 3. Setelah COMMIT: hapus file. Kegagalan hanya dicatat, tidak membatalkan hasil.
+    $this->deleteFileQuietly($ebook->file_path);
+
+    return $ebook;
+  }
+
   private function deleteFileQuietly(string $path): void
   {
     try {
