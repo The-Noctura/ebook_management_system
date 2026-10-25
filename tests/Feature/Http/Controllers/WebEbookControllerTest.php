@@ -171,6 +171,43 @@ test('returns the collection limit error when uploading an 11th ebook', function
   expect(Storage::disk('local')->allFiles('ebooks'))->toBe([]);
 });
 
+test('deleting an ebook from a full collection allows another upload', function () {
+  Storage::fake('local');
+  config(['filesystems.ebook_disk' => 'local']);
+
+  $user = webEbookTestUser();
+  $ebookToDelete = null;
+  foreach (range(1, 10) as $number) {
+    $ebook = Ebook::create([
+      'user_id' => $user->id,
+      'title' => "Existing ebook {$number}",
+      'file_path' => "ebooks/user-{$user->id}/existing-{$number}.pdf",
+      'file_hash' => hash('sha256', "web-full-collection-{$number}"),
+    ]);
+
+    if ($number === 1) {
+      $ebookToDelete = $ebook;
+    }
+  }
+  Storage::disk('local')->put($ebookToDelete->file_path, "%PDF-1.4\nExisting book\n%%EOF");
+
+  $this->actingAs($user)
+    ->delete(route('ebooks.destroy', $ebookToDelete->id))
+    ->assertRedirect(route('ebooks.index'))
+    ->assertSessionHas('success', '“Existing ebook 1” dihapus dari koleksi.');
+
+  $this->assertDatabaseCount('ebooks', 9);
+  expect(Storage::disk('local')->exists($ebookToDelete->file_path))->toBeFalse();
+
+  $this->actingAs($user)
+    ->post('/ebooks', [
+      'file' => UploadedFile::fake()->createWithContent('replacement-book.pdf', "%PDF-1.4\nReplacement book\n%%EOF"),
+    ])
+    ->assertRedirect();
+
+  $this->assertDatabaseCount('ebooks', 10);
+});
+
 test('returns 404 when a user tries to open another users PDF', function () {
   $user = webEbookTestUser();
   $anotherUser = webEbookTestUser('another@example.test');

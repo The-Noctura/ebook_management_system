@@ -164,6 +164,43 @@ test('returns 409 when uploading an 11th ebook', function () {
   expect(Storage::disk('local')->allFiles('ebooks'))->toBe([]);
 });
 
+test('deleting an ebook from a full collection allows another upload', function () {
+  Storage::fake('local');
+  config(['filesystems.ebook_disk' => 'local']);
+
+  $user = apiEbookTestUser();
+  $ebookToDelete = null;
+  foreach (range(1, 10) as $number) {
+    $ebook = Ebook::create([
+      'user_id' => $user->id,
+      'title' => "Existing ebook {$number}",
+      'file_path' => "ebooks/user-{$user->id}/existing-{$number}.pdf",
+      'file_hash' => hash('sha256', "api-full-collection-{$number}"),
+    ]);
+
+    if ($number === 1) {
+      $ebookToDelete = $ebook;
+    }
+  }
+  Storage::disk('local')->put($ebookToDelete->file_path, "%PDF-1.4\nExisting book\n%%EOF");
+
+  $this->actingAs($user, 'sanctum')
+    ->deleteJson('/api/ebooks/' . $ebookToDelete->id)
+    ->assertOk()
+    ->assertExactJson(['message' => 'Ebook berhasil dihapus.']);
+
+  $this->assertDatabaseCount('ebooks', 9);
+  expect(Storage::disk('local')->exists($ebookToDelete->file_path))->toBeFalse();
+
+  $this->actingAs($user, 'sanctum')
+    ->postJson('/api/ebooks', [
+      'file' => UploadedFile::fake()->createWithContent('replacement-book.pdf', "%PDF-1.4\nReplacement book\n%%EOF"),
+    ])
+    ->assertCreated();
+
+  $this->assertDatabaseCount('ebooks', 10);
+});
+
 test('streams an owned PDF inline and hides ebooks owned by another user', function () {
   Storage::fake('local');
   config(['filesystems.ebook_disk' => 'local']);
