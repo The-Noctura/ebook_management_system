@@ -33,6 +33,10 @@ Route::middleware('auth')->group(function () {
     ->whereNumber('id')
     ->name('ebooks.file');
 
+  Route::delete('/ebooks/{id}', [WebEbookController::class, 'destroy'])
+    ->whereNumber('id')
+    ->name('ebooks.destroy');
+
   Route::patch('/ebooks/{id}', [WebEbookController::class, 'update'])
     ->whereNumber('id')
     ->name('ebooks.update');
