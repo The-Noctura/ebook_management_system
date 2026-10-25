@@ -25,6 +25,9 @@ Route::post('/ebooks', [EbookController::class, 'store'])
 Route::get('/ebooks/{id}/file', [EbookController::class, 'file'])
   ->whereNumber('id')
   ->middleware('auth:sanctum');
+Route::delete('/ebooks/{id}', [EbookController::class, 'destroy'])
+  ->whereNumber('id')
+  ->middleware('auth:sanctum');
 Route::patch('/ebooks/{id}', [EbookController::class, 'update'])
   ->whereNumber('id')
   ->middleware('auth:sanctum');

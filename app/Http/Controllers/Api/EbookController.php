@@ -92,6 +92,18 @@ class EbookController extends Controller
     return $this->ebooks->streamFile($request->user(), $id);
   }
 
+  /**
+   * DELETE /api/ebooks/{id}
+   *
+   * ModelNotFoundException -> 404 ebook_not_found (di ApiErrorResponse).
+   */
+  public function destroy(Request $request, int $id)
+  {
+    $this->ebooks->destroy($request->user(), $id);
+
+    return response()->json(['message' => 'Ebook berhasil dihapus.']);
+  }
+
   public function update(Request $request, int $id)
   {
     $validated = $request->validate([
