@@ -2,6 +2,7 @@
 
 use App\Exceptions\DuplicateEbookException;
 use App\Exceptions\EbookFileMissingException;
+use App\Exceptions\EbookLimitReachedException;
 use App\Models\Ebook;
 use App\Models\User;
 use App\Services\EbookService;
@@ -64,6 +65,63 @@ test('it throws a duplicate exception when the same file already exists for the 
   $this->expectExceptionMessage('PDF ini sudah ada di koleksi Anda.');
 
   $service->store($user, $duplicateFile);
+});
+
+test('it rejects an upload when the user already has 10 ebooks', function () {
+  Storage::fake('local');
+  $service = new EbookService;
+  $user = User::create([
+    'name' => 'Full Collection Owner',
+    'email' => 'full-collection@example.com',
+    'password' => 'secret123',
+  ]);
+
+  foreach (range(1, 10) as $number) {
+    Ebook::create([
+      'user_id' => $user->id,
+      'title' => "Existing ebook {$number}",
+      'file_path' => "ebooks/existing-{$number}.pdf",
+      'file_hash' => hash('sha256', "existing-{$number}"),
+    ]);
+  }
+
+  $file = UploadedFile::fake()->createWithContent('new-book.pdf', "%PDF-1.4\nNew book\n%%EOF");
+
+  try {
+    $service->store($user, $file);
+    $this->fail('An 11th ebook must be rejected.');
+  } catch (EbookLimitReachedException $exception) {
+    expect($exception->getMessage())->toBe('Koleksi sudah penuh (maksimal 10 PDF). Hapus salah satu untuk menambah.');
+  }
+
+  $this->assertDatabaseCount('ebooks', 10);
+  expect(Storage::disk('local')->allFiles('ebooks'))->toBe([]);
+});
+
+test('it allows an upload when the user has 9 ebooks', function () {
+  Storage::fake('local');
+  $service = new EbookService;
+  $user = User::create([
+    'name' => 'Almost Full Owner',
+    'email' => 'almost-full@example.com',
+    'password' => 'secret123',
+  ]);
+
+  foreach (range(1, 9) as $number) {
+    Ebook::create([
+      'user_id' => $user->id,
+      'title' => "Existing ebook {$number}",
+      'file_path' => "ebooks/existing-{$number}.pdf",
+      'file_hash' => hash('sha256', "almost-full-{$number}"),
+    ]);
+  }
+
+  $file = UploadedFile::fake()->createWithContent('tenth-book.pdf', "%PDF-1.4\nTenth book\n%%EOF");
+  $ebook = $service->store($user, $file);
+
+  $this->assertModelExists($ebook);
+  $this->assertDatabaseCount('ebooks', 10);
+  expect(Storage::disk('local')->exists($ebook->file_path))->toBeTrue();
 });
 
 test('it trims a supplied title and limits it to 255 characters', function () {

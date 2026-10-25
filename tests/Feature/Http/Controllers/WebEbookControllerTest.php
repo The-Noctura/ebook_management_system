@@ -145,6 +145,32 @@ test('returns to the upload form with the existing ebook id for duplicate PDFs',
   $this->assertDatabaseCount('ebooks', 1);
 });
 
+test('returns the collection limit error when uploading an 11th ebook', function () {
+  Storage::fake('local');
+  config(['filesystems.ebook_disk' => 'local']);
+
+  $user = webEbookTestUser();
+  foreach (range(1, 10) as $number) {
+    Ebook::create([
+      'user_id' => $user->id,
+      'title' => "Existing ebook {$number}",
+      'file_path' => "ebooks/existing-{$number}.pdf",
+      'file_hash' => hash('sha256', "web-existing-{$number}"),
+    ]);
+  }
+
+  $this->actingAs($user)
+    ->from('/ebooks/create')
+    ->post('/ebooks', [
+      'file' => UploadedFile::fake()->createWithContent('new-book.pdf', "%PDF-1.4\nNew book\n%%EOF"),
+    ])
+    ->assertRedirect('/ebooks/create')
+    ->assertSessionHasErrors(['file' => 'Koleksi sudah penuh (maksimal 10 PDF). Hapus salah satu untuk menambah.']);
+
+  $this->assertDatabaseCount('ebooks', 10);
+  expect(Storage::disk('local')->allFiles('ebooks'))->toBe([]);
+});
+
 test('returns 404 when a user tries to open another users PDF', function () {
   $user = webEbookTestUser();
   $anotherUser = webEbookTestUser('another@example.test');

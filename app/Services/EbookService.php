@@ -4,22 +4,27 @@ namespace App\Services;
 
 use App\Exceptions\DuplicateEbookException;
 use App\Exceptions\EbookFileMissingException;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use App\Exceptions\EbookLimitReachedException;
 use App\Models\Ebook;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use RuntimeException;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Throwable;
 
 class EbookService
 {
+  private const MAX_EBOOKS_PER_USER = 10;
+
   /**
-   * @return \Illuminate\Filesystem\FilesystemAdapter
+   * @return FilesystemAdapter
    */
   private function disk()
   {
@@ -38,6 +43,10 @@ class EbookService
 
     if ($existingId !== null) {
       throw new DuplicateEbookException((int) $existingId);
+    }
+
+    if ($user->ebooks()->count() >= self::MAX_EBOOKS_PER_USER) {
+      throw new EbookLimitReachedException;
     }
 
     // 3. Judul: dari input, atau nama file tanpa ekstensi.
@@ -60,12 +69,20 @@ class EbookService
 
     // 5. Simpan baris ebooks dalam transaksi.
     try {
-      return DB::transaction(fn() => Ebook::create([
-        'user_id' => $user->id,
-        'title' => $title,
-        'file_path' => $path,
-        'file_hash' => $hash,
-      ]));
+      return DB::transaction(function () use ($user, $title, $path, $hash): Ebook {
+        User::query()->whereKey($user->id)->lockForUpdate()->firstOrFail();
+
+        if ($user->ebooks()->count() >= self::MAX_EBOOKS_PER_USER) {
+          throw new EbookLimitReachedException;
+        }
+
+        return Ebook::create([
+          'user_id' => $user->id,
+          'title' => $title,
+          'file_path' => $path,
+          'file_hash' => $hash,
+        ]);
+      });
     } catch (Throwable $e) {
       // DB::transaction sudah melakukan ROLLBACK. Sekarang compensating action:
       $this->deleteFileQuietly($path);
@@ -88,7 +105,7 @@ class EbookService
   /**
    * Mengubah status baca ebook milik user.
    *
-   * @throws \Illuminate\Database\Eloquent\ModelNotFoundException bila ebook tidak ada atau bukan milik user
+   * @throws ModelNotFoundException bila ebook tidak ada atau bukan milik user
    */
   public function setReadStatus(User $user, int $ebookId, bool $isRead): Ebook
   {
@@ -115,7 +132,7 @@ class EbookService
   /**
    * Mengalirkan PDF milik user ke klien (Web atau API).
    *
-   * @throws \Illuminate\Database\Eloquent\ModelNotFoundException bila ebook tidak ada atau bukan milik user
+   * @throws ModelNotFoundException bila ebook tidak ada atau bukan milik user
    * @throws EbookFileMissingException bila baris ebook ada tetapi file tidak ada di disk
    */
   public function streamFile(User $user, int $ebookId): StreamedResponse

@@ -136,6 +136,34 @@ test('returns 409 when the uploaded PDF already belongs to the user', function (
   $this->assertDatabaseCount('ebooks', 1);
 });
 
+test('returns 409 when uploading an 11th ebook', function () {
+  Storage::fake('local');
+  config(['filesystems.ebook_disk' => 'local']);
+
+  $user = apiEbookTestUser();
+  foreach (range(1, 10) as $number) {
+    Ebook::create([
+      'user_id' => $user->id,
+      'title' => "Existing ebook {$number}",
+      'file_path' => "ebooks/existing-{$number}.pdf",
+      'file_hash' => hash('sha256', "api-existing-{$number}"),
+    ]);
+  }
+
+  $this->actingAs($user, 'sanctum')
+    ->postJson('/api/ebooks', [
+      'file' => UploadedFile::fake()->createWithContent('new-book.pdf', "%PDF-1.4\nNew book\n%%EOF"),
+    ])
+    ->assertConflict()
+    ->assertExactJson([
+      'message' => 'Koleksi sudah penuh (maksimal 10 PDF). Hapus salah satu untuk menambah.',
+      'code' => 'ebook_limit_reached',
+    ]);
+
+  $this->assertDatabaseCount('ebooks', 10);
+  expect(Storage::disk('local')->allFiles('ebooks'))->toBe([]);
+});
+
 test('streams an owned PDF inline and hides ebooks owned by another user', function () {
   Storage::fake('local');
   config(['filesystems.ebook_disk' => 'local']);
