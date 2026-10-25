@@ -33,9 +33,12 @@ class WebEbookController extends Controller
       $ebooks = $user->ebooks()->orderByDesc('created_at')->orderByDesc('id')->get();
 
       // Pada koleksi kosong fungsi tidak perlu dipanggil (wireframe Empty State).
-      $readCount = $ebooks->isEmpty()
-        ? 0
-        : (int) DB::selectOne('SELECT fn_count_read_ebooks(?) AS total', [$user->id])->total;
+      // Mode tanpa objek SQL: hitung dari koleksi yang sudah dimuat (tanpa query tambahan).
+      $readCount = match (true) {
+        $ebooks->isEmpty() => 0,
+        config('ebook.sql_objects') => (int) DB::selectOne('SELECT fn_count_read_ebooks(?) AS total', [$user->id])->total,
+        default => $ebooks->where('is_read', true)->count(),
+      };
 
       $loadFailed = false;
     } catch (QueryException $e) {
@@ -66,18 +69,19 @@ class WebEbookController extends Controller
     // Upload yang ditolak PHP sebelum validasi Laravel (melebihi upload_max_filesize).
     // Tanpa ini, pesannya salah: "Pilih file PDF terlebih dahulu."
     $upload = $request->file('file');
+    $limitLabel = config('ebook.max_upload_label');
 
     if ($upload !== null && ! $upload->isValid()) {
       $tooBig = in_array($upload->getError(), [UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE], true);
 
       throw ValidationException::withMessages([
-        'file' => $tooBig ? 'Ukuran file maksimal 20 MB.' : 'File gagal diunggah. Coba lagi.',
+        'file' => $tooBig ? "Ukuran file maksimal {$limitLabel}." : 'File gagal diunggah. Coba lagi.',
       ]);
     }
 
     $data = $request->validate(
       [
-        'file' => ['required', 'file', 'mimes:pdf', 'mimetypes:application/pdf', 'max:20480'],
+        'file' => ['required', 'file', 'mimes:pdf', 'mimetypes:application/pdf', 'max:' . config('ebook.max_upload_kb')],
         'title' => ['nullable', 'string', 'max:255'],
       ],
       [
@@ -86,7 +90,7 @@ class WebEbookController extends Controller
         'file.uploaded' => 'File gagal diunggah. Coba lagi.',
         'file.mimes' => 'File harus berformat PDF.',
         'file.mimetypes' => 'File harus berformat PDF.',
-        'file.max' => 'Ukuran file maksimal 20 MB.',
+        'file.max' => "Ukuran file maksimal {$limitLabel}.",
         'title.string' => 'Judul tidak valid.',
         'title.max' => 'Judul maksimal 255 karakter.',
       ]

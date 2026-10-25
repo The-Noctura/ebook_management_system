@@ -78,9 +78,12 @@ document.querySelectorAll("[data-focus]").forEach((btn) => {
 // ===== Halaman Upload (C11, wireframe Upload bagian 6.4) =====
 // Semua opsional: tanpa JavaScript form tetap berfungsi.
 // Kunci tombol saat submit sudah ditangani oleh data-loading di atas.
-const MAX_UPLOAD_BYTES = 20 * 1024 * 1024; // sama dengan max:20480 KB di server
-
 const uploadForm = document.querySelector("[data-upload-form]");
+
+// Batas dibaca dari form (data-max-bytes dan data-max-label, diisi dari config/ebook.php),
+// jadi sama dengan aturan di server. Cadangan 20 MB bila atribut tidak ada.
+const MAX_UPLOAD_BYTES = Number(uploadForm?.dataset.maxBytes) || 20 * 1024 * 1024;
+const MAX_UPLOAD_LABEL = uploadForm?.dataset.maxLabel || "20 MB";
 
 if (uploadForm) {
     const fileInput = uploadForm.querySelector("#file");
@@ -111,7 +114,7 @@ if (uploadForm) {
         fileInput.classList.add("animate-shake");
     }
 
-    // 2. Placeholder Judul mengikuti nama file; 3. tolak file di atas 20 MB
+    // 2. Placeholder Judul mengikuti nama file; 3. tolak file di atas batas ukuran
     fileInput.addEventListener("change", () => {
         clearFileError();
         serverError?.setAttribute("hidden", "");
@@ -127,7 +130,7 @@ if (uploadForm) {
         if (file.size > MAX_UPLOAD_BYTES) {
             fileInput.value = "";
             titleInput.placeholder = defaultPlaceholder;
-            showFileError("Ukuran file maksimal 20 MB.");
+            showFileError(`Ukuran file maksimal ${MAX_UPLOAD_LABEL}.`);
             return;
         }
 
@@ -150,7 +153,7 @@ if (uploadForm) {
             const file = fileInput.files[0];
             if (file && file.size > MAX_UPLOAD_BYTES) {
                 block();
-                showFileError("Ukuran file maksimal 20 MB.");
+                showFileError(`Ukuran file maksimal ${MAX_UPLOAD_LABEL}.`);
                 return;
             }
 

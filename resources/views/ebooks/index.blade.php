@@ -61,8 +61,8 @@
                     <span class="hidden lg:inline">Tambah PDF Pertama ke Koleksi</span>
                 </x-link-button>
 
-                <p class="col-span-2 text-caption text-text-muted lg:col-span-1 lg:col-start-2">Hanya PDF, maksimal 20
-                    MB.</p>
+                <p class="col-span-2 text-caption text-text-muted lg:col-span-1 lg:col-start-2">Hanya PDF, maksimal
+                    {{ config('ebook.max_upload_label') }}.</p>
             </section>
         @else
             {{-- Grid kartu: 1 kolom mobile, 2 kolom tablet, auto-fill (min 320) desktop --}}

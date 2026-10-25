@@ -100,7 +100,7 @@
                 <h2 class="text-center text-title-lg font-semibold">Cara Memakai EMS</h2>
                 <ol class="relative mt-8 grid gap-6 lg:grid-cols-3">
                     <div aria-hidden="true" class="absolute inset-x-1/6 top-5 hidden h-px bg-outline lg:block"></div>
-                    @foreach ([['Buat akun', 'Daftar dengan nama, email, dan password minimal 8 karakter.'], ['Unggah PDF', 'Pilih file PDF dari perangkat Anda. Ukuran maksimal 20 MB per file.'], ['Baca dan tandai', 'Buka PDF di browser, lalu tandai sebagai sudah atau belum dibaca.']] as $i => [$judul, $isi])
+                    @foreach ([['Buat akun', 'Daftar dengan nama, email, dan password minimal 8 karakter.'], ['Unggah PDF', 'Pilih file PDF dari perangkat Anda. Ukuran maksimal ' . config('ebook.max_upload_label') . ' per file.'], ['Baca dan tandai', 'Buka PDF di browser, lalu tandai sebagai sudah atau belum dibaca.']] as $i => [$judul, $isi])
                         <li
                             class="relative flex gap-4 max-lg:not-last:after:absolute max-lg:not-last:after:-bottom-6 max-lg:not-last:after:left-5 max-lg:not-last:after:top-10 max-lg:not-last:after:w-px max-lg:not-last:after:bg-outline lg:grid lg:justify-items-center lg:text-center">
                             <span
@@ -121,7 +121,7 @@
                 <h2 class="text-center text-title-lg font-semibold">Pertanyaan yang Sering Muncul</h2>
                 <div
                     class="mt-8 divide-y divide-outline overflow-hidden rounded-lg border border-outline bg-background">
-                    @foreach ([['Format file apa yang didukung?', 'Saat ini hanya PDF, dengan ukuran maksimal 20 MB per file.'], ['Apakah file saya bisa dilihat pengguna lain?', 'Tidak. Setiap PDF hanya bisa dibuka oleh pemilik akun yang mengunggahnya.'], ['Bagaimana jika saya mengunggah PDF yang sama dua kali?', 'Sistem mengenali isi file, bukan namanya. PDF yang sama dengan yang sudah ada di koleksi Anda akan ditolak, jadi koleksi tidak terisi duplikat.'], ['Apakah bisa dibuka dari HP?', 'Bisa, lewat browser di HP. Saat ini belum ada aplikasi Android.']] as [$tanya, $jawab])
+                    @foreach ([['Format file apa yang didukung?', 'Saat ini hanya PDF, dengan ukuran maksimal ' . config('ebook.max_upload_label') . ' per file.'], ['Apakah file saya bisa dilihat pengguna lain?', 'Tidak. Setiap PDF hanya bisa dibuka oleh pemilik akun yang mengunggahnya.'], ['Bagaimana jika saya mengunggah PDF yang sama dua kali?', 'Sistem mengenali isi file, bukan namanya. PDF yang sama dengan yang sudah ada di koleksi Anda akan ditolak, jadi koleksi tidak terisi duplikat.'], ['Apakah bisa dibuka dari HP?', 'Bisa, lewat browser di HP. Saat ini belum ada aplikasi Android.']] as [$tanya, $jawab])
                         <details class="group">
                             <summary
                                 class="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-label font-medium transition-colors duration-200 ease-standard hover:bg-primary-tint [&::-webkit-details-marker]:hidden">

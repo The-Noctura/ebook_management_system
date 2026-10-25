@@ -6,6 +6,7 @@ use App\Exceptions\DuplicateEbookException;
 use App\Exceptions\EbookFileMissingException;
 use App\Exceptions\EbookLimitReachedException;
 use App\Models\Ebook;
+use App\Models\EbookStatusHistory;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
@@ -117,6 +118,31 @@ class EbookService
       return $ebook;
     }
 
+    // 2b. Mode tanpa objek SQL (hosting yang menonaktifkan procedure dan trigger):
+    //     pekerjaan procedure dan trigger dikerjakan di PHP dalam satu transaksi.
+    if (! config('ebook.sql_objects')) {
+      DB::transaction(function () use ($user, $ebook, $isRead): void {
+        $locked = Ebook::where('user_id', $user->id)->lockForUpdate()->findOrFail($ebook->id);
+
+        if ($locked->is_read === $isRead) {
+          return;
+        }
+
+        $old = $locked->is_read;
+        $locked->is_read = $isRead;
+        $locked->save(); // Eloquent mengisi updated_at
+
+        EbookStatusHistory::create([
+          'ebook_id' => $locked->id,
+          'old_status' => $old,
+          'new_status' => $isRead,
+          'changed_at' => now(),
+        ]);
+      });
+
+      return $ebook->fresh();
+    }
+
     // 3. Status berbeda: panggil procedure di dalam transaksi.
     //    Trigger AFTER UPDATE mencatat riwayat; error apa pun memicu ROLLBACK otomatis.
     $procedure = $isRead ? 'sp_mark_ebook_read' : 'sp_mark_ebook_unread';
@@ -182,9 +208,14 @@ class EbookService
 
     // 2. Hapus baris dalam transaksi. Jumlah baris terhapus 0 berarti ebook sudah
     //    dihapus oleh permintaan lain yang berjalan bersamaan.
-    $deleted = DB::transaction(
-      fn(): int => Ebook::where('user_id', $user->id)->whereKey($ebook->id)->delete()
-    );
+    $deleted = DB::transaction(function () use ($user, $ebook): int {
+      // Tanpa objek SQL tidak ada foreign key ON DELETE CASCADE: riwayat dihapus manual.
+      if (! config('ebook.sql_objects')) {
+        EbookStatusHistory::where('ebook_id', $ebook->id)->delete();
+      }
+
+      return Ebook::where('user_id', $user->id)->whereKey($ebook->id)->delete();
+    });
 
     if ($deleted === 0) {
       throw (new ModelNotFoundException)->setModel(Ebook::class, [$ebookId]);

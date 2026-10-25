@@ -79,7 +79,7 @@ class ApiErrorResponse
 
         // 413 datang dari ValidatePostSize (body melebihi post_max_size); dokumen 04 bagian 7.1.
         if ($status === 413) {
-            $message = 'Ukuran file melebihi batas 20 MB.';
+            $message = 'Ukuran file melebihi batas ' . config('ebook.max_upload_label') . '.';
         }
 
         $headers = $exception instanceof HttpExceptionInterface ? $exception->getHeaders() : [];

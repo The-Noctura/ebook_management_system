@@ -24,10 +24,13 @@ class EbookController extends Controller
       ->orderByDesc('id')
       ->get();
 
-    $readCount = DB::selectOne(
-      'SELECT fn_count_read_ebooks(?) AS read_count',
-      [$user->id]
-    )->read_count;
+    // Mode tanpa objek SQL: hitung dari koleksi yang sudah dimuat.
+    $readCount = config('ebook.sql_objects')
+      ? DB::selectOne(
+        'SELECT fn_count_read_ebooks(?) AS read_count',
+        [$user->id]
+      )->read_count
+      : $ebooks->where('is_read', true)->count();
 
     return EbookResource::collection($ebooks)->additional([
       'meta' => [
@@ -47,25 +50,26 @@ class EbookController extends Controller
   {
     // Bila file melebihi upload_max_filesize, PHP menolaknya sebelum Laravel menjalankan
     // aturan `max`; tanpa pemeriksaan ini pesan yang muncul menyesatkan ("file wajib diisi").
+    $limitLabel = config('ebook.max_upload_label');
     $raw = $request->files->get('file');
     if (
       $raw instanceof UploadedFile
       && in_array($raw->getError(), [UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE], true)
     ) {
       throw ValidationException::withMessages([
-        'file' => ['Ukuran file maksimal 20 MB.'],
+        'file' => ["Ukuran file maksimal {$limitLabel}."],
       ]);
     }
 
     $validated = $request->validate([
-      'file'  => ['bail', 'required', 'file', 'mimes:pdf', 'mimetypes:application/pdf', 'max:20480'],
+      'file'  => ['bail', 'required', 'file', 'mimes:pdf', 'mimetypes:application/pdf', 'max:' . config('ebook.max_upload_kb')],
       'title' => ['nullable', 'string', 'max:255'],
     ], [
       'file.required'  => 'File PDF wajib diisi.',
-      'file.file'      => 'File gagal diunggah. Pastikan ukuran file tidak lebih dari 20 MB.',
+      'file.file'      => "File gagal diunggah. Pastikan ukuran file tidak lebih dari {$limitLabel}.",
       'file.mimes'     => 'File harus berformat PDF.',
       'file.mimetypes' => 'File harus berformat PDF.',
-      'file.max'       => 'Ukuran file maksimal 20 MB.',
+      'file.max'       => "Ukuran file maksimal {$limitLabel}.",
       'title.string'   => 'Judul harus berupa teks.',
       'title.max'      => 'Judul maksimal 255 karakter.',
     ]);

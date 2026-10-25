@@ -21,14 +21,15 @@
                     <x-icon.info class="size-6 text-primary" aria-hidden="true" /> Aturan upload
                 </h2>
                 <ul class="mt-2 grid list-disc gap-1 pl-6 text-body text-text">
-                    <li>Hanya PDF, maksimal 20 MB.</li>
+                    <li>Hanya PDF, maksimal {{ config('ebook.max_upload_label') }}.</li>
                     <li>PDF yang sama tidak ditambahkan dua kali.</li>
                     <li>Upload membutuhkan koneksi internet.</li>
                 </ul>
             </aside>
 
             <form method="POST" action="{{ route('ebooks.store') }}" enctype="multipart/form-data" novalidate
-                data-upload-form class="grid max-w-xl animate-enter content-start gap-4">
+                data-upload-form data-max-bytes="{{ config('ebook.max_upload_kb') * 1024 }}"
+                data-max-label="{{ config('ebook.max_upload_label') }}" class="grid max-w-xl animate-enter content-start gap-4">
                 @csrf
 
                 {{-- Gagal di server (500) --}}
@@ -73,14 +74,14 @@
                         </p>
                     @endif
 
-                    {{-- Error dari JavaScript (file di atas 20 MB) --}}
+                    {{-- Error dari JavaScript (file di atas batas ukuran) --}}
                     <p data-file-error role="alert" hidden
                         class="flex animate-enter items-start gap-1 text-caption text-error">
                         <x-icon.warning class="size-4 shrink-0" aria-hidden="true" />
                         <span data-file-error-text></span>
                     </p>
 
-                    <p id="file-hint" class="text-caption text-text-muted">Hanya PDF, maksimal 20 MB.</p>
+                    <p id="file-hint" class="text-caption text-text-muted">Hanya PDF, maksimal {{ config('ebook.max_upload_label') }}.</p>
                 </div>
 
                 <x-field name="title" label="Judul (opsional)" placeholder="Kosongkan untuk memakai nama file" />
