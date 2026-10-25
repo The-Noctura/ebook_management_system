@@ -104,9 +104,10 @@
                                 </x-chip>
                             </form>
 
-                            {{-- Hapus: belum tersedia (nonaktif, tetap dapat difokus dan dibacakan) --}}
-                            <button type="button" aria-disabled="true" aria-label="Hapus ebook, segera hadir"
-                                class="inline-grid size-12 cursor-not-allowed place-items-center rounded-full opacity-[0.38] lg:size-10">
+                            {{-- Hapus permanen: membuka dialog konfirmasi (#delete-dialog) --}}
+                            <button type="button" data-delete-url="{{ route('ebooks.destroy', $ebook->id) }}"
+                                data-delete-title="{{ $ebook->title }}" aria-label="Hapus {{ $ebook->title }}"
+                                class="inline-grid size-12 cursor-pointer place-items-center rounded-full text-text transition duration-100 ease-standard hover:bg-primary-tint active:scale-95 motion-reduce:active:scale-100 lg:size-10">
                                 <x-icon.trash class="size-6" aria-hidden="true" />
                             </button>
                         </div>
@@ -115,6 +116,62 @@
             </section>
         @endif
     </main>
+
+    @if (!$loadFailed && $total > 0)
+        {{-- Dialog konfirmasi hapus (06 bagian 7.8). Tombol hapus memakai ink, bukan merah (06 bagian 3.1 butir 4). --}}
+        <dialog id="delete-dialog" aria-labelledby="delete-title"
+            class="m-auto w-[calc(100%-2rem)] max-w-md animate-enter rounded-lg border border-outline bg-background p-0 text-text backdrop:bg-ink/40">
+            <form method="POST" action="#" class="grid gap-4 p-6">
+                @csrf
+                @method('DELETE')
+                <h2 id="delete-title" class="text-title-md font-semibold">Hapus ebook ini?</h2>
+                <p class="text-body">
+                    “<span data-delete-title class="font-medium"></span>” dan file PDF-nya akan dihapus permanen
+                    dan tidak dapat dikembalikan.
+                </p>
+                <div class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                    <x-button variant="text" type="button" data-delete-cancel>Batal</x-button>
+                    <button type="submit" data-delete-submit
+                        class="inline-flex min-h-12 cursor-pointer items-center justify-center rounded-full border border-transparent bg-ink px-6 text-label font-medium text-on-ink transition duration-100 ease-standard hover:bg-ink-hover active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-[0.38] disabled:active:scale-100 motion-reduce:active:scale-100 lg:min-h-10 lg:px-5">Ya,
+                        Hapus</button>
+                </div>
+            </form>
+        </dialog>
+
+        <script>
+            (() => {
+                const dialog = document.getElementById('delete-dialog');
+                if (!dialog) return;
+                const form = dialog.querySelector('form');
+                const title = dialog.querySelector('[data-delete-title]');
+                const submit = dialog.querySelector('[data-delete-submit]');
+                let opener = null;
+
+                document.querySelectorAll('[data-delete-url]').forEach((button) => {
+                    button.addEventListener('click', () => {
+                        opener = button;
+                        form.action = button.dataset.deleteUrl;
+                        title.textContent = button.dataset.deleteTitle;
+                        submit.disabled = false;
+                        submit.textContent = 'Ya, Hapus';
+                        dialog.showModal();
+                    });
+                });
+
+                dialog.querySelector('[data-delete-cancel]').addEventListener('click', () => dialog.close());
+                // Klik pada latar gelap (di luar kotak dialog) menutup dialog.
+                dialog.addEventListener('click', (event) => {
+                    if (event.target === dialog) dialog.close();
+                });
+                dialog.addEventListener('close', () => opener && opener.focus());
+                // Mencegah klik ganda selama permintaan berjalan.
+                form.addEventListener('submit', () => {
+                    submit.disabled = true;
+                    submit.textContent = 'Menghapus…';
+                });
+            })();
+        </script>
+    @endif
 
     {{-- Snackbar sukses: ink, ikon centang, hilang otomatis 4 detik (06 bagian 7.8; app.js [data-snackbar]) --}}
     @if (session('success'))
