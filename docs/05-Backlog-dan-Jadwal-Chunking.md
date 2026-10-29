@@ -2,14 +2,14 @@
 
 ## Ebook Storage & To-Do List
 
-| Item                      | Detail                                                                                                                      |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| Versi                     | 3 (menggantikan versi 2)                                                                                                    |
-| Tanggal disusun           | 5 Oktober 2026                                                                                                              |
-| Revisi terakhir           | 19 Oktober 2026: penerapan dokumen 06 dan Tailwind pada Web (lihat bagian 9)                                                |
-| Acuan                     | 00-Project-Overview, 01-Use-Case, 02-User-Flow, 03-Rancangan-Database-Ebook-Storage, 04-API-Specification, 06-Design-System |
-| Milestone (tidak berubah) | Core MVP Functional 7 Oktober 2026; Full MVP 12 Oktober 2026                                                                |
-| Jam kerja                 | 16.00 sampai 23.00 atau 00.00 (6-8 jam per hari)                                                                            |
+| Item            | Detail                                                                                                                                                                  |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Versi           | 3 (menggantikan versi 2)                                                                                                                                                |
+| Tanggal disusun | 5 Oktober 2026                                                                                                                                                          |
+| Revisi terakhir | 28 Oktober 2026: deadline Full MVP dipindah ke 31 Oktober, jadwal Android dihitung ulang, keputusan file lokal (lihat bagian 9)                                         |
+| Acuan           | 00-Project-Overview, 01-Use-Case, 02-User-Flow, 03-Rancangan-Database-Ebook-Storage, 04-API-Specification, 06-Design-System                                             |
+| Milestone       | Core MVP Functional 7 Oktober 2026 (bagian backend, API, dan Web tercapai; bagian Android bergeser ke 28 Oktober); Full MVP **31 Oktober 2026** (sebelumnya 12 Oktober) |
+| Jam kerja       | Nonstop 28 sampai 31 Oktober 2026; jadwal dihitung dengan 8-9 jam kerja efektif per hari                                                                                |
 
 ---
 
@@ -50,15 +50,15 @@ Empat tanda pertama adalah tempat **menulis kode**. Tanda sisanya adalah alat at
 
 Semua durasi di bawah adalah **perkiraan saya**, bukan ukuran pasti.
 
-- Total beban C03 sampai C26 sekitar **39 jam**. C01 dan C02 dijadwalkan 4 Oktober.
-- Waktu tersedia 5 sampai 12 Oktober pada 6-8 jam per hari adalah sekitar 48 sampai 64 jam, sehingga ada sisa sekitar 9 sampai 25 jam sebagai penyangga.
-- Penerapan dokumen 06 (Design System) menambah sekitar **3 sampai 4 jam**, perkiraan saya, yaitu token dan komponen Tailwind di C10, tampilan Upload di C11, serta tema Android di C12 dan C14. Tambahan ini **belum termasuk** dalam angka 39 jam dan belum diselipkan ke tabel jadwal.
-- Jadwal tidak memperhitungkan hari ketika pekerjaan lain (tim Roblox, startup) mengambil waktu. Bila ada hari yang sudah pasti kosong, jadwal perlu dihitung ulang.
+- Sisa pekerjaan per 28 Oktober adalah C12 sampai C26 (Android, Cloudflare R2, pengujian, finalisasi): sekitar **25,5 jam**, ditambah sekitar **2 jam** untuk tema Android dokumen 06 (C12 dan C14) dan sekitar **0,5 jam** untuk pemindahan file pasca-upload di C17. Totalnya sekitar **27 jam**, perkiraan saya.
+- Waktu tersedia 28 sampai 31 Oktober secara nonstop pada 8-9 jam kerja efektif per hari adalah sekitar 32 sampai 36 jam, sehingga penyangga hanya sekitar 5 sampai 9 jam (31 Oktober dibiarkan hampir kosong untuk itu). Ini jauh lebih tipis daripada rencana awal (9 sampai 25 jam), dan kerja nonstop mengurangi ketelitian pada jam-jam terakhir.
+- Hari yang diharapkan paling padat: 29 Oktober (sekitar 9 jam, memuat C16, C17, C19, dan C20 yang berisiko tinggi). Bila C16 sampai C20 meluber, urutan pemotongan di bagian 7 berlaku.
+- C21 (setup Cloudflare R2) tidak bergantung pada Android; bila ada jeda menunggu build atau uji di HP, boleh ditarik maju ke 28 atau 29 Oktober.
   | Target | Nilai | Catatan |
   | ---------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------ |
-  | Gate 7 Okt: P0 backend dan API, Web P1 | **7/10** | Beban 6 Okt dan 7 Okt padat, tetapi 8 Okt masih dapat menampung limpahan |
-  | Gate 7 Okt: Android login (target lunak) | **5/10** | C11, C12, dan C13 berada pada hari yang sama (sekitar 5,5 jam); bila meluber, bergeser ke 8 Okt |
-  | Gate 12 Okt: Full MVP | **6/10** | Risiko terbesar: upload dan pemilih file Android (C16, C17), FileProvider (C20), dan Cloudflare R2 yang baru dipasang 9-10 Okt |
+  | Gate 7 Okt: P0 backend dan API, Web P1 | **tercapai** | C01 sampai C11 sudah tercentang |
+  | Gate 7 Okt: Android login dan koleksi (target lunak) | **bergeser** | Dikerjakan 28 Okt (C12 sampai C15) |
+  | Gate 31 Okt: Full MVP | **5/10** | Risiko terbesar: upload dan pemilih file Android (C16, C17), FileProvider (C20), dan Cloudflare R2 yang baru dipasang 30 Okt; penyangga tipis dan semua pekerjaan Android baru dimulai |
 
 ---
 
@@ -66,17 +66,13 @@ Semua durasi di bawah adalah **perkiraan saya**, bukan ukuran pasti.
 
 Urutan mengikuti prioritas Anda: database, autentikasi, Ebook API, Web, Android, integrasi, polish. Pekerjaan pada baris yang sama dapat ditukar urutannya selama syarat **Membutuhkan** terpenuhi.
 
-| Tanggal | Hari   | Pekerjaan (perkiraan jam)                                                                                                        | Jam       |
-| ------- | ------ | -------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| 4 Okt   | Minggu | C01 setup, register, login, logout Web (1,5-2); C02 tabel dan model (1)                                                          | sekitar 3 |
-| 5 Okt   | Senin  | C03 objek database (1,5); C04 autentikasi API (1,5); C05 layanan penyimpanan ebook (1,5); C06 layanan ubah status dan file (1,5) | 6         |
-| 6 Okt   | Selasa | C07 API daftar dan ubah status (1,5); C08 API upload dan unduh (1,5); C09 uji API (1,5); C10 Web daftar dan ubah status (2)      | 6,5       |
-| 7 Okt   | Rabu   | C11 Web upload dan buka PDF (1,5); C12 setup Android (2); C13 Android login dan register (2). **Gate 7 Oktober**                 | 5,5       |
-| 8 Okt   | Kamis  | C14 Android daftar koleksi (1,5); C15 Android ubah status (1); C16 Android pemilih file (2); C17 Android upload (2)              | 6,5       |
-| 9 Okt   | Jumat  | C18 uji upload (1); C19 Android unduh PDF (2); C20 Android buka PDF (1,5); C21 setup Cloudflare R2 (1,5)                         | 6         |
-| 10 Okt  | Sabtu  | C22 pindah ke R2 (1,5); C23 Android akses offline dan logout (2); C24 uji lintas platform (1,5); C25 uji end-to-end (2)          | 7         |
-| 11 Okt  | Minggu | C26 regresi dan finalisasi (1,5); sisa waktu untuk limpahan dan item P2                                                          | 1,5+      |
-| 12 Okt  | Senin  | Penyangga; **Gate 12 Oktober**                                                                                                   | -         |
+| Tanggal | Hari        | Pekerjaan (perkiraan jam)                                                                                                                                 | Jam     |
+| ------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| 4-7 Okt | Minggu-Rabu | Selesai: C01 sampai C11 (backend, API, Web)                                                                                                               | selesai |
+| 28 Okt  | Rabu        | C12 setup Android + tema dokumen 06 (2+1); C13 Android login dan register (2); C14 Android daftar koleksi (1,5+0,5); C15 Android ubah status (1)          | 8       |
+| 29 Okt  | Kamis       | C16 Android pemilih file (2); C17 Android upload + pindah file ke `pdfs` (2,5); C18 uji upload (1); C19 Android unduh PDF (2); C20 Android buka PDF (1,5) | 9       |
+| 30 Okt  | Jumat       | C21 setup Cloudflare R2 (1,5); C22 pindah ke R2 (1,5); C23 Android akses offline dan logout (2); C24 uji lintas platform (1,5); C25 uji end-to-end (2)    | 8,5     |
+| 31 Okt  | Sabtu       | C26 regresi dan finalisasi (1,5); sisa waktu untuk limpahan; **Gate 31 Oktober** (deadline)                                                               | 1,5+    |
 
 Hari yang pekerjaannya selesai lebih cepat dapat menarik pekerjaan hari berikutnya maju. Hari yang meluber memindahkan sisanya ke hari berikutnya; bila Gate terancam, ikuti urutan pemotongan di bagian 7.
 
@@ -99,21 +95,21 @@ Centang pekerjaan di sini setelah kotak **Selesai jika**-nya tercentang.
 - [x] C09 · Uji di Postman · Pengujian API menyeluruh (6 Okt)
 - [x] C10 · Laravel Web · Daftar koleksi dan ubah status (6 Okt)
 - [x] C11 · Laravel Web · Upload dan buka PDF (7 Okt)
-- [ ] C12 · Android · Setup proyek dan koneksi ke backend (7 Okt)
-- [ ] C13 · Android · Login dan register (7 Okt)
-- [ ] C14 · Android · Daftar koleksi (8 Okt)
-- [ ] C15 · Android · Ubah status baca (8 Okt)
-- [ ] C16 · Android · Pemilih file (8 Okt)
-- [ ] C17 · Android · Upload multipart (8 Okt)
-- [ ] C18 · Uji di Browser dan HP fisik · Pengujian upload end-to-end (9 Okt)
-- [ ] C19 · Android · Unduh PDF (9 Okt)
-- [ ] C20 · Android · Penampil PDF (9 Okt)
-- [ ] C21 · Laravel Backend dan Cloudflare · Setup Cloudflare R2 (9 Okt)
-- [ ] C22 · Laravel Backend dan Cloudflare · Pindah ke R2 (10 Okt)
-- [ ] C23 · Android · Akses offline, logout, dan penanganan 401 (10 Okt)
-- [ ] C24 · Laravel Web, Laravel API, dan Android · Pengujian lintas platform dan pesan error (10 Okt)
-- [ ] C25 · Uji di Browser dan HP fisik · Pengujian end-to-end Web dan Android (10 Okt)
-- [ ] C26 · Regresi dan finalisasi (11 Okt)
+- [ ] C12 · Android · Setup proyek dan koneksi ke backend (28 Okt)
+- [ ] C13 · Android · Login dan register (28 Okt)
+- [ ] C14 · Android · Daftar koleksi (28 Okt)
+- [ ] C15 · Android · Ubah status baca (28 Okt)
+- [ ] C16 · Android · Pemilih file (29 Okt)
+- [ ] C17 · Android · Upload multipart (29 Okt)
+- [ ] C18 · Uji di Browser dan HP fisik · Pengujian upload end-to-end (29 Okt)
+- [ ] C19 · Android · Unduh PDF (29 Okt)
+- [ ] C20 · Android · Penampil PDF (29 Okt)
+- [ ] C21 · Laravel Backend dan Cloudflare · Setup Cloudflare R2 (30 Okt)
+- [ ] C22 · Laravel Backend dan Cloudflare · Pindah ke R2 (30 Okt)
+- [ ] C23 · Android · Akses offline, logout, dan penanganan 401 (30 Okt)
+- [ ] C24 · Laravel Web, Laravel API, dan Android · Pengujian lintas platform dan pesan error (30 Okt)
+- [ ] C25 · Uji di Browser dan HP fisik · Pengujian end-to-end Web dan Android (30 Okt)
+- [ ] C26 · Regresi dan finalisasi (31 Okt)
 
 ### Epic A: Dasar Backend (P0)
 
@@ -132,7 +128,6 @@ Centang pekerjaan di sini setelah kotak **Selesai jika**-nya tercentang.
 - [x] **[Laravel Web]** Satu layout Blade (kerangka halaman yang dipakai bersama) dengan CSS biasa, tanpa Tailwind, Vite, atau Node.js. _(Diganti 19 Oktober 2026: Web kini memakai Tailwind CSS lewat Vite dan Node.js sesuai dokumen 06 bagian 10; penyesuaian tampilan dikerjakan di C10. Lihat bagian 9.)_
 - [x] **[Laravel Web]** File `AuthController` untuk Web (satu file yang menampung logika register, login, dan logout halaman Web).
       **Register**
-
 - [x] **[Laravel Web]** Dua route (alamat halaman): `GET /register` untuk menampilkan form, `POST /register` untuk memproses form.
 - [x] **[Laravel Web]** Satu view (file tampilan) berisi form dengan kolom nama, email, password, konfirmasi password, tombol daftar, dan tautan ke halaman login.
 - [x] **[Laravel Web]** Method di `AuthController` yang menampilkan form.
@@ -141,7 +136,6 @@ Centang pekerjaan di sini setelah kotak **Selesai jika**-nya tercentang.
 - [x] **[Laravel Web]** Jika berhasil: arahkan ke halaman login dengan pesan sukses (dokumen 02 bagian 5.1: akun dibuat, lalu login).
 - [x] **[Laravel Web]** Jika gagal: kembali ke form, tampilkan pesan error berbahasa Indonesia, dan isian nama serta email tetap terisi.
       **Login**
-
 - [x] **[Laravel Web]** Dua route: `GET /login` dan `POST /login`.
 - [x] **[Laravel Web]** Satu view berisi form email, password, dan tombol masuk.
 - [x] **[Laravel Web]** Method yang menampilkan form, dan method yang memeriksa bahwa email dan password terisi.
@@ -151,11 +145,9 @@ Centang pekerjaan di sini setelah kotak **Selesai jika**-nya tercentang.
 - [x] **[Laravel Web]** Batas 5 percobaan per menit pada `POST /login`.
 - [x] **[Laravel Web]** Halaman `/ebooks` sementara yang hanya menampilkan nama user dan hanya bisa dibuka setelah login. Jika belum login, user diarahkan ke halaman login. Halaman ini diganti pada C10.
       **Logout**
-
 - [x] **[Laravel Web]** Route `POST /logout` dan tombol logout di `/ebooks`.
 - [x] **[Laravel Web]** Akhiri sesi, buat ulang token CSRF (kode pengaman form), lalu kembali ke login.
       **Penutup**
-
 - [x] **[Terminal]** Inisialisasi Git dan commit pertama.
 - [x] **Selesai jika:** **[Browser]** register, login, dan logout berjalan; **[Klien MySQL]** tabel `users` sesuai dokumen 03 bagian 3 tanpa kolom atau tabel bawaan yang tidak dipakai.
 
@@ -171,7 +163,6 @@ Membutuhkan: C01.
 - [x] **[Laravel Backend]** Constraint unik pada pasangan `(user_id, file_hash)` agar satu user tidak punya dua PDF yang sama, dan index pada `user_id` (dokumen 03 bagian 12). => karena hal ini fitur delete ebooks dipertimbangkan untuk masuk lebih cepat.
 - [x] **[Laravel Backend]** Migration `ebook_status_history` (dokumen 03 bagian 5): `id`, `ebook_id` (kunci asing ke `ebooks.id`), `old_status`, `new_status`, `changed_at`.
       **Model**
-
 - [x] **[Laravel Backend]** Model `Ebook`: `is_read` dibaca sebagai boolean; relasi ke `User` (milik satu user) dan ke riwayat status (punya banyak).
 - [x] **[Laravel Backend]** Model `User`: relasi punya banyak `Ebook`.
 - [x] **Selesai jika:** **[Terminal]** `php artisan migrate:fresh` berhasil dan **[Klien MySQL]** ketiga tabel beserta kunci asing, index, dan constraint unik terlihat benar (dokumen 03 dan 04).
@@ -186,18 +177,14 @@ Membutuhkan: C02.
 
 - [x] **[Laravel Backend]** Satu migration khusus yang membuat semua objek di bawah memakai `DB::unprepared()` (menjalankan SQL mentah). Migration ini tidak boleh berada di dalam transaksi karena perintah pembuatan objek di MySQL otomatis meng-commit.
       **Stored procedure** (dokumen 03 bagian 7.1)
-
 - [x] **[Laravel Backend]** `sp_mark_ebook_read(user_id, ebook_id)`: memeriksa bahwa ebook milik user (jika bukan, menghasilkan error), lalu mengubah `is_read` menjadi true dan `updated_at` menjadi `NOW()`. `updated_at` harus diisi di sini karena perubahan lewat procedure tidak melewati Eloquent yang biasanya mengisinya.
 - [x] **[Laravel Backend]** `sp_mark_ebook_unread(user_id, ebook_id)`: sama, dengan `is_read` menjadi false.
 - [x] **[Laravel Backend]** Procedure tidak mengisi tabel riwayat; itu tugas trigger.
       **Trigger** (dokumen 03 bagian 7.2)
-
 - [x] **[Laravel Backend]** Trigger `AFTER UPDATE` pada `ebooks`: menambah satu baris ke `ebook_status_history` (`old_status`, `new_status`, `changed_at`) hanya bila `OLD.is_read <> NEW.is_read`.
       **Function** (dokumen 03 bagian 7.3)
-
 - [x] **[Laravel Backend]** `fn_count_read_ebooks(user_id)`: mengembalikan jumlah ebook milik user dengan `is_read` true.
       **Pengujian manual**
-
 - [x] **[Klien MySQL]** Memanggil procedure mengubah status dan menambah tepat satu baris riwayat.
 - [x] **[Klien MySQL]** Memanggil procedure kedua kali dengan nilai yang sama tidak menambah riwayat.
 - [x] **[Klien MySQL]** Memanggil procedure pada ebook milik user lain menghasilkan error.
@@ -215,14 +202,12 @@ Membutuhkan: C01.
 - [x] **[Terminal]** Pasang Sanctum (paket token bawaan Laravel untuk API) dengan `php artisan install:api`.
 - [x] **[Laravel Backend]** Tambahkan `HasApiTokens` pada model `User`.
       **Endpoint**
-
 - [x] **[Laravel API]** `POST /api/register`: aturan isian sama dengan register Web; respons 201 berisi `id`, `name`, `email`, **tanpa token** (dokumen 04 bagian 5.1).
 - [x] **[Laravel API]** `POST /api/login`: menerima `email`, `password`, dan `device_name` (opsional, bawaan "android"); respons 200 berisi `token`, `token_type` "Bearer", dan data user (dokumen 04 bagian 5.2).
 - [x] **[Laravel API]** `POST /api/login` memberi 401 `invalid_credentials` bila salah, 422 bila isian kurang, dan 429 `too_many_attempts` bila lebih dari 5 percobaan per menit.
 - [x] **[Laravel API]** `POST /api/logout`: mencabut token yang dipakai pada request tersebut; respons 200 dengan pesan "Logout berhasil." (dokumen 04 bagian 5.3).
 - [x] **[Laravel API]** Jawaban error ditulis dalam format dokumen 04 bagian 3.4.
       **Pengujian**
-
 - [x] **[Postman]** Setiap request diberi header `Accept: application/json`. Header ini **dikirim oleh pihak yang memanggil API** (di sini Postman, nanti Android pada C13), bukan oleh Laravel; tanpa header ini Laravel dapat menjawab dengan halaman HTML, bukan JSON (dokumen 04 bagian 3.1).
 - [x] **[Postman]** Uji register, login, dan logout.
 - [x] **Selesai jika:** **[Postman]** register, login, dan logout lulus; token yang sudah di-logout ditolak dengan 401.
@@ -313,14 +298,12 @@ Membutuhkan: C06, C01.
 - [x] **[Dokumen]** Wireframe Login dan Register berlaku untuk Web dan Android. Logika Login dan Register dari C01 tidak dikerjakan ulang; hanya tampilannya disesuaikan pada butir Design system di bawah.
 - [x] **[Dokumen]** Wireframe disimpan di repositori, misalnya folder `docs/`.
       **Design system Web (dokumen 06)**
-
 - [x] **[Terminal]** `npm run dev` berjalan dan `npm run build` berhasil. Versi Tailwind diperiksa di `package.json`; dokumen 06 bagian 10 mengasumsikan v4.
 - [x] **[Laravel Web]** Token warna, radius, tipografi, easing, dan animasi dari dokumen 06 bagian 10.2 ditulis di `resources/css/app.css`.
 - [x] **[Laravel Web]** Layout Blade memuat aset dengan `@vite`.
 - [x] **[Laravel Web]** Komponen Blade `button`, `card`, `chip`, dan `field` (dokumen 06 bagian 10.4), serta komponen ikon SVG inline `x-icon.*` untuk ikon yang dibutuhkan layar.
 - [x] **[Laravel Web]** Login dan Register dari C01 disesuaikan tampilannya (dua kolom di desktop, pita merah di mobile) memakai komponen tersebut; logika tidak berubah.
-
-**Halaman**
+      **Halaman**
 
 - [x] **[Laravel Web]** Route `GET /ebooks` dalam grup `auth` (hanya untuk user yang sudah login) dan `WebEbookController@index`, menggantikan halaman sementara dari C01 (dokumen 04 bagian 8).
 - [x] **[Laravel Web]** View daftar berisi judul, status baca, dan tanggal; Empty State sesuai wireframe; jumlah ebook yang sudah dibaca dari `fn_count_read_ebooks`. Tampilan memakai bilah atas merah, grid kartu di desktop, dan komponen `card` serta `chip` (dokumen 06 bagian 7 dan 8).
@@ -343,7 +326,7 @@ Membutuhkan: C10, C05.
 
 ### Epic D: Android (P1)
 
-#### C12 · Android · Setup proyek dan koneksi ke backend · P1 · 7 Okt
+#### C12 · Android · Setup proyek dan koneksi ke backend · P1 · 28 Okt
 
 Membutuhkan: C04.
 
@@ -351,18 +334,17 @@ Membutuhkan: C04.
 
 **Keputusan yang harus tertulis**
 
-- [x] **[Dokumen]** Struktur proyek Android: package dan lapisan sederhana (misalnya `data/api`, `data/model`, `ui/login`, `ui/ebooks`, `util`) dengan satu paragraf aturan.
-- [x] **[Dokumen]** Akses backend dari HP fisik. Karena pengujian memakai HP fisik, rekomendasinya jaringan lokal: server Laravel dijalankan dengan `php artisan serve --host=0.0.0.0` dan HP serta komputer berada pada Wi-Fi yang sama. Hosting online tidak direkomendasikan karena menambah pekerjaan. Tulis keputusan akhir di sini.
+- [ ] **[Dokumen]** Struktur proyek Android: package dan lapisan sederhana (misalnya `data/api`, `data/model`, `ui/login`, `ui/ebooks`, `util`) dengan satu paragraf aturan.
+- [ ] **[Dokumen]** Akses backend dari HP fisik. Karena pengujian memakai HP fisik, rekomendasinya jaringan lokal: server Laravel dijalankan dengan `php artisan serve --host=0.0.0.0` dan HP serta komputer berada pada Wi-Fi yang sama. Hosting online tidak direkomendasikan karena menambah pekerjaan. Tulis keputusan akhir di sini.
       **Proyek**
-
-- [x] **[Android]** Proyek Kotlin dengan ViewBinding (cara mengakses elemen layar tanpa `findViewById`), dependency Retrofit (pustaka pemanggil API), converter Gson (pengubah JSON), OkHttp logging-interceptor (pencatat request di Logcat), dan RecyclerView (komponen daftar).
-- [x] **[Android]** Material Components dan resource tema dari dokumen 06 bagian 11: `colors.xml`, `dimens.xml`, `themes.xml`, interpolator, dan `Motion.kt`. Tanpa `values-night` karena tema gelap tidak dipakai.
-- [x] **[Android]** `AndroidManifest`: izin `INTERNET` dan izin HTTP tanpa enkripsi (cleartext) khusus pengembangan.
+- [ ] **[Android]** Proyek Kotlin dengan ViewBinding (cara mengakses elemen layar tanpa `findViewById`), dependency Retrofit (pustaka pemanggil API), converter Gson (pengubah JSON), OkHttp logging-interceptor (pencatat request di Logcat), dan RecyclerView (komponen daftar).
+- [ ] **[Android]** Material Components dan resource tema dari dokumen 06 bagian 11: `colors.xml`, `dimens.xml`, `themes.xml`, interpolator, dan `Motion.kt`. Tanpa `values-night` karena tema gelap tidak dipakai.
+- [ ] **[Android]** `AndroidManifest`: izin `INTERNET` dan izin HTTP tanpa enkripsi (cleartext) khusus pengembangan.
 - [ ] **[Terminal]** Jalankan Laravel dengan `php artisan serve --host=0.0.0.0` sesuai keputusan di atas.
 - [ ] **[Android]** Uji sambung dari **[HP fisik]**: memanggil `POST /api/login` dengan data tetap dan melihat respons di Logcat (jendela log Android Studio).
 - [ ] **Selesai jika:** Android menerima respons dari Laravel dan dua keputusan di atas tertulis.
 
-#### C13 · Android · Login dan register · P1 · 7 Okt
+#### C13 · Android · Login dan register · P1 · 28 Okt
 
 Membutuhkan: C12.
 
@@ -377,30 +359,30 @@ Membutuhkan: C12.
 - [ ] **[Android]** Saat aplikasi dibuka dan token sudah ada, langsung ke daftar ebook.
 - [ ] **Selesai jika:** **[HP fisik]** register dan login berhasil dan token tersimpan.
 
-#### C14 · Android · Daftar koleksi · P1 · 8 Okt
+#### C14 · Android · Daftar koleksi · P1 · 28 Okt
 
 Membutuhkan: C13, C07.
 
 **Dikerjakan di:** Dokumen, Android, HP fisik, Browser (untuk mengunggah ebook uji). Laravel tidak diubah; yang dipakai adalah `GET /api/ebooks` dari C07.
 
 - [ ] **[Dokumen]** Wireframe Daftar Ebook dan Empty State disesuaikan untuk Android.
-- [ ] **[Android]** Layout daftar dan item (judul dan kontrol status) mengikuti dokumen 06 bagian 7: bilah atas merah, kartu ebook, chip status baca, dan tombol Tambah PDF mengambang.
+- [ ] **[Android]** Layout daftar dan item (judul dan kontrol status) mengikuti dokumen 06 bagian 7: bilah atas merah, kartu ebook, chip status baca, dan ikon logout 48 dp di bilah atas (fungsinya disambungkan di C23). Tombol Tambah PDF berupa pil `primary` mengambang di kanan bawah bila ada ebook; bila koleksi kosong, tombol itu berada di dalam kotak Empty State dan tidak mengambang, agar hanya ada satu aksi utama di layar (Wireframe Empty State, bagian 10 butir 6).
 - [ ] **[Android]** `RecyclerView` dan adapter yang memanggil `GET /api/ebooks`.
 - [ ] **[Android]** Tampilan loading, Empty State, dan error dengan tombol muat ulang; jumlah ebook yang sudah dibaca diambil dari `meta.read_count`.
 - [ ] **Selesai jika:** ebook yang diunggah lewat **[Browser]** (Web) muncul di **[HP fisik]**.
 
-#### C15 · Android · Ubah status baca · P1 · 8 Okt
+#### C15 · Android · Ubah status baca · P1 · 28 Okt
 
 Membutuhkan: C14.
 
 **Dikerjakan di:** Android, HP fisik, Browser. Laravel tidak diubah; yang dipakai adalah `PATCH /api/ebooks/{id}` dari C07.
 
-- [ ] **[Android]** Kotak centang pada item memanggil `PATCH /api/ebooks/{id}`; item diperbarui dari respons.
+- [ ] **[Android]** Chip status baca pada kartu (06 bagian 7.4: "Belum Dibaca" bergaris abu dengan ikon lingkaran kosong, "Sudah Dibaca" berisi hitam dengan ikon centang) memanggil `PATCH /api/ebooks/{id}` saat ditekan; item diperbarui dari respons. Chip memakai `contentDescription` yang menyebut aksinya, misalnya "Belum dibaca. Tandai sudah dibaca."
 - [ ] **[Android]** Bila gagal, status dikembalikan ke sebelumnya dan pesan ditampilkan (dokumen 01, UC-09 dan UC-10: status lama dipertahankan saat penyimpanan gagal).
 - [ ] **[HP fisik]** dan **[Browser]** Diuji dua arah: ubah di Android lalu lihat di Web, dan sebaliknya.
 - [ ] **Selesai jika:** status konsisten antara Android dan Web.
 
-#### C16 · Android · Pemilih file · P1 · 8 Okt · risiko tinggi
+#### C16 · Android · Pemilih file · P1 · 29 Okt · risiko tinggi
 
 Membutuhkan: C14.
 
@@ -413,7 +395,7 @@ Membutuhkan: C14.
 - [ ] **[Android]** File lebih dari 20 MB ditolak sebelum dikirim.
 - [ ] **Selesai jika:** **[HP fisik]** nama dan ukuran file terbaca dan file sementara terbentuk.
 
-#### C17 · Android · Upload multipart · P1 · 8 Okt · risiko tinggi
+#### C17 · Android · Upload multipart · P1 · 29 Okt · risiko tinggi
 
 Membutuhkan: C16, C08.
 
@@ -423,11 +405,13 @@ Membutuhkan: C16, C08.
 - [ ] **[Android]** Batas waktu tulis dan baca OkHttp dinaikkan karena unggahan 20 MB pada koneksi lambat dapat melampaui bawaan (dokumen 04 bagian 7.1).
 - [ ] **[Android]** Sebelum mengirim, koneksi diperiksa lewat `ConnectivityManager`; bila offline tampil "coba lagi saat online", tanpa antrean (dokumen 01 bagian 1.2 dan dokumen 02 bagian 7).
 - [ ] **[Android]** Pemetaan error ke pesan: 409 duplikat, 413 atau 422 file terlalu besar atau bukan PDF, 401 sesi habis, 500 gagal di server.
-- [ ] **[Android]** Saat sukses: kembali ke daftar, muat ulang, dan hapus file sementara.
+- [ ] **[Android]** Bar progres pil (tinggi 8, trek `outline`, isi `primary`; 06 bagian 7.8) mengikuti kemajuan unggahan, karena Retrofit dapat melaporkannya (Wireframe Upload, bagian 10 butir 7).
+- [ ] **[Android]** Kegagalan di tengah unggahan (timeout atau koneksi putus) menampilkan "PDF belum bisa ditambahkan. Silakan coba lagi." dan PDF tidak dianggap masuk koleksi (dokumen 01, UC-06). File sementara di `cacheDir` dihapus juga saat unggahan gagal atau dibatalkan.
+- [ ] **[Android]** Saat sukses (respons 201 membawa `id`): file sementara dipindahkan ke `filesDir/pdfs/{id}.pdf`, bukan dihapus, sehingga PDF yang baru diunggah langsung menjadi "file lokal" dan dapat dibuka offline tanpa unduh ulang (keputusan 28 Okt, lihat C19). Setelah itu kembali ke daftar dan muat ulang.
 - [ ] **[Android]** Tombol upload tidak dapat ditekan dua kali selama proses berjalan.
-- [ ] **Selesai jika:** **[HP fisik]** PDF kecil berhasil terunggah.
+- [ ] **Selesai jika:** **[HP fisik]** PDF kecil berhasil terunggah dan file `filesDir/pdfs/{id}.pdf` terbentuk.
 
-#### C18 · Uji di Browser dan HP fisik · Pengujian upload end-to-end · P1 · 9 Okt
+#### C18 · Uji di Browser dan HP fisik · Pengujian upload end-to-end · P1 · 29 Okt
 
 Membutuhkan: C17, C11.
 
@@ -439,7 +423,7 @@ Membutuhkan: C17, C11.
 - [ ] **[HP fisik]** PDF sekitar 15-20 MB berhasil (atau batas waktu disesuaikan); di atas 20 MB menghasilkan pesan yang jelas.
 - [ ] **Selesai jika:** keempat skenario berperilaku benar.
 
-#### C19 · Android · Unduh PDF · P1 · 9 Okt
+#### C19 · Android · Unduh PDF · P1 · 29 Okt
 
 Membutuhkan: C14, C08.
 
@@ -447,16 +431,17 @@ Membutuhkan: C14, C08.
 
 **Keputusan yang harus tertulis**
 
-- [ ] **[Dokumen]** Penyimpanan lokal Android. Rekomendasi: PDF diunduh ke `filesDir/pdfs/{id}.pdf` (folder privat aplikasi); file hasil unduhan menjadi "file lokal" yang dipakai ulang selama masih ada; aplikasi tidak melacak file asli di folder Download; folder `pdfs` dihapus saat logout. Konfirmasi atau ubah, lalu tulis keputusan akhir.
+- [x] **[Dokumen]** Penyimpanan lokal Android. **Diputuskan 28 Okt 2026:** PDF disimpan di `filesDir/pdfs/{id}.pdf` (folder privat aplikasi). File ini menjadi "file lokal" yang dipakai ulang selama masih ada, baik hasil unduhan (C19) maupun file sementara yang dipindahkan setelah upload berhasil (C17). Aplikasi tidak melacak file asli di folder Download. Folder `pdfs` dihapus saat logout atau saat token ditolak (C23).
 - [ ] **[Dokumen]** Dokumen 00 dan 01 (bagian yang menjelaskan akses PDF Android dan UC-08) diperbarui agar istilah "file lokal" jelas mengacu pada file hasil unduhan; catat di bagian 9.
       **Unduhan**
-
 - [ ] **[Android]** Retrofit dengan `@Streaming` untuk `GET /api/ebooks/{id}/file`, agar seluruh file tidak dimuat ke memori sekaligus.
 - [ ] **[Android]** Isi ditulis ke `{id}.pdf.part`, lalu namanya diganti menjadi `{id}.pdf` hanya setelah unduhan selesai, supaya file setengah jadi tidak pernah dianggap utuh.
 - [ ] **[Android]** Indikator loading selama mengunduh.
+- [ ] **[Android]** Pemicu: mengetuk kartu ebook memulai unduhan (bila `{id}.pdf` belum ada) lalu membuka PDF lewat C20. Cabang offline dan `file_missing` ditambahkan di C23.
+- [ ] **[Android]** Unduhan yang gagal karena 500 atau jaringan putus menampilkan "PDF belum bisa diunduh. Silakan coba lagi." dan file `.part` yang setengah jadi dihapus (dokumen 02 bagian 10.1: gagal berarti tampilkan error).
 - [ ] **Selesai jika:** **[HP fisik]** file `{id}.pdf` utuh tersimpan di penyimpanan aplikasi dan keputusan tertulis.
 
-#### C20 · Android · Penampil PDF · P1 · 9 Okt · risiko tinggi
+#### C20 · Android · Penampil PDF · P1 · 29 Okt · risiko tinggi
 
 Membutuhkan: C19.
 
@@ -470,7 +455,7 @@ Membutuhkan: C19.
 
 ### Epic E: Cloudflare R2 (P0)
 
-#### C21 · Laravel Backend dan Cloudflare · Setup Cloudflare R2 · P0 · 9 Okt
+#### C21 · Laravel Backend dan Cloudflare · Setup Cloudflare R2 · P0 · 30 Okt
 
 Membutuhkan: C05.
 
@@ -483,7 +468,7 @@ Membutuhkan: C05.
 - [ ] **[Terminal]** Uji tulis dan baca file kecil lewat `tinker`.
 - [ ] **Selesai jika:** Laravel dapat menulis dan membaca objek di bucket R2.
 
-#### C22 · Laravel Backend dan Cloudflare · Pindah ke R2 · P0 · 10 Okt
+#### C22 · Laravel Backend dan Cloudflare · Pindah ke R2 · P0 · 30 Okt
 
 Membutuhkan: C21, C11, C08.
 
@@ -498,23 +483,23 @@ Membutuhkan: C21, C11, C08.
 
 ### Epic F: Integrasi dan Finalisasi
 
-#### C23 · Android · Akses offline, logout, dan penanganan 401 · P1 · 10 Okt
+#### C23 · Android · Akses offline, logout, dan penanganan 401 · P1 · 30 Okt
 
 Membutuhkan: C20, C19.
 
 **Dikerjakan di:** Android, HP fisik. Laravel tidak diubah; yang dipakai adalah `POST /api/logout` dari C04.
 
-- **[Android]** Saat item diketuk (dokumen 02 bagian 10.1):
+- **[Android]** Pada pemicu ketuk kartu yang dibuat di C19, tambahkan cabang berikut (dokumen 02 bagian 10.1):
     - [ ] bila `filesDir/pdfs/{id}.pdf` ada, langsung dibuka;
     - [ ] bila tidak ada dan offline, tampil "Butuh internet untuk membuka PDF";
     - [ ] bila tidak ada dan online, diunduh lalu dibuka;
     - [ ] bila server menjawab 404 `file_missing`, tampil "file tidak tersedia".
-- [ ] **[Android]** Logout memanggil `POST /api/logout`; token lokal **selalu** dihapus meski offline (dokumen 04 bagian 5.3); folder `pdfs` dihapus sesuai keputusan C19.
-- [ ] **[Android]** Interceptor: jawaban 401 menghapus token dan mengembalikan user ke Login.
+- [ ] **[Android]** Logout memanggil `POST /api/logout`; token lokal **selalu** dihapus meski offline (dokumen 04 bagian 5.3); folder `pdfs` dihapus sesuai keputusan C19. Langkah pembersihan ini (hapus token dan folder `pdfs`) dipakai bersama oleh logout manual dan jalur 401 di bawah.
+- [ ] **[Android]** Interceptor: jawaban 401 dengan `code` `unauthenticated` (token tidak valid) menjalankan langkah pembersihan yang sama dengan logout (hapus token dan folder `pdfs`) lalu mengembalikan user ke Login. Jawaban 401 `invalid_credentials` dari `POST /api/login` tidak disentuh interceptor, agar pesan "Email atau password salah." tetap tampil (dokumen 04 bagian 3.5: kedua kondisi memakai status 401).
 - [ ] **[HP fisik]** Pengujian: buka PDF sekali saat online, aktifkan mode pesawat, buka lagi (tetap terbuka); logout lalu login ulang.
 - [ ] **Selesai jika:** **[HP fisik]** skenario offline setelah unduhan pertama berhasil dan tidak ada kondisi tersangkut setelah token tidak valid.
 
-#### C24 · Laravel Web, Laravel API, dan Android · Pengujian lintas platform dan pesan error · P1 · 10 Okt
+#### C24 · Laravel Web, Laravel API, dan Android · Pengujian lintas platform dan pesan error · P1 · 30 Okt
 
 Membutuhkan: C23, C22.
 
@@ -526,7 +511,7 @@ Membutuhkan: C23, C22.
 - [ ] **[Browser]**, **[Postman]**, dan **[HP fisik]** Diuji: kredensial salah, email sudah terdaftar, password kurang dari 8 karakter.
 - [ ] **Selesai jika:** seluruh baris matriks lulus atau tercatat sebagai bug.
 
-#### C25 · Uji di Browser dan HP fisik · Pengujian end-to-end Web dan Android · P1 · 10 Okt
+#### C25 · Uji di Browser dan HP fisik · Pengujian end-to-end Web dan Android · P1 · 30 Okt
 
 Membutuhkan: C24.
 
@@ -538,18 +523,18 @@ Membutuhkan: C24.
 - [ ] Bug yang menghalangi alur P0 diperbaiki di bagian yang bermasalah.
 - [ ] **Selesai jika:** kedua skenario berjalan tanpa campur tangan manual.
 
-#### C26 · Regresi dan finalisasi · P0/P1 · 11 Okt
+#### C26 · Regresi dan finalisasi · P0/P1 · 31 Okt
 
 Membutuhkan: C25.
 
 **Dikerjakan di:** Browser, HP fisik, Terminal, Klien MySQL, Dokumen, dan perbaikan di bagian mana pun yang bermasalah.
 
-- [ ] **[Browser]** dan **[HP fisik]** Daftar periksa Gate 12 Oktober (bagian 6) dijalankan ulang; hanya bug yang menghalangi P0 dan P1 yang diperbaiki.
+- [ ] **[Browser]** dan **[HP fisik]** Daftar periksa Gate 31 Oktober (bagian 6) dijalankan ulang; hanya bug yang menghalangi P0 dan P1 yang diperbaiki.
 - [ ] **[Terminal]** `npm run build` berhasil dan `public/build` terbentuk, lalu tag Git rilis.
 - [ ] **[Dokumen]** `README` berisi langkah menjalankan Laravel dan Android.
 - [ ] **[Klien MySQL]** Akun dan data demo disiapkan dan database dicadangkan.
 - [ ] **[Browser]** dan **[HP fisik]** Skenario demo dilatih satu kali.
-- [ ] **Selesai jika:** Gate 12 Oktober terpenuhi dan proyek dapat dijalankan ulang mengikuti `README`.
+- [ ] **Selesai jika:** Gate 31 Oktober terpenuhi dan proyek dapat dijalankan ulang mengikuti `README`.
 
 ### Item P2 (hanya jika waktu tersisa)
 
@@ -579,8 +564,8 @@ Tidak dijadwalkan.
 | C11       | pakai           | -           | ya          | -       |
 | C12       | -               | pakai       | -           | ya      |
 | C13       | -               | pakai       | -           | ya      |
-| C14       | -               | pakai       | -           | ya      |
-| C15       | -               | pakai       | -           | ya      |
+| C14       | -               | pakai       | pakai       | ya      |
+| C15       | -               | pakai       | pakai       | ya      |
 | C16       | -               | -           | -           | ya      |
 | C17       | -               | pakai       | -           | ya      |
 | C18       | -               | pakai       | pakai       | pakai   |
@@ -609,12 +594,11 @@ Tidak dijadwalkan.
 - [x] PDF dapat dibuka lewat mekanisme akses yang sesuai
 - [x] 7 endpoint API lulus uji Postman
       **P1**
-
 - [x] Web: login, daftar, manual upload
-- [ ] Android: setup dan login (**target lunak**: bergeser ke 8 Okt bila C11-C13 tidak selesai 7 Okt)
-- [ ] Android: menampilkan koleksi (dijadwalkan pada C14, 8 Okt)
+- [ ] Android: setup dan login (**target lunak**: bergeser ke 28 Okt, dikerjakan di C12 dan C13)
+- [ ] Android: menampilkan koleksi (dijadwalkan pada C14, 28 Okt)
 
-### Gate 12 Oktober (Full MVP)
+### Gate 31 Oktober (Full MVP; sebelumnya 12 Oktober)
 
 - [ ] Seluruh Gate 7 Oktober terpenuhi
 - [ ] File tersimpan di Cloudflare R2 (bucket privat)
@@ -630,36 +614,36 @@ Tidak dijadwalkan.
 
 | #   | Skenario                             | Hasil yang diharapkan                 | Lulus |
 | --- | ------------------------------------ | ------------------------------------- | ----- |
-| 1   | Register data valid                  | 201, tanpa token                      | [ ]   |
-| 2   | Register email sudah ada             | 422                                   | [ ]   |
-| 3   | Login benar                          | 200, token                            | [ ]   |
-| 4   | Login salah                          | 401 `invalid_credentials`             | [ ]   |
-| 5   | Login 6 kali dalam semenit           | 429 `too_many_attempts`               | [ ]   |
-| 6   | `GET /ebooks` tanpa token            | 401 `unauthenticated`                 | [ ]   |
-| 7   | `GET /ebooks` koleksi kosong         | 200, `data: []`, total 0              | [ ]   |
-| 8   | Upload PDF valid                     | 201                                   | [ ]   |
-| 9   | Upload PDF yang sama                 | 409 `duplicate_ebook` + `existing_id` | [ ]   |
-| 10  | Upload non-PDF                       | 422                                   | [ ]   |
-| 11  | Upload lebih dari 20 MB              | 422 atau 413                          | [ ]   |
-| 12  | `PATCH` `is_read` berbeda            | 200, history bertambah satu           | [ ]   |
-| 13  | `PATCH` `is_read` sama               | 200, history tidak bertambah          | [ ]   |
-| 14  | `PATCH` ebook user lain              | 404 `ebook_not_found`                 | [ ]   |
-| 15  | `GET file` milik sendiri             | 200, PDF                              | [ ]   |
-| 16  | `GET file` milik user lain           | 404 `ebook_not_found`                 | [ ]   |
-| 17  | `GET file`, file hilang dari storage | 404 `file_missing`                    | [ ]   |
-| 18  | Logout lalu pakai token lama         | 401                                   | [ ]   |
+| 1   | Register data valid                  | 201, tanpa token                      | [x]   |
+| 2   | Register email sudah ada             | 422                                   | [x]   |
+| 3   | Login benar                          | 200, token                            | [x]   |
+| 4   | Login salah                          | 401 `invalid_credentials`             | [x]   |
+| 5   | Login 6 kali dalam semenit           | 429 `too_many_attempts`               | [x]   |
+| 6   | `GET /ebooks` tanpa token            | 401 `unauthenticated`                 | [x]   |
+| 7   | `GET /ebooks` koleksi kosong         | 200, `data: []`, total 0              | [x]   |
+| 8   | Upload PDF valid                     | 201                                   | [x]   |
+| 9   | Upload PDF yang sama                 | 409 `duplicate_ebook` + `existing_id` | [x]   |
+| 10  | Upload non-PDF                       | 422                                   | [x]   |
+| 11  | Upload lebih dari 20 MB              | 422 atau 413                          | [x]   |
+| 12  | `PATCH` `is_read` berbeda            | 200, history bertambah satu           | [x]   |
+| 13  | `PATCH` `is_read` sama               | 200, history tidak bertambah          | [x]   |
+| 14  | `PATCH` ebook user lain              | 404 `ebook_not_found`                 | [x]   |
+| 15  | `GET file` milik sendiri             | 200, PDF                              | [x]   |
+| 16  | `GET file` milik user lain           | 404 `ebook_not_found`                 | [x]   |
+| 17  | `GET file`, file hilang dari storage | 404 `file_missing`                    | [x]   |
+| 18  | Logout lalu pakai token lama         | 401                                   | [x]   |
 
 ### Matriks lintas platform (dipakai pada C24, dijalankan di Browser dan HP fisik)
 
-| #   | Skenario                                                                           | Lulus |
-| --- | ---------------------------------------------------------------------------------- | ----- |
-| 1   | Upload dari Android, terlihat di Web                                               | [ ]   |
-| 2   | Upload dari Web, terlihat di Android                                               | [ ]   |
-| 3   | Status diubah di Android, terlihat di Web                                          | [ ]   |
-| 4   | Status diubah di Web, terlihat di Android                                          | [ ]   |
-| 5   | Upload via Web, unggah ulang via Android: 409                                      | [ ]   |
-| 6   | Dua akun berbeda tidak dapat melihat atau membuka ebook satu sama lain             | [ ]   |
-| 7   | Android offline: upload ditolak dengan pesan; PDF yang sudah diunduh tetap terbuka | [ ]   |
+| #   | Skenario                                                                                              | Lulus |
+| --- | ----------------------------------------------------------------------------------------------------- | ----- |
+| 1   | Upload dari Android, terlihat di Web                                                                  | [ ]   |
+| 2   | Upload dari Web, terlihat di Android                                                                  | [ ]   |
+| 3   | Status diubah di Android, terlihat di Web                                                             | [ ]   |
+| 4   | Status diubah di Web, terlihat di Android                                                             | [ ]   |
+| 5   | Upload via Web, unggah ulang via Android: 409                                                         | [ ]   |
+| 6   | Dua akun berbeda tidak dapat melihat atau membuka ebook satu sama lain                                | [ ]   |
+| 7   | Android offline: upload ditolak dengan pesan; PDF yang sudah diunduh atau baru diunggah tetap terbuka | [ ]   |
 
 ---
 
@@ -684,8 +668,8 @@ Bila waktu tidak cukup, korbankan dari atas ke bawah:
 Catat ide atau bug baru di sini; jangan dikerjakan di tengah pekerjaan lain.
 
 - [ ] Temuan review dokumen 00-05 (pagi 4 Okt) yang tidak menghalangi C01-C02.
-- [ ] Urutan integrasi Cloudflare R2: dokumen 05 menjadwalkan R2 (C21-C22) pada 9-10 Okt, yaitu setelah Web dan Android berjalan, sedangkan dokumen 00 bagian 20 menempatkan integrasi R2 pada langkah 10, sebelum Web dan Android. Belum diputuskan mana yang berlaku (dibahas nanti).
-- [ ] Penyimpanan lokal Android: makna "file lokal" (folder Download atau penyimpanan privat aplikasi; apakah file sementara pasca-upload dipindahkan ke `filesDir/pdfs/{id}.pdf`) dan pembaruan dokumen 00, 01, 02 terkait; diputuskan paling lambat saat mengerjakan C19 (dibahas nanti).
+- [ ] Urutan integrasi Cloudflare R2: dokumen 05 menjadwalkan R2 (C21-C22) pada 30 Okt, yaitu setelah Web dan Android berjalan, sedangkan dokumen 00 bagian 20 menempatkan integrasi R2 pada langkah 10, sebelum Web dan Android. Belum diputuskan mana yang berlaku (dibahas nanti).
+- [x] Penyimpanan lokal Android: diputuskan 28 Okt (lihat C19 dan C17). Sisa: memperbarui dokumen 00, 01, dan 02 agar "file lokal" jelas mengacu pada file di `filesDir/pdfs/{id}.pdf` (baris C19 di bagian 9).
 - [ ] Wireframe Login, Register, Daftar Ebook, Upload, dan Empty State di `docs/` ditulis sebelum dokumen 06 dan masih berasumsi satu kolom di desktop. Sesuaikan dengan dokumen 06 bagian 8.1 bila masih dipakai sebagai acuan.
 - [ ] Dokumen 00 bagian 1.1 masih menyebut enam dokumen perancangan; dokumen 06 perlu ditambahkan ke daftar itu.
 - [ ] (tambahkan di sini)
@@ -696,15 +680,18 @@ Catat ide atau bug baru di sini; jangan dikerjakan di tengah pekerjaan lain.
 
 Diisi setiap kali ada perubahan pada dokumen perancangan.
 
-| Pekerjaan | Perubahan atau temuan                                                                                                                                                                                                                                                                                                                                               | Dokumen yang diperbarui                                         | Selesai |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------- |
-| C13       | Token memakai `SharedPreferences` privat (04 bagian 3.2)                                                                                                                                                                                                                                                                                                            | 04                                                              | [x]     |
-| C19       | Penyimpanan lokal Android: lokasi dan sifat file hasil unduhan                                                                                                                                                                                                                                                                                                      | 00, 01                                                          | [ ]     |
-| C01       | Autentikasi Web dibuat sendiri, bukan Breeze; register Web diarahkan ke login sesuai 02 bagian 5.1                                                                                                                                                                                                                                                                  | 05 (C01, C10, Parkir)                                           | [x]     |
-| (semua)   | Dokumen 05 diubah dari jadwal berisi perintah menjadi daftar hasil per pekerjaan (versi 3); jadwal dihitung ulang untuk jam kerja 16.00-23.00/00; aturan kerja, durasi 90 menit, slot cadangan, dan catatan perubahan per pekerjaan dihapus                                                                                                                         | 05                                                              | [x]     |
-| (semua)   | Tanda platform tunggal di judul pekerjaan ambigu (C04 disangka bagian Android). Setiap pekerjaan kini punya baris "Dikerjakan di" dan setiap butir diberi tanda tempat kerja (Laravel Backend, Laravel API, Laravel Web, Android, dan alat bantu); ditambah tabel pemetaan di bagian 5. Header `Accept` dinyatakan dikirim oleh Postman atau Android, bukan Laravel | 05                                                              | [x]     |
-| C07       | Zona waktu koneksi MySQL diatur ke UTC (`'timezone' => '+00:00'` di `config/database.php`) agar `NOW()` pada procedure dan trigger konsisten dengan timestamp Eloquent                                                                                                                                                                                              | 03, 04                                                          | [x]     |
-| C01, C10  | Web memakai Tailwind CSS lewat Vite dan Node.js (sudah terpasang), menggantikan butir C01 "CSS biasa, tanpa Tailwind, Vite, atau Node.js". Token dan komponen Blade ada di dokumen 06 bagian 10; penyesuaian tampilan Login dan Register dikerjakan di C10                                                                                                          | 05 (C01, C10), 06                                               | [x]     |
-| (semua)   | Ditambah dokumen 06 Design System (versi 1.2): putih 60%, merah 30%, hitam 10%; flat dan rounded; gerak sebagai respons; desktop rapat. Menjadi acuan C10, C11, C12, dan C14. Beban tambahan sekitar 3 sampai 4 jam dicatat di bagian 2                                                                                                                             | 05 (Acuan, bagian 2, C10, C11, C12, C14, C26, Cut Line, Parkir) | [x]     |
-| (semua)   | Dokumen 00 bagian 1.1 masih menyebut enam dokumen; perlu ditambah dokumen 06                                                                                                                                                                                                                                                                                        | 00                                                              | [ ]     |
-|           |                                                                                                                                                                                                                                                                                                                                                                     |                                                                 | [ ]     |
+| Pekerjaan | Perubahan atau temuan                                                                                                                                                                                                                                                                                                                                                                                                                            | Dokumen yang diperbarui                                         | Selesai |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- | ------- |
+| C13       | Token memakai `SharedPreferences` privat (04 bagian 3.2)                                                                                                                                                                                                                                                                                                                                                                                         | 04                                                              | [x]     |
+| C19       | Penyimpanan lokal Android: lokasi dan sifat file hasil unduhan                                                                                                                                                                                                                                                                                                                                                                                   | 00, 01                                                          | [ ]     |
+| C01       | Autentikasi Web dibuat sendiri, bukan Breeze; register Web diarahkan ke login sesuai 02 bagian 5.1                                                                                                                                                                                                                                                                                                                                               | 05 (C01, C10, Parkir)                                           | [x]     |
+| (semua)   | Dokumen 05 diubah dari jadwal berisi perintah menjadi daftar hasil per pekerjaan (versi 3); jadwal dihitung ulang untuk jam kerja 16.00-23.00/00; aturan kerja, durasi 90 menit, slot cadangan, dan catatan perubahan per pekerjaan dihapus                                                                                                                                                                                                      | 05                                                              | [x]     |
+| (semua)   | Tanda platform tunggal di judul pekerjaan ambigu (C04 disangka bagian Android). Setiap pekerjaan kini punya baris "Dikerjakan di" dan setiap butir diberi tanda tempat kerja (Laravel Backend, Laravel API, Laravel Web, Android, dan alat bantu); ditambah tabel pemetaan di bagian 5. Header `Accept` dinyatakan dikirim oleh Postman atau Android, bukan Laravel                                                                              | 05                                                              | [x]     |
+| C07       | Zona waktu koneksi MySQL diatur ke UTC (`'timezone' => '+00:00'` di `config/database.php`) agar `NOW()` pada procedure dan trigger konsisten dengan timestamp Eloquent                                                                                                                                                                                                                                                                           | 03, 04                                                          | [x]     |
+| C01, C10  | Web memakai Tailwind CSS lewat Vite dan Node.js (sudah terpasang), menggantikan butir C01 "CSS biasa, tanpa Tailwind, Vite, atau Node.js". Token dan komponen Blade ada di dokumen 06 bagian 10; penyesuaian tampilan Login dan Register dikerjakan di C10                                                                                                                                                                                       | 05 (C01, C10), 06                                               | [x]     |
+| (semua)   | Ditambah dokumen 06 Design System (versi 1.2): putih 60%, merah 30%, hitam 10%; flat dan rounded; gerak sebagai respons; desktop rapat. Menjadi acuan C10, C11, C12, dan C14. Beban tambahan sekitar 3 sampai 4 jam dicatat di bagian 2                                                                                                                                                                                                          | 05 (Acuan, bagian 2, C10, C11, C12, C14, C26, Cut Line, Parkir) | [x]     |
+| (semua)   | Dokumen 00 bagian 1.1 masih menyebut enam dokumen; perlu ditambah dokumen 06                                                                                                                                                                                                                                                                                                                                                                     | 00                                                              | [ ]     |
+| (semua)   | Perbaikan butir Android hasil pemeriksaan 28 Okt 2026: C15 memakai chip (bukan kotak centang); C14 menjelaskan tombol Tambah PDF mengambang vs di dalam Empty State dan menambah ikon logout; C17 menambah bar progres dan penanganan gagal di tengah unggah; C19 memuat pemicu ketuk kartu dan pesan gagal unduh; C23 membatasi interceptor pada `unauthenticated` dan membersihkan `pdfs` pada 401; tabel bagian 5 untuk C14 dan C15 dikoreksi | 05                                                              | [x]     |
+| (semua)   | Deadline Full MVP dipindah dari 12 Oktober ke 31 Oktober 2026 (kerja nonstop 28 sampai 31 Oktober); jadwal bagian 2, 3, dan 6 dihitung ulang; tanggal C12 sampai C26 diganti; Gate 12 Oktober menjadi Gate 31 Oktober. Dokumen 00 dan 02 diperbarui di bagian tanggal Full MVP                                                                                                                                                                   | 00, 02, 05                                                      | [x]     |
+| C17, C19  | Keputusan file lokal: file sementara pasca-upload dipindahkan ke `filesDir/pdfs/{id}.pdf` (bukan dihapus); folder itu menjadi satu-satunya "file lokal". Kalimat penjelas di dokumen 00 dan 01 masih perlu diperbarui                                                                                                                                                                                                                            | 05 (selesai); 00, 01, 02 (belum)                                | [ ]     |
+|           |                                                                                                                                                                                                                                                                                                                                                                                                                                                  |                                                                 | [ ]     |
