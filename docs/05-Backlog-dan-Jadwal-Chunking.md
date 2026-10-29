@@ -354,7 +354,7 @@ Membutuhkan: C12.
 - [x] **[Android]** `ApiService` (daftar endpoint untuk Retrofit), model request dan respons.
 - [x] **[Android]** `ApiClient` dengan interceptor yang menambah header `Accept: application/json` pada setiap request dan `Authorization: Bearer {token}` bila token ada. Di sini Android yang mengirim header `Accept`, sama seperti Postman pada C04.
 - [x] **[Android]** `TokenStore` menyimpan token di `SharedPreferences` privat (`MODE_PRIVATE`); dicatat sebagai utang teknis karena belum terenkripsi (dokumen 04 bagian 3.2).
-- [ ] **[Android]** `LoginActivity`: kolom email dan password, tombol, indikator loading, dan pesan untuk 401, 422, 429, dan tanpa koneksi.
+- [x] **[Android]** `LoginActivity`: kolom email dan password, tombol, indikator loading, dan pesan untuk 401, 422, 429, dan tanpa koneksi.
 - [ ] **[Android]** `RegisterActivity`: kolom nama, email, password, dan konfirmasi password; memanggil `POST /api/register`; menampilkan error 422 (termasuk email sudah terdaftar); setelah 201 kembali ke Login dengan pesan sukses (tanpa token, dokumen 04 bagian 5.1).
 - [ ] **[Android]** Saat aplikasi dibuka dan token sudah ada, langsung ke daftar ebook.
 - [ ] **Selesai jika:** **[HP fisik]** register dan login berhasil dan token tersimpan.
