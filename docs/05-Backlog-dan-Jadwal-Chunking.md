@@ -356,8 +356,8 @@ Membutuhkan: C04.
       **Proyek**
 
 - [x] **[Android]** Proyek Kotlin dengan ViewBinding (cara mengakses elemen layar tanpa `findViewById`), dependency Retrofit (pustaka pemanggil API), converter Gson (pengubah JSON), OkHttp logging-interceptor (pencatat request di Logcat), dan RecyclerView (komponen daftar).
-- [ ] **[Android]** Material Components dan resource tema dari dokumen 06 bagian 11: `colors.xml`, `dimens.xml`, `themes.xml`, interpolator, dan `Motion.kt`. Tanpa `values-night` karena tema gelap tidak dipakai.
-- [ ] **[Android]** `AndroidManifest`: izin `INTERNET` dan izin HTTP tanpa enkripsi (cleartext) khusus pengembangan.
+- [x] **[Android]** Material Components dan resource tema dari dokumen 06 bagian 11: `colors.xml`, `dimens.xml`, `themes.xml`, interpolator, dan `Motion.kt`. Tanpa `values-night` karena tema gelap tidak dipakai.
+- [x] **[Android]** `AndroidManifest`: izin `INTERNET` dan izin HTTP tanpa enkripsi (cleartext) khusus pengembangan.
 - [ ] **[Terminal]** Jalankan Laravel dengan `php artisan serve --host=0.0.0.0` sesuai keputusan di atas.
 - [ ] **[Android]** Uji sambung dari **[HP fisik]**: memanggil `POST /api/login` dengan data tetap dan melihat respons di Logcat (jendela log Android Studio).
 - [ ] **Selesai jika:** Android menerima respons dari Laravel dan dua keputusan di atas tertulis.
